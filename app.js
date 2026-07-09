@@ -13,6 +13,7 @@ let bikeArrow;
 let windControl;
 let windMarker;
 let windLegend;
+let routeLine;
 
 function windEffect(rideDirection, windDirection) {
 
