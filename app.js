@@ -93,6 +93,7 @@ ${effect}
 
     return div;
 };
+}
 function addWindLegend() {
 
     if (windLegend) {
@@ -128,8 +129,7 @@ windControl.addTo(map);
     }catch (error) {
     alert("Erreur récupération du vent : " + error.message);
     console.log(error);
-}
-}
+}    
     // Fonction itinéraire
 let routeLine;
 function getSegmentDirection(p1, p2) {
@@ -210,7 +210,7 @@ const windSpeed = currentWindSpeed;
     }).addTo(map);
 }
 
-    map.fitBounds(routeLine.getBounds());
+    map.fitBounds(latlngs);
 addWindLegend();
 
     // Analyse du vent sur le trajet
@@ -224,8 +224,8 @@ addWindLegend();
 
         const segmentDirection = getSegmentDirection(p1, p2);
 
-        const windDirection = 180; // test
-        const windSpeed = 15; // test
+        const windDirection = currentWindDirection;
+const windSpeed = currentWindSpeed;
 
         const cost = windCost(
             segmentDirection,
