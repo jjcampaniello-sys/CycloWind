@@ -216,53 +216,7 @@ L.polyline(
 
 
 
-    for(let i=0;i<latlngs.length-1;i++){
-
-
-        const p1=latlngs[i];
-        const p2=latlngs[i+1];
-
-
-        const direction =
-        getSegmentDirection(p1,p2);
-
-
-
-        const cost =
-        windCost(
-            direction,
-            currentWindDirection,
-            currentWindSpeed
-        );
-
-
-        totalCost += cost;
-        count++;
-
-
-
-        let color;
-
-
-        if(cost>20){
-            color="red";
-        }
-        else if(cost>8){
-            color="orange";
-        }
-        else{
-            color="green";
-        }
-
-
-
-        L.polyline(
-            [p1,p2],
-            {
-                color:color,
-                weight:6
-            }
-        ).addTo(map);
+    drawWindRoute(latlngs);;
 
     }
 
