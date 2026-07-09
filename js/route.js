@@ -33,8 +33,8 @@ async function getRoute(){
     const endLon = start.lng + 0.02;
 
 
-    const url =
-    `https://router.project-osrm.org/route/v1/bicycle/${start.lng},${start.lat};${endLon},${endLat}?overview=full&geometries=geojson`;
+   const url =
+`https://router.project-osrm.org/route/v1/bicycle/${start.lng},${start.lat};${endLon},${endLat}?overview=full&geometries=geojson&alternatives=true`;
 
 
     const response = await fetch(url);
@@ -42,9 +42,8 @@ async function getRoute(){
     const data = await response.json();
 
 
-    const coords =
-    data.routes[0].geometry.coordinates;
-
+   const routes = data.routes;
+console.log("Nombre de trajets :", routes.length);
 
     const latlngs =
     coords.map(point=>[
