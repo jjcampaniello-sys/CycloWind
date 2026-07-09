@@ -77,7 +77,51 @@ windControl.addTo(map);
     console.log(error);
 }
 }
-    
+    // Foncyion itinéraire
+let routeLine;
+
+async function getRoute() {
+
+    if (!marker) {
+        alert("Définissez votre position d'abord");
+        return;
+    }
+
+    const start = marker.getLatLng();
+
+    // Destination test (à remplacer ensuite)
+    const endLat = start.lat + 0.02;
+    const endLon = start.lng + 0.02;
+
+
+    const url =
+    `https://router.project-osrm.org/route/v1/bicycle/${start.lng},${start.lat};${endLon},${endLat}?overview=full&geometries=geojson`;
+
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const coords = data.routes[0].geometry.coordinates;
+
+
+    const latlngs = coords.map(point => [
+        point[1],
+        point[0]
+    ]);
+
+
+    if (routeLine) {
+        map.removeLayer(routeLine);
+    }
+
+
+    routeLine = L.polyline(latlngs, {
+        weight: 5
+    }).addTo(map);
+
+
+    map.fitBounds(routeLine.getBounds());
+}
 // Fonction GPS
 function getLocation() {
 
