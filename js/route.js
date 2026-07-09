@@ -1,12 +1,5 @@
 // Direction segment route
-async function getRoute(){
 
-    console.log("getRoute démarré");
-
-    if(!marker){
-        alert("Définissez votre position d'abord");
-        return;
-    }
 function getSegmentDirection(p1,p2){
 
     const dy = p2[0]-p1[0];
