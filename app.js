@@ -55,7 +55,7 @@ windControl.onAdd = function() {
 
     div.innerHTML = `
         <div class="wind-arrow"
-             style="transform: rotate(${direction}deg)">
+             style="transform: rotate(${direction + 180}deg)">
              ➤
         </div>
         <div>
