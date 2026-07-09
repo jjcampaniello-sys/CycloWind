@@ -1,50 +1,80 @@
 let destination = null;
 
+
 async function searchDestination(){
 
     const query =
     document.getElementById("destination").value;
 
-    if(!query){
-        alert("Entrez une destination");
+
+    const box =
+    document.getElementById("suggestions");
+
+
+    if(query.length < 3){
+        box.innerHTML = "";
         return;
     }
 
 
     const url =
-    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`;
+    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&addressdetails=1`;
 
 
-    const response = await fetch(url);
-
-    const results = await response.json();
-
-
-    if(results.length === 0){
-        alert("Aucune destination trouvée");
-        return;
-    }
+    const response =
+    await fetch(url);
 
 
-    let choice = prompt(
-        results.map((r,index)=>
-        `${index}: ${r.display_name}`
-        ).join("\n")
-    );
+    const results =
+    await response.json();
 
 
-    const selected = results[choice];
+    box.innerHTML = "";
 
 
-    destination = {
-        lat: parseFloat(selected.lat),
-        lon: parseFloat(selected.lon)
-    };
+    results.forEach((place)=>{
 
 
-    alert(
-        "Destination choisie :\n" +
-        selected.display_name
-    );
+        const item =
+        document.createElement("div");
+
+
+        item.className="suggestion";
+
+
+        item.innerHTML =
+        place.display_name;
+
+
+        item.onclick = function(){
+
+
+            destination = {
+
+                lat: parseFloat(place.lat),
+
+                lon: parseFloat(place.lon)
+
+            };
+
+
+            document.getElementById("destination").value =
+            place.display_name;
+
+
+            box.innerHTML="";
+
+
+            console.log(
+            "Destination choisie :",
+            destination
+            );
+
+        };
+
+
+        box.appendChild(item);
+
+    });
 
 }
