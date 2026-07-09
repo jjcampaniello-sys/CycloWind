@@ -86,6 +86,49 @@ function chooseBestRoute(normalRoute, alternativeRoute, normalScore, alternative
 
     return "normal";
 }
+// 3 - Nouvelle fonction couleur trajet
+function drawWindRoute(latlngs){
+
+    for(let i = 0; i < latlngs.length - 1; i++){
+
+        const direction =
+        getSegmentDirection(
+            latlngs[i],
+            latlngs[i+1]
+        );
+
+
+        const cost =
+        windCost(
+            direction,
+            currentWindDirection,
+            currentWindSpeed
+        );
+
+
+        let color;
+
+        if(cost > 20){
+            color = "red";
+        }
+        else if(cost > 8){
+            color = "orange";
+        }
+        else{
+            color = "green";
+        }
+
+
+        L.polyline(
+            [latlngs[i], latlngs[i+1]],
+            {
+                color: color,
+                weight: 6
+            }
+        ).addTo(map);
+    }
+}
+
 //----------------------------------------------------------------------------------------------------------
 // Calcul trajet
 async function getRoute(){
