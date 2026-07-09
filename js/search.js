@@ -2,7 +2,7 @@ let destination = null;
 
 
 async function searchDestination(){
-
+console.log("Recherche :", document.getElementById("destination").value);
     const query =
     document.getElementById("destination").value;
 
