@@ -95,6 +95,11 @@ console.log("Route alternative :", alternative);
 const routes = data.routes;
  console.log("Nombre de trajets :", routes.length);   
 const coords = routes[0].geometry.coordinates;
+  const latlngs =
+    coords.map(point=>[
+        point[1],
+        point[0]
+    ]);   
 const altCoords = alternative.geometry.coordinates;
 
 const altLatlngs = altCoords.map(point => [
@@ -124,14 +129,7 @@ L.polyline(
         weight:5
     }
 ).addTo(map);
-    const latlngs =
-    coords.map(point=>[
-        point[1],
-        point[0]
-    ]);
-
-
-
+   
     let totalCost=0;
     let count=0;
 
