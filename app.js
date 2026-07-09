@@ -6,6 +6,8 @@ L.tileLayer(
         attribution: 'OpenStreetMap'
     }
 ).addTo(map);
+let marker;
+let bikeArrow;
 let windControl;
 let windMarker;
 let marker;
@@ -27,7 +29,7 @@ function windEffect(rideDirection, windDirection) {
 
     return "↔️ Vent latéral";
 }
-async function getWind(lat, lon) {
+async function getWind(lat, lon, rideDirection) {
 
     try {
 
@@ -40,7 +42,7 @@ async function getWind(lat, lon) {
 
         const speed = data.current.wind_speed_10m;
         const direction = data.current.wind_direction_10m;
-        const rideDirection = 90; // test : déplacement vers l'Est
+       
 const effect = windEffect(rideDirection, direction);
 
        if (windControl) {
@@ -87,6 +89,24 @@ function getLocation() {
 
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
+                const rideDirection = position.coords.heading || 0;
+                if (bikeArrow) {
+    map.removeLayer(bikeArrow);
+}
+
+const bikeIcon = L.divIcon({
+    className: "bike-arrow",
+    html: `
+        <div style="transform: rotate(${rideDirection}deg); font-size:45px;">
+            🚴
+        </div>
+    `,
+    iconSize: [50,50]
+});
+
+bikeArrow = L.marker([lat, lon], {
+    icon: bikeIcon
+}).addTo(map);
 
                 if (marker) {
                     map.removeLayer(marker);
