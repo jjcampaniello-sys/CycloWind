@@ -11,3 +11,16 @@ button {
     height: 75vh;
     width: 100%;
 }
+.wind-box {
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.wind-arrow {
+    font-size: 45px;
+}
