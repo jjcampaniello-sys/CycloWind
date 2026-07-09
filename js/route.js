@@ -129,5 +129,19 @@ const coords = routes[0].geometry.coordinates;
     `;
 
 }
+async function getAlternativeRoute(start, endLat, endLon) {
 
+    const midLat = (start.lat + endLat) / 2;
+    const midLon = (start.lng + endLon) / 2 + 0.01;
+
+    const url =
+    `https://router.project-osrm.org/route/v1/bicycle/${start.lng},${start.lat};${midLon},${midLat};${endLon},${endLat}?overview=full&geometries=geojson`;
+
+
+    const response = await fetch(url);
+
+    const data = await response.json();
+
+    return data.routes[0];
+}
 
