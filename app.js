@@ -175,7 +175,11 @@ async function getRoute() {
 
     const avgCost = totalCost / totalSegments;
 
-    alert("Effort vent moyen : " + avgCost.toFixed(1));
+   document.getElementById("windInfo").innerHTML =
+`
+🌬️ Impact du vent : ${avgCost.toFixed(1)}<br>
+🚴 Effort estimé
+`;
 }
 function getLocation() {
 
