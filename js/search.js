@@ -58,12 +58,15 @@ async function searchDestination(){
             };
 
 
-            document.getElementById("destination").value =
-            place.display_name;
+            const input =
+document.getElementById("destination");
 
+input.value = place.display_name;
 
-            box.innerHTML="";
+input.dataset.lat = place.lat;
+input.dataset.lon = place.lon;
 
+box.innerHTML="";
 
             console.log(
             "Destination choisie :",
