@@ -32,7 +32,7 @@ async function getWind(lat, lon) {
     try {
 
         const url =
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m,wind_direction_10m`;
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m%2Cwind_direction_10m`;
 
         const response = await fetch(url);
 
@@ -84,12 +84,10 @@ const windIcon = L.divIcon({
 windMarker = L.marker([lat, lon], {
     icon: windIcon
 }).addTo(map);
-    } catch (error) {
-
-        alert("Erreur récupération du vent");
-
-        console.log(error);
-    }
+    }catch (error) {
+    alert("Erreur récupération du vent : " + error.message);
+    console.log(error);
+}
 }
     
 // Fonction GPS
