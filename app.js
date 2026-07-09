@@ -6,15 +6,20 @@ L.tileLayer(
         attribution: 'OpenStreetMap'
     }
 ).addTo(map);
+
+
+// Variables globales
 let currentWindDirection = 0;
 let currentWindSpeed = 0;
+
 let marker;
 let bikeArrow;
 let windControl;
-let windMarker;
 let windLegend;
 let routeLine;
 
+
+// Analyse du vent
 function windEffect(rideDirection, windDirection) {
 
     let angle = Math.abs(rideDirection - windDirection);
@@ -33,6 +38,9 @@ function windEffect(rideDirection, windDirection) {
 
     return "↔️ Vent latéral";
 }
+
+
+// Coût du vent
 function windCost(roadDirection, windDirection, windSpeed) {
 
     let angle = Math.abs(roadDirection - windDirection);
@@ -41,19 +49,19 @@ function windCost(roadDirection, windDirection, windSpeed) {
         angle = 360 - angle;
     }
 
-    // vent de face
     if (angle < 45) {
         return windSpeed * 2;
     }
 
-    // vent latéral
     if (angle < 135) {
         return windSpeed * 0.5;
     }
 
-    // vent arrière
     return 0;
 }
+
+
+// Récupération météo
 async function getWind(lat, lon, rideDirection) {
 
     try {
@@ -64,254 +72,331 @@ async function getWind(lat, lon, rideDirection) {
         const response = await fetch(url);
         const data = await response.json();
 
-        const speed = data.current.wind_speed_10m;
-        const direction = data.current.wind_direction_10m;
+        currentWindSpeed = data.current.wind_speed_10m;
+        currentWindDirection = data.current.wind_direction_10m;
 
-        currentWindSpeed = speed;
-        currentWindDirection = direction;
-
-        const effect = windEffect(rideDirection, direction);
 
         if (windControl) {
             map.removeControl(windControl);
         }
 
-        windControl = L.control({position: "topright"});
+
+        windControl = L.control({
+            position: "topright"
+        });
+
 
         windControl.onAdd = function() {
 
-            const div = L.DomUtil.create("div", "wind-box");
+            const div = L.DomUtil.create(
+                "div",
+                "wind-box"
+            );
+
 
             div.innerHTML = `
-                <div class="wind-arrow"
-                style="transform: rotate(${direction + 180}deg)">
-                ➤
-                </div>
+            <div class="wind-arrow"
+            style="transform:rotate(${currentWindDirection + 180}deg)">
+            ➤
+            </div>
 
-                <div>
-                ${speed} km/h<br>
-                ${effect}
-                </div>
+            <div>
+            ${currentWindSpeed} km/h<br>
+            ${windEffect(
+                rideDirection,
+                currentWindDirection
+            )}
+            </div>
             `;
+
 
             return div;
         };
 
+
         windControl.addTo(map);
 
 
-    } catch (error) {
+    }
+    catch(error) {
 
-        alert("Erreur récupération du vent : " + error.message);
         console.log(error);
+        alert("Erreur récupération du vent");
     }
 }
 
 
 
+// Légende
 function addWindLegend() {
 
     if (windLegend) {
         map.removeControl(windLegend);
     }
 
-    windLegend = L.control({position: "bottomleft"});
+
+    windLegend = L.control({
+        position:"bottomleft"
+    });
+
 
     windLegend.onAdd = function() {
 
         const div = L.DomUtil.create("div");
 
-        div.style.background = "white";
-        div.style.padding = "10px";
-        div.style.borderRadius = "10px";
-        div.style.fontSize = "16px";
 
-        div.innerHTML = `
+        div.style.background="white";
+        div.style.padding="10px";
+        div.style.borderRadius="10px";
+        div.style.fontSize="16px";
+
+
+        div.innerHTML =
+        `
         🟢 Vent favorable<br>
         🟠 Vent latéral<br>
         🔴 Vent de face
         `;
 
+
         return div;
     };
 
+
     windLegend.addTo(map);
 }
-    }catch (error) {
-    alert("Erreur récupération du vent : " + error.message);
-    console.log(error);
-}    
-    // Fonction itinéraire
-let routeLine;
-function getSegmentDirection(p1, p2) {
 
-    const dy = p2[0] - p1[0];
-    const dx = p2[1] - p1[1];
 
-    let angle = Math.atan2(dy, dx) * (180 / Math.PI);
 
-    if (angle < 0) {
-        angle += 360;
+// Direction segment route
+function getSegmentDirection(p1,p2){
+
+    const dy = p2[0]-p1[0];
+    const dx = p2[1]-p1[1];
+
+
+    let angle =
+    Math.atan2(dy,dx)*(180/Math.PI);
+
+
+    if(angle<0){
+        angle+=360;
     }
+
 
     return angle;
 }
-async function getRoute() {
 
-    if (!marker) {
+
+
+// Calcul trajet
+async function getRoute(){
+
+    if(!marker){
         alert("Définissez votre position d'abord");
         return;
     }
 
+
     const start = marker.getLatLng();
+
 
     const endLat = start.lat + 0.02;
     const endLon = start.lng + 0.02;
 
+
     const url =
     `https://router.project-osrm.org/route/v1/bicycle/${start.lng},${start.lat};${endLon},${endLat}?overview=full&geometries=geojson`;
 
+
     const response = await fetch(url);
+
     const data = await response.json();
 
-    const coords = data.routes[0].geometry.coordinates;
 
-    const latlngs = coords.map(point => [
+    const coords =
+    data.routes[0].geometry.coordinates;
+
+
+    const latlngs =
+    coords.map(point=>[
         point[1],
         point[0]
     ]);
 
-    if (routeLine) {
-        map.removeLayer(routeLine);
-    }
-
-  for (let i = 0; i < latlngs.length - 1; i++) {
-
-    const p1 = latlngs[i];
-    const p2 = latlngs[i + 1];
-
-    const segmentDirection = getSegmentDirection(p1, p2);
-
-   const windDirection = currentWindDirection;
-const windSpeed = currentWindSpeed;
-
-    const cost = windCost(
-        segmentDirection,
-        windDirection,
-        windSpeed
-    );
 
 
-    let color;
-
-    if (cost > 20) {
-        color = "red";       // vent de face fort
-    } 
-    else if (cost > 8) {
-        color = "orange";    // vent latéral
-    } 
-    else {
-        color = "green";     // vent favorable
-    }
+    let totalCost=0;
+    let count=0;
 
 
-    L.polyline([p1, p2], {
-        weight: 6,
-        color: color
-    }).addTo(map);
-}
 
-    map.fitBounds(latlngs);
-addWindLegend();
+    for(let i=0;i<latlngs.length-1;i++){
 
-    // Analyse du vent sur le trajet
-    let totalCost = 0;
-    let totalSegments = 0;
 
-    for (let i = 0; i < latlngs.length - 1; i++) {
+        const p1=latlngs[i];
+        const p2=latlngs[i+1];
 
-        const p1 = latlngs[i];
-        const p2 = latlngs[i + 1];
 
-        const segmentDirection = getSegmentDirection(p1, p2);
+        const direction =
+        getSegmentDirection(p1,p2);
 
-        const windDirection = currentWindDirection;
-const windSpeed = currentWindSpeed;
 
-        const cost = windCost(
-            segmentDirection,
-            windDirection,
-            windSpeed
+
+        const cost =
+        windCost(
+            direction,
+            currentWindDirection,
+            currentWindSpeed
         );
+
 
         totalCost += cost;
-        totalSegments++;
-    }
+        count++;
 
-    const avgCost = totalCost / totalSegments;
 
-   document.getElementById("windInfo").innerHTML =
-`
-🌬️ Impact du vent : ${avgCost.toFixed(1)}<br>
-🚴 Effort estimé
-`;
-}
-function getLocation() {
 
-    if (navigator.geolocation) {
+        let color;
 
-        navigator.geolocation.getCurrentPosition(
 
-            function(position) {
+        if(cost>20){
+            color="red";
+        }
+        else if(cost>8){
+            color="orange";
+        }
+        else{
+            color="green";
+        }
 
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                const rideDirection = position.coords.heading || 0;
-                if (bikeArrow) {
-    map.removeLayer(bikeArrow);
-}
 
-const bikeIcon = L.divIcon({
-    className: "bike-arrow",
-    html: `
-        <div style="
-            transform: rotate(${rideDirection}deg);
-            font-size:50px;
-            color:blue;">
-            ➤
-        </div>
-    `,
-    iconSize: [50,50]
-});
 
-bikeArrow = L.marker([lat, lon], {
-    icon: bikeIcon
-}).addTo(map);
-
-                if (marker) {
-                    map.removeLayer(marker);
-                }
-                
-marker = L.marker([lat, lon])
-    .addTo(map)
-    .bindPopup("Vous êtes ici");
-
-                // Zoom automatique
-               map.setView([lat, lon], 19);
-getWind(lat, lon, rideDirection);
-            },
-
-            function(error) {
-                alert("Impossible d'obtenir votre position GPS");
-            },
-
+        L.polyline(
+            [p1,p2],
             {
-                enableHighAccuracy: true,
-                timeout: 10000,
-                maximumAge: 0
+                color:color,
+                weight:6
             }
-        );
- } else {
-        alert("GPS non disponible");
+        ).addTo(map);
+
     }
+
+
+
+    map.fitBounds(latlngs);
+
+
+    addWindLegend();
+
+
+
+    const avgCost =
+    totalCost/count;
+
+
+
+    document.getElementById("windInfo").innerHTML=
+    `
+    🌬️ Impact du vent : ${avgCost.toFixed(1)}<br>
+    🚴 Effort estimé
+    `;
+
+}
+
+
+
+// GPS
+function getLocation(){
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position){
+
+
+            const lat =
+            position.coords.latitude;
+
+
+            const lon =
+            position.coords.longitude;
+
+
+            const rideDirection =
+            position.coords.heading || 0;
+
+
+
+            if(marker){
+                map.removeLayer(marker);
+            }
+
+
+
+            marker =
+            L.marker([lat,lon])
+            .addTo(map)
+            .bindPopup("Vous êtes ici");
+
+
+
+            if(bikeArrow){
+                map.removeLayer(bikeArrow);
+            }
+
+
+
+            const icon =
+            L.divIcon({
+
+                html:
+                `
+                <div style="
+                transform:rotate(${rideDirection}deg);
+                font-size:50px;
+                color:blue;">
+                ➤
+                </div>
+                `
+
+            });
+
+
+
+            bikeArrow =
+            L.marker(
+                [lat,lon],
+                {icon:icon}
+            )
+            .addTo(map);
+
+
+
+            map.setView(
+                [lat,lon],
+                19
+            );
+
+
+
+            getWind(
+                lat,
+                lon,
+                rideDirection
+            );
+
+        },
+
+
+        function(){
+            alert("GPS impossible");
+        },
+
+
+        {
+            enableHighAccuracy:true
+        }
+
+    );
+
 }
