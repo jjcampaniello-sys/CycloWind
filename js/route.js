@@ -148,8 +148,8 @@ async function getRoute(){
 
     const start = marker.getLatLng();
 
-    const endLat = start.lat + 0.02;
-    const endLon = start.lng + 0.02;
+ const endLat = destination.lat;
+const endLon = destination.lon;
 const alternative = await getAlternativeRoute(
     start,
     endLat,
