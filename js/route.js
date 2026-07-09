@@ -200,11 +200,11 @@ L.polyline(
 
 
 
-    document.getElementById("windInfo").innerHTML=
-    `
-    🌬️ Impact du vent : ${avgCost.toFixed(1)}<br>
-    🚴 Effort estimé
-    `;
+ document.getElementById("windInfo").innerHTML=
+`
+🌬️ Impact du vent : ${avgCost.toFixed(1)}<br>
+🚴 Effort estimé : ${avgCost < 8 ? "Facile" : avgCost < 15 ? "Moyen" : "Difficile"}
+`;
 
 }
 
