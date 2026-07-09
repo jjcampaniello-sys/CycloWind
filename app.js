@@ -10,7 +10,7 @@ let marker;
 let bikeArrow;
 let windControl;
 let windMarker;
-let marker;
+
 function windEffect(rideDirection, windDirection) {
 
     let angle = Math.abs(rideDirection - windDirection);
@@ -122,7 +122,7 @@ bikeArrow = L.marker([lat, lon], {
                     animate: true,
                     duration: 1.5
                 });
-getWind(lat, lon);
+getWind(lat, lon, rideDirection);
             },
 
             function(error) {
