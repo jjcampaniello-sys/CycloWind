@@ -27,8 +27,7 @@ button {
 .wind-arrow {
     font-size: 45px;
 }
-#windInfo {
-    #windInfo {
+   #windInfo {
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -58,12 +57,13 @@ button {
 
 
 #suggestions{
-
     position:absolute;
+    top:42px;
+    left:0;
     background:white;
     width:100%;
-    z-index:1000;
-
+    z-index:3000;
+    border:1px solid #ccc;
 }
 
 
