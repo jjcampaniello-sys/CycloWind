@@ -107,6 +107,10 @@ const bikeIcon = L.divIcon({
     iconSize: [50,50]
 });
 
+bikeArrow = L.marker([lat, lon], {
+    icon: bikeIcon
+}).addTo(map);
+
                 if (marker) {
                     map.removeLayer(marker);
                 }
