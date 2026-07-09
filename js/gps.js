@@ -1,5 +1,5 @@
-
 // GPS
+console.log("gps.js chargé");
 function getLocation(){
 
 
