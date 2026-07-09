@@ -97,25 +97,23 @@ function getLocation() {
 const bikeIcon = L.divIcon({
     className: "bike-arrow",
     html: `
-        <div style="transform: rotate(${rideDirection}deg); font-size:45px;">
-            🚴
+        <div style="
+            transform: rotate(${rideDirection}deg);
+            font-size:50px;
+            color:blue;">
+            ➤
         </div>
     `,
     iconSize: [50,50]
 });
 
-bikeArrow = L.marker([lat, lon], {
-    icon: bikeIcon
-}).addTo(map);
-
                 if (marker) {
                     map.removeLayer(marker);
                 }
-
-                marker = L.marker([lat, lon])
-                    .addTo(map)
-                    .bindPopup("Vous êtes ici")
-                    .openPopup();
+                
+marker = L.marker([lat, lon], {
+    opacity: 0
+}).addTo(map);
 
                 // Zoom automatique
                  map.flyTo([lat, lon], 18, {
