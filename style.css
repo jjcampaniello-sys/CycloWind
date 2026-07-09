@@ -14,6 +14,25 @@ button {
     height: 75vh;
     width: 100%;
 }
+.top-bar{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+@media (max-width:600px){
+
+    .top-bar{
+        flex-direction:row;
+    }
+
+    button{
+        font-size:16px;
+        padding:10px 12px;
+    }
+
+}
 .wind-box {
     background: white;
     padding: 12px;
