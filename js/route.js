@@ -209,21 +209,12 @@ L.polyline(
     let totalCost=0;
     let count=0;
 
-    }
-
-
-
     map.fitBounds(latlngs);
 
 
     addWindLegend();
 
-
-
-    const avgCost =
-    totalCost/count;
-
-
+    const avgCost = normalScore;
 
  const normalEffort =
 normalScore < 8 ? "Facile" :
