@@ -205,10 +205,29 @@ L.polyline(
 
 
 
- document.getElementById("windInfo").innerHTML=
+ const normalEffort =
+normalScore < 8 ? "Facile" :
+normalScore < 15 ? "Moyen" :
+"Difficile";
+
+
+const alternativeEffort =
+alternativeScore < 8 ? "Facile" :
+alternativeScore < 15 ? "Moyen" :
+"Difficile";
+
+
+document.getElementById("windInfo").innerHTML =
 `
-🌬️ Impact du vent : ${avgCost.toFixed(1)}<br>
-🚴 Effort estimé : ${avgCost < 8 ? "Facile" : avgCost < 15 ? "Moyen" : "Difficile"}
+🌬️ <b>Trajet actuel</b><br>
+Impact vent : ${normalScore.toFixed(1)}<br>
+Effort : ${normalEffort}
+
+<br><br>
+
+🌱 <b>Alternative CycloWind</b><br>
+Impact vent : ${alternativeScore.toFixed(1)}<br>
+Effort : ${alternativeEffort}
 `;
 
 }
