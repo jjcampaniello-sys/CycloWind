@@ -17,6 +17,7 @@ function getLocation() {
     if (navigator.geolocation) {
 
         navigator.geolocation.getCurrentPosition(
+
             function(position) {
 
                 const lat = position.coords.latitude;
@@ -31,7 +32,22 @@ function getLocation() {
                     .bindPopup("Vous êtes ici")
                     .openPopup();
 
-                map.setView([lat, lon], 15);
+                // Zoom automatique
+                map.flyTo([lat, lon], 16, {
+                    animate: true,
+                    duration: 1.5
+                });
+
+            },
+
+            function(error) {
+                alert("Impossible d'obtenir votre position GPS");
+            },
+
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
             }
         );
 
