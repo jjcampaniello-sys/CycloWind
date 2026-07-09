@@ -6,6 +6,8 @@ L.tileLayer(
         attribution: 'OpenStreetMap'
     }
 ).addTo(map);
+let currentWindDirection = 0;
+let currentWindSpeed = 0;
 let marker;
 let bikeArrow;
 let windControl;
@@ -64,7 +66,8 @@ async function getWind(lat, lon, rideDirection) {
 
         const speed = data.current.wind_speed_10m;
         const direction = data.current.wind_direction_10m;
-       
+       currentWindSpeed = speed;
+currentWindDirection = direction;
 const effect = windEffect(rideDirection, direction);
 
        if (windControl) {
@@ -178,8 +181,8 @@ async function getRoute() {
 
     const segmentDirection = getSegmentDirection(p1, p2);
 
-    const windDirection = 180; // temporaire
-    const windSpeed = 15; // temporaire
+   const windDirection = currentWindDirection;
+const windSpeed = currentWindSpeed;
 
     const cost = windCost(
         segmentDirection,
