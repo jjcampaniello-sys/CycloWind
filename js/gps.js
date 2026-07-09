@@ -33,21 +33,24 @@ function getLocation(){
 
 
             const icon =
-            L.divIcon({
+L.divIcon({
 
-                html:
-                `
-                <div style="
-                transform:rotate(${rideDirection}deg);
-                font-size:50px;
-                color:blue;">
-                ➤
-                </div>
-                `,
+    className: "bike-icon",
 
-                iconSize:[50,50]
+    html:
+    `
+    <div style="
+    transform:rotate(${rideDirection}deg);
+    font-size:28px;
+    color:blue;">
+    ➤
+    </div>
+    `,
 
-            });
+    iconSize:[35,35],
+    iconAnchor:[17,17]
+
+});
 
 
 
