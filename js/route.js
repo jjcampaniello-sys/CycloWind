@@ -125,6 +125,17 @@ function drawWindRoute(latlngs){
         ).addTo(map);
     }
 }
+function drawGrayRoute(latlngs){
+
+    L.polyline(
+        latlngs,
+        {
+            color:"gray",
+            weight:5
+        }
+    ).addTo(map);
+
+}
 //----------------------------------------------------------------------------------------------------------
 // Calcul trajet
 async function getRoute(){
@@ -191,21 +202,25 @@ alternativeScore.toFixed(1)
     normalScore,
     alternativeScore
 );
+if(choice === "alternative"){
 
+    drawGrayRoute(latlngs);
+    drawWindRoute(altLatlngs);
+
+}
+else{
+
+    drawGrayRoute(altLatlngs);
+    drawWindRoute(latlngs);
+
+}
 console.log("Choix CycloWind :", choice);   
 document.getElementById("windInfo").innerHTML +=
 `
 <br>Route test : ${normalScore.toFixed(1)}
 <br>Alternative : ${alternativeScore.toFixed(1)}
 `;    
-L.polyline(
-    altLatlngs,
-    {
-        color:"blue",
-        weight:5
-    }
-).addTo(map);
-   
+  
     let totalCost=0;
     let count=0;
 
