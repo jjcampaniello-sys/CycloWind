@@ -31,6 +31,36 @@ async function getAlternativeRoute(start, endLat, endLon) {
 
     return data.routes[0];
 }
+function calculateWindScore(latlngs){
+
+    let totalCost = 0;
+    let count = 0;
+
+
+    for(let i = 0; i < latlngs.length - 1; i++){
+
+        const direction =
+        getSegmentDirection(
+            latlngs[i],
+            latlngs[i+1]
+        );
+
+
+        const cost =
+        windCost(
+            direction,
+            currentWindDirection,
+            currentWindSpeed
+        );
+
+
+        totalCost += cost;
+        count++;
+    }
+
+
+    return totalCost / count;
+}
 //----------------------------------------------------------------------------------------------------------
 // Calcul trajet
 async function getRoute(){
@@ -71,7 +101,22 @@ const altLatlngs = altCoords.map(point => [
     point[1],
     point[0]
 ]);
+const normalScore =
+calculateWindScore(latlngs);
 
+const alternativeScore =
+calculateWindScore(altLatlngs);
+
+
+console.log(
+"Trajet actuel :",
+normalScore.toFixed(1)
+);
+
+console.log(
+"Alternative :",
+alternativeScore.toFixed(1)
+);
 L.polyline(
     altLatlngs,
     {
