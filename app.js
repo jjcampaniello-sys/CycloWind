@@ -185,7 +185,10 @@ marker = L.marker([lat, lon])
     .bindPopup("Vous êtes ici");
 
                 // Zoom automatique
-                map.flyTo([lat, lon], 19.5);
+                map.flyTo([lat, lon], 19, {
+    animate: true,
+    duration: 1.5
+});
 getWind(lat, lon, rideDirection);
             },
 
