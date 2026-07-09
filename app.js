@@ -61,39 +61,53 @@ async function getWind(lat, lon, rideDirection) {
         `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m%2Cwind_direction_10m`;
 
         const response = await fetch(url);
-
         const data = await response.json();
 
         const speed = data.current.wind_speed_10m;
         const direction = data.current.wind_direction_10m;
-       currentWindSpeed = speed;
-currentWindDirection = direction;
-const effect = windEffect(rideDirection, direction);
 
-       if (windControl) {
-    map.removeControl(windControl);
+        currentWindSpeed = speed;
+        currentWindDirection = direction;
+
+        const effect = windEffect(rideDirection, direction);
+
+        if (windControl) {
+            map.removeControl(windControl);
+        }
+
+        windControl = L.control({position: "topright"});
+
+        windControl.onAdd = function() {
+
+            const div = L.DomUtil.create("div", "wind-box");
+
+            div.innerHTML = `
+                <div class="wind-arrow"
+                style="transform: rotate(${direction + 180}deg)">
+                ➤
+                </div>
+
+                <div>
+                ${speed} km/h<br>
+                ${effect}
+                </div>
+            `;
+
+            return div;
+        };
+
+        windControl.addTo(map);
+
+
+    } catch (error) {
+
+        alert("Erreur récupération du vent : " + error.message);
+        console.log(error);
+    }
 }
 
-windControl = L.control({position: "topright"});
 
-windControl.onAdd = function() {
 
-    const div = L.DomUtil.create("div", "wind-box");
-
-    div.innerHTML = `
-        <div class="wind-arrow"
-             style="transform: rotate(${direction + 180}deg)">
-             ➤
-        </div>
-        <div>
-             ${speed} km/h<br>
-${effect}
-        </div>
-    `;
-
-    return div;
-};
-}
 function addWindLegend() {
 
     if (windLegend) {
@@ -110,12 +124,11 @@ function addWindLegend() {
         div.style.padding = "10px";
         div.style.borderRadius = "10px";
         div.style.fontSize = "16px";
-        div.style.boxShadow = "0 2px 8px rgba(0,0,0,0.3)";
 
         div.innerHTML = `
-            🟢 Vent favorable<br>
-            🟠 Vent latéral<br>
-            🔴 Vent de face
+        🟢 Vent favorable<br>
+        🟠 Vent latéral<br>
+        🔴 Vent de face
         `;
 
         return div;
@@ -123,9 +136,6 @@ function addWindLegend() {
 
     windLegend.addTo(map);
 }
-windControl.addTo(map);
-
-
     }catch (error) {
     alert("Erreur récupération du vent : " + error.message);
     console.log(error);
