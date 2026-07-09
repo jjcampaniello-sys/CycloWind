@@ -10,6 +10,7 @@ let marker;
 let bikeArrow;
 let windControl;
 let windMarker;
+let windLegend;
 
 function windEffect(rideDirection, windDirection) {
 
@@ -89,7 +90,35 @@ ${effect}
 
     return div;
 };
+function addWindLegend() {
 
+    if (windLegend) {
+        map.removeControl(windLegend);
+    }
+
+    windLegend = L.control({position: "bottomleft"});
+
+    windLegend.onAdd = function() {
+
+        const div = L.DomUtil.create("div");
+
+        div.style.background = "white";
+        div.style.padding = "10px";
+        div.style.borderRadius = "10px";
+        div.style.fontSize = "16px";
+        div.style.boxShadow = "0 2px 8px rgba(0,0,0,0.3)";
+
+        div.innerHTML = `
+            🟢 Vent favorable<br>
+            🟠 Vent latéral<br>
+            🔴 Vent de face
+        `;
+
+        return div;
+    };
+
+    windLegend.addTo(map);
+}
 windControl.addTo(map);
 
 
@@ -179,7 +208,7 @@ async function getRoute() {
 }
 
     map.fitBounds(routeLine.getBounds());
-
+addWindLegend();
 
     // Analyse du vent sur le trajet
     let totalCost = 0;
