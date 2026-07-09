@@ -1,14 +1,3 @@
-// Variables globales
-let currentWindDirection = 0;
-let currentWindSpeed = 0;
-
-let marker;
-let bikeArrow;
-let windControl;
-let windLegend;
-let routeLine;
-
-
 
 // GPS
 function getLocation(){
