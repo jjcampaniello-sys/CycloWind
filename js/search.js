@@ -18,7 +18,7 @@ async function searchDestination(){
 
 
     const url =
-    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&addressdetails=1`;
+`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ", Netherlands")}&limit=5&addressdetails=1`;
 
 
     const response =
