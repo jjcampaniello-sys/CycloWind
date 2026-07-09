@@ -1,24 +1,17 @@
 // GPS
 console.log("gps.js chargé");
-function getLocation(){
 
+function getLocation(){
 
     navigator.geolocation.getCurrentPosition(
 
         function(position){
 
-
-            const lat =
-            position.coords.latitude;
-
-
-            const lon =
-            position.coords.longitude;
-
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
 
             const rideDirection =
             position.coords.heading || 0;
-
 
 
             if(marker){
@@ -26,18 +19,17 @@ function getLocation(){
             }
 
 
-
             marker =
             L.marker([lat,lon])
             .addTo(map)
-            .bindPopup("Vous êtes ici");
+            .bindPopup("Vous êtes ici")
+            .openPopup();
 
 
 
             if(bikeArrow){
                 map.removeLayer(bikeArrow);
             }
-
 
 
             const icon =
@@ -51,7 +43,9 @@ function getLocation(){
                 color:blue;">
                 ➤
                 </div>
-                `
+                `,
+
+                iconSize:[50,50]
 
             });
 
@@ -72,7 +66,6 @@ function getLocation(){
             );
 
 
-
             getWind(
                 lat,
                 lon,
@@ -82,25 +75,20 @@ function getLocation(){
         },
 
 
-        function(){
-            alert("GPS impossible");
+        function(error){
+
+            alert(
+            "GPS impossible : " + error.message
+            );
+
         },
 
 
         {
-            enableHighAccuracy:true
+            enableHighAccuracy:true,
+            timeout:10000
         }
 
     );
-const map = L.map('map').setView([52.3676, 4.9041], 12);
-
-L.tileLayer(
-    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {
-        attribution: 'OpenStreetMap'
-    }
-).addTo(map);
-
 
 }
-
