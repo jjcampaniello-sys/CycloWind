@@ -142,18 +142,40 @@ async function getRoute() {
         map.removeLayer(routeLine);
     }
 
-   for (let i = 0; i < latlngs.length - 1; i++) {
+  for (let i = 0; i < latlngs.length - 1; i++) {
 
-    const segment = [
-        latlngs[i],
-        latlngs[i + 1]
-    ];
+    const p1 = latlngs[i];
+    const p2 = latlngs[i + 1];
 
-    L.polyline(segment, {
+    const segmentDirection = getSegmentDirection(p1, p2);
+
+    const windDirection = 180; // temporaire
+    const windSpeed = 15; // temporaire
+
+    const cost = windCost(
+        segmentDirection,
+        windDirection,
+        windSpeed
+    );
+
+
+    let color;
+
+    if (cost > 20) {
+        color = "red";       // vent de face fort
+    } 
+    else if (cost > 8) {
+        color = "orange";    // vent latéral
+    } 
+    else {
+        color = "green";     // vent favorable
+    }
+
+
+    L.polyline([p1, p2], {
         weight: 6,
-        color: "red"
+        color: color
     }).addTo(map);
-
 }
 
     map.fitBounds(routeLine.getBounds());
