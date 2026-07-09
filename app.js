@@ -122,64 +122,61 @@ async function getRoute() {
 
     const start = marker.getLatLng();
 
-    // Destination test (à remplacer ensuite)
     const endLat = start.lat + 0.02;
     const endLon = start.lng + 0.02;
 
-
     const url =
     `https://router.project-osrm.org/route/v1/bicycle/${start.lng},${start.lat};${endLon},${endLat}?overview=full&geometries=geojson`;
-
 
     const response = await fetch(url);
     const data = await response.json();
 
     const coords = data.routes[0].geometry.coordinates;
 
-
     const latlngs = coords.map(point => [
         point[1],
         point[0]
     ]);
 
-
     if (routeLine) {
         map.removeLayer(routeLine);
     }
-
 
     routeLine = L.polyline(latlngs, {
         weight: 5
     }).addTo(map);
 
-
     map.fitBounds(routeLine.getBounds());
+
+
+    // Analyse du vent sur le trajet
+    let totalCost = 0;
+    let totalSegments = 0;
+
+    for (let i = 0; i < latlngs.length - 1; i++) {
+
+        const p1 = latlngs[i];
+        const p2 = latlngs[i + 1];
+
+        const segmentDirection = getSegmentDirection(p1, p2);
+
+        const windDirection = 180; // test
+        const windSpeed = 15; // test
+
+        const cost = windCost(
+            segmentDirection,
+            windDirection,
+            windSpeed
+        );
+
+        totalCost += cost;
+        totalSegments++;
+    }
+
+    const avgCost = totalCost / totalSegments;
+
+    alert("Effort vent moyen : " + avgCost.toFixed(1));
 }
-// Analyse du vent sur le trajet
-let totalCost = 0;
-let totalSegments = 0;
-
-for (let i = 0; i < latlngs.length - 1; i++) {
-
-    const p1 = latlngs[i];
-    const p2 = latlngs[i + 1];
-
-    const segmentDirection = getSegmentDirection(p1, p2);
-
-    // ⚠️ pour l’instant valeurs test
-    const windDirection = 180;
-    const windSpeed = 15;
-
-    const cost = windCost(segmentDirection, windDirection, windSpeed);
-
-    totalCost += cost;
-    totalSegments++;
-}
-
-const avgCost = totalCost / totalSegments;
-
-alert("Effort vent moyen : " + avgCost.toFixed(1));
-// Fonction GPS
 function getLocation() {
 
     if (navigator.geolocation) {
