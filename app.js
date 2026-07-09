@@ -7,9 +7,27 @@ L.tileLayer(
     }
 ).addTo(map);
 
-
+let windMarker;
 let marker;
+async function getWind(lat, lon) {
 
+    const url =
+    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m,wind_direction_10m`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const speed = data.current.wind_speed_10m;
+    const direction = data.current.wind_direction_10m;
+
+    alert(
+        "Vent : " + speed + " km/h\nDirection : " + direction + "°"
+    );
+}
+    } else {
+        alert("GPS non disponible");
+    }
+}
 
 // Fonction GPS
 function getLocation() {
@@ -33,11 +51,11 @@ function getLocation() {
                     .openPopup();
 
                 // Zoom automatique
-                map.flyTo([lat, lon], 16, {
+                 map.flyTo([lat, lon], 18, {
                     animate: true,
                     duration: 1.5
                 });
-
+getWind(lat, lon);
             },
 
             function(error) {
@@ -50,8 +68,3 @@ function getLocation() {
                 maximumAge: 0
             }
         );
-
-    } else {
-        alert("GPS non disponible");
-    }
-}
