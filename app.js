@@ -111,9 +111,9 @@ const bikeIcon = L.divIcon({
                     map.removeLayer(marker);
                 }
                 
-marker = L.marker([lat, lon], {
-    opacity: 0
-}).addTo(map);
+marker = L.marker([lat, lon])
+    .addTo(map)
+    .bindPopup("Vous êtes ici");
 
                 // Zoom automatique
                  map.flyTo([lat, lon], 18, {
