@@ -11,24 +11,30 @@ let windMarker;
 let marker;
 async function getWind(lat, lon) {
 
-    const url =
-    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m,wind_direction_10m`;
+    try {
 
-    const response = await fetch(url);
-    const data = await response.json();
+        const url =
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m,wind_direction_10m`;
 
-    const speed = data.current.wind_speed_10m;
-    const direction = data.current.wind_direction_10m;
+        const response = await fetch(url);
 
-    alert(
-        "Vent : " + speed + " km/h\nDirection : " + direction + "°"
-    );
-}
-    } else {
-        alert("GPS non disponible");
+        const data = await response.json();
+
+        const speed = data.current.wind_speed_10m;
+        const direction = data.current.wind_direction_10m;
+
+        alert(
+            "Vent : " + speed + " km/h\nDirection : " + direction + "°"
+        );
+
+    } catch (error) {
+
+        alert("Erreur récupération du vent");
+
+        console.log(error);
     }
 }
-
+    
 // Fonction GPS
 function getLocation() {
 
@@ -68,3 +74,7 @@ getWind(lat, lon);
                 maximumAge: 0
             }
         );
+ } else {
+        alert("GPS non disponible");
+    }
+}
