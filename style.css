@@ -28,10 +28,10 @@ button {
     font-size: 45px;
 }
 #windInfo {
+    #windInfo {
     position: absolute;
     bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 20px;
     background: white;
     padding: 12px 20px;
     border-radius: 12px;
