@@ -23,10 +23,26 @@ async function getWind(lat, lon) {
         const speed = data.current.wind_speed_10m;
         const direction = data.current.wind_direction_10m;
 
-        alert(
-            "Vent : " + speed + " km/h\nDirection : " + direction + "°"
-        );
+       if (windMarker) {
+    map.removeLayer(windMarker);
+}
 
+const windIcon = L.divIcon({
+    className: "wind-arrow",
+    html: `
+        <div style="transform: rotate(${direction}deg); font-size:40px;">
+            ➤
+        </div>
+        <div style="font-size:14px;">
+            ${speed} km/h
+        </div>
+    `,
+    iconSize: [60,60]
+});
+
+windMarker = L.marker([lat, lon], {
+    icon: windIcon
+}).addTo(map);
     } catch (error) {
 
         alert("Erreur récupération du vent");
