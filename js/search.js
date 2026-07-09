@@ -72,7 +72,6 @@ async function searchDestination(){
 
         };
 
-
         box.appendChild(item);
 
     });
