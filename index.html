@@ -15,13 +15,20 @@
 <body>
 
 <h1>CycloWind</h1>
+<div class="search-box">
+
 <input 
 id="destination"
-placeholder="Destination (nom ou adresse)"
+placeholder="Nom ou adresse de destination"
+oninput="searchDestination()"
 >
 
-<button onclick="searchDestination()">
-Chercher
+<div id="suggestions"></div>
+
+</div>
+
+<button onclick="getRoute()">
+Calculer trajet
 </button>
 <button onclick="getLocation()">Ma position</button>
 <button onclick="getRoute()">Calculer trajet</button>    
