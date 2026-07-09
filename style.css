@@ -1,10 +1,16 @@
 button {
-    font-size: 20px;
-    padding: 12px 25px;
-    margin: 10px;
+    font-size: 18px;
+    padding: 12px 20px;
     border-radius: 10px;
+    background-color: #2c7be5;
+    color: white;
     border: none;
+    margin: 5px;
     cursor: pointer;
+}
+
+button:hover {
+    background-color: #1a5edb;
 }
 
 #map {
