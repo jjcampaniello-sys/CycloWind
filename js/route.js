@@ -97,14 +97,12 @@ function drawWindRoute(latlngs){
             latlngs[i+1]
         );
 
-
         const cost =
         windCost(
             direction,
             currentWindDirection,
             currentWindSpeed
         );
-
 
         let color;
 
@@ -118,7 +116,6 @@ function drawWindRoute(latlngs){
             color = "green";
         }
 
-
         L.polyline(
             [latlngs[i], latlngs[i+1]],
             {
@@ -128,7 +125,6 @@ function drawWindRoute(latlngs){
         ).addTo(map);
     }
 }
-
 //----------------------------------------------------------------------------------------------------------
 // Calcul trajet
 async function getRoute(){
@@ -140,7 +136,6 @@ async function getRoute(){
 
 
     const start = marker.getLatLng();
-
 
     const endLat = start.lat + 0.02;
     const endLon = start.lng + 0.02;
@@ -174,12 +169,12 @@ const altLatlngs = altCoords.map(point => [
     point[1],
     point[0]
 ]);
+    drawWindRoute(latlngs);  
 const normalScore =
 calculateWindScore(latlngs);
 
 const alternativeScore =
 calculateWindScore(altLatlngs);
-
 
 console.log(
 "Trajet actuel :",
@@ -213,10 +208,6 @@ L.polyline(
    
     let totalCost=0;
     let count=0;
-
-
-
-    drawWindRoute(latlngs);;
 
     }
 
