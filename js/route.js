@@ -254,13 +254,10 @@ document.getElementById("windInfo").innerHTML =
 `
 ${recommendation}
 
-<br><br>
-
-🌬️ Trajet actuel : ${normalScore.toFixed(1)}
-
 <br>
-
-🌱 Alternative : ${alternativeScore.toFixed(1)}
+🌬️ Actuel : ${normalScore.toFixed(1)}
+<br>
+🌱 CycloWind : ${alternativeScore.toFixed(1)}
 `;
 
 }
