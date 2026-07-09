@@ -84,7 +84,11 @@ const alternative = await getAlternativeRoute(
 );
 
 console.log("Route alternative :", alternative);
-
+document.getElementById("windInfo").innerHTML +=
+`
+<br>Route test : ${normalScore.toFixed(1)}
+<br>Alternative : ${alternativeScore.toFixed(1)}
+`;
  const url =
 `https://router.project-osrm.org/route/v1/bicycle/${start.lng},${start.lat};${endLon},${endLat}?overview=full&geometries=geojson&alternatives=3`;
 
