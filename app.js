@@ -29,6 +29,27 @@ function windEffect(rideDirection, windDirection) {
 
     return "↔️ Vent latéral";
 }
+function windCost(roadDirection, windDirection, windSpeed) {
+
+    let angle = Math.abs(roadDirection - windDirection);
+
+    if (angle > 180) {
+        angle = 360 - angle;
+    }
+
+    // vent de face
+    if (angle < 45) {
+        return windSpeed * 2;
+    }
+
+    // vent latéral
+    if (angle < 135) {
+        return windSpeed * 0.5;
+    }
+
+    // vent arrière
+    return 0;
+}
 async function getWind(lat, lon, rideDirection) {
 
     try {
@@ -77,7 +98,7 @@ windControl.addTo(map);
     console.log(error);
 }
 }
-    // Foncyion itinéraire
+    // Fonction itinéraire
 let routeLine;
 
 async function getRoute() {
