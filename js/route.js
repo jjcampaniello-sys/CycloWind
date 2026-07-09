@@ -42,8 +42,8 @@ async function getRoute(){
     const data = await response.json();
 
 
-   const routes = data.routes;
-console.log("Nombre de trajets :", routes.length);
+const coords =
+data.routes[0].geometry.coordinates;
 
     const latlngs =
     coords.map(point=>[
