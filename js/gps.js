@@ -10,6 +10,7 @@ function startCompass(){
             if(event.alpha !== null){
 
                 currentHeading = 360 - event.alpha;
+updateBikeArrow();
 
             }
 
@@ -17,6 +18,34 @@ function startCompass(){
         true
     );
 
+}
+function updateBikeArrow(){
+
+    if(!bikeArrow){
+        return;
+    }
+
+    const icon = L.divIcon({
+
+        className:"bike-icon",
+
+        html:
+        `
+        <div style="
+        transform:rotate(${currentHeading}deg);
+        font-size:28px;
+        color:blue;">
+        ➤
+        </div>
+        `,
+
+        iconSize:[35,35],
+        iconAnchor:[17,17]
+
+    });
+
+
+    bikeArrow.setIcon(icon);
 }
 function getLocation(){
 
