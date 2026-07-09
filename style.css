@@ -1,14 +1,13 @@
-
-body {
-    margin: 0;
-    font-family: Arial;
-}
-
-h1 {
-    text-align: center;
+button {
+    font-size: 20px;
+    padding: 12px 25px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
 }
 
 #map {
-    height: 80vh;
+    height: 75vh;
     width: 100%;
 }
