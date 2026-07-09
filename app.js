@@ -142,9 +142,19 @@ async function getRoute() {
         map.removeLayer(routeLine);
     }
 
-    routeLine = L.polyline(latlngs, {
-        weight: 5
+   for (let i = 0; i < latlngs.length - 1; i++) {
+
+    const segment = [
+        latlngs[i],
+        latlngs[i + 1]
+    ];
+
+    L.polyline(segment, {
+        weight: 6,
+        color: "red"
     }).addTo(map);
+
+}
 
     map.fitBounds(routeLine.getBounds());
 
