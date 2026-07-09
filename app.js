@@ -6,7 +6,7 @@ L.tileLayer(
         attribution: 'OpenStreetMap'
     }
 ).addTo(map);
-
+let windControl;
 let windMarker;
 let marker;
 async function getWind(lat, lon) {
@@ -23,9 +23,30 @@ async function getWind(lat, lon) {
         const speed = data.current.wind_speed_10m;
         const direction = data.current.wind_direction_10m;
 
-       if (windMarker) {
-    map.removeLayer(windMarker);
+       if (windControl) {
+    map.removeControl(windControl);
 }
+
+windControl = L.control({position: "topright"});
+
+windControl.onAdd = function() {
+
+    const div = L.DomUtil.create("div", "wind-box");
+
+    div.innerHTML = `
+        <div class="wind-arrow"
+             style="transform: rotate(${direction}deg)">
+             ➤
+        </div>
+        <div>
+             ${speed} km/h
+        </div>
+    `;
+
+    return div;
+};
+
+windControl.addTo(map);
 
 const windIcon = L.divIcon({
     className: "wind-arrow",
