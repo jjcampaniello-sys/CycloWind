@@ -62,6 +62,30 @@ function calculateWindScore(latlngs){
 
     return totalCost / count;
 }
+function chooseBestRoute(normalRoute, alternativeRoute, normalScore, alternativeScore){
+
+    const normalTime = normalRoute.duration;
+    const alternativeTime = alternativeRoute.duration;
+
+
+    // avantage vent
+    const windGain = normalScore - alternativeScore;
+
+
+    // l'alternative est intéressante si :
+    // - elle améliore fortement le vent
+    // - et ajoute moins de 20% de temps
+
+    if(
+        windGain > 3 &&
+        alternativeTime < normalTime * 1.2
+    ){
+        return "alternative";
+    }
+
+
+    return "normal";
+}
 //----------------------------------------------------------------------------------------------------------
 // Calcul trajet
 async function getRoute(){
@@ -123,6 +147,14 @@ console.log(
 "Alternative :",
 alternativeScore.toFixed(1)
 );
+ const choice = chooseBestRoute(
+    routes[0],
+    alternative,
+    normalScore,
+    alternativeScore
+);
+
+console.log("Choix CycloWind :", choice);   
 document.getElementById("windInfo").innerHTML +=
 `
 <br>Route test : ${normalScore.toFixed(1)}
@@ -216,18 +248,25 @@ alternativeScore < 8 ? "Facile" :
 alternativeScore < 15 ? "Moyen" :
 "Difficile";
 
+let recommendation =
+choice === "alternative"
+?
+"🌱 CycloWind recommande l'alternative"
+:
+"🚴 CycloWind recommande le trajet actuel";
+
 
 document.getElementById("windInfo").innerHTML =
 `
-🌬️ <b>Trajet actuel</b><br>
-Impact vent : ${normalScore.toFixed(1)}<br>
-Effort : ${normalEffort}
+${recommendation}
 
 <br><br>
 
-🌱 <b>Alternative CycloWind</b><br>
-Impact vent : ${alternativeScore.toFixed(1)}<br>
-Effort : ${alternativeEffort}
+🌬️ Trajet actuel : ${normalScore.toFixed(1)}
+
+<br>
+
+🌱 Alternative : ${alternativeScore.toFixed(1)}
 `;
 
 }
