@@ -9,6 +9,24 @@ L.tileLayer(
 let windControl;
 let windMarker;
 let marker;
+function windEffect(rideDirection, windDirection) {
+
+    let angle = Math.abs(rideDirection - windDirection);
+
+    if (angle > 180) {
+        angle = 360 - angle;
+    }
+
+    if (angle < 45) {
+        return "💨 Vent de face";
+    }
+
+    if (angle > 135) {
+        return "🚴 Vent favorable";
+    }
+
+    return "↔️ Vent latéral";
+}
 async function getWind(lat, lon) {
 
     try {
@@ -21,7 +39,8 @@ async function getWind(lat, lon) {
         const data = await response.json();
 
         const speed = data.current.wind_speed_10m;
-        const direction = data.current.wind_direction_10m;
+        const rideDirection = 90; // test : déplacement vers l'Est
+const effect = windEffect(rideDirection, direction);
 
        if (windControl) {
     map.removeControl(windControl);
@@ -39,7 +58,8 @@ windControl.onAdd = function() {
              ➤
         </div>
         <div>
-             ${speed} km/h
+             ${speed} km/h<br>
+${effect}
         </div>
     `;
 
