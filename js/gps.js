@@ -1,6 +1,23 @@
 // GPS
 console.log("gps.js chargé");
+let currentHeading = 0;
+function startCompass(){
 
+    window.addEventListener(
+        "deviceorientation",
+        function(event){
+
+            if(event.alpha !== null){
+
+                currentHeading = 360 - event.alpha;
+
+            }
+
+        },
+        true
+    );
+
+}
 function getLocation(){
 
     navigator.geolocation.getCurrentPosition(
@@ -10,8 +27,7 @@ function getLocation(){
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
 
-            const rideDirection =
-            position.coords.heading || 0;
+         const rideDirection = currentHeading;
 
 
             if(marker){
@@ -93,5 +109,6 @@ L.divIcon({
         }
 
     );
+    startCompass();
 
 }
