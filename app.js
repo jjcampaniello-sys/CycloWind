@@ -100,7 +100,19 @@ windControl.addTo(map);
 }
     // Fonction itinéraire
 let routeLine;
+function getSegmentDirection(p1, p2) {
 
+    const dy = p2[0] - p1[0];
+    const dx = p2[1] - p1[1];
+
+    let angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+    if (angle < 0) {
+        angle += 360;
+    }
+
+    return angle;
+}
 async function getRoute() {
 
     if (!marker) {
@@ -143,6 +155,30 @@ async function getRoute() {
 
     map.fitBounds(routeLine.getBounds());
 }
+// Analyse du vent sur le trajet
+let totalCost = 0;
+let totalSegments = 0;
+
+for (let i = 0; i < latlngs.length - 1; i++) {
+
+    const p1 = latlngs[i];
+    const p2 = latlngs[i + 1];
+
+    const segmentDirection = getSegmentDirection(p1, p2);
+
+    // ⚠️ pour l’instant valeurs test
+    const windDirection = 180;
+    const windSpeed = 15;
+
+    const cost = windCost(segmentDirection, windDirection, windSpeed);
+
+    totalCost += cost;
+    totalSegments++;
+}
+
+const avgCost = totalCost / totalSegments;
+
+alert("Effort vent moyen : " + avgCost.toFixed(1));
 // Fonction GPS
 function getLocation() {
 
