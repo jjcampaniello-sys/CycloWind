@@ -7,40 +7,7 @@ L.tileLayer(
  attribution:'OpenStreetMap'
 }
 ).addTo(map);
-function loadSavedRoute(){
 
-    const saved =
-    localStorage.getItem("cyclowind_route");
-
-
-    if(!saved){
-        return;
-    }
-
-
-    const route =
-    JSON.parse(saved);
-
-
-    if(!route.coords){
-        return;
-    }
-
-
-    drawWindRoute(route.coords);
-
-
-    map.fitBounds(route.coords);
-
-
-    document.getElementById("windInfo").innerHTML =
-    `
-    🚴 Trajet sauvegardé
-    <br>
-    🌬️ Vent : ${route.wind.toFixed(1)}
-    `;
-
-}
 function clearRoute(){
     localStorage.removeItem("cyclowind_route");
     location.reload();
