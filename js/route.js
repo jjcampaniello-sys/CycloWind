@@ -287,7 +287,7 @@ const routeData = {
 localStorage.setItem("cyclowind_route", JSON.stringify(routeData));
     window.drawWindRoute = drawWindRoute;
     
-    
+ alert("route.js chargé");   
 }
 
-alert("route.js chargé");
+
