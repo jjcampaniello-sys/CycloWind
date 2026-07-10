@@ -176,21 +176,42 @@ alert("Route alternative récupérée");
     
 console.log("Route alternative :", alternative);
 
- const url =
-`https://router.project-osrm.org/route/v1/bicycle/${start.lng},${start.lat};${endLon},${endLat}?overview=full&geometries=geojson&alternatives=3`;
+const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImU5N2JkNDJjYTM5MzRjYTFhODQ1MTE2YjViNmQ2ZGJjIiwiaCI6Im11cm11cjY0In0=";
 
+const orsUrl =
+"https://api.openrouteservice.org/v2/directions/cycling-regular/geojson";
 
-    const response = await fetch(url);
-    
-alert("Réponse serveur reçue");
-    
-    const data = await response.json();
-    
-alert("Données trajet reçues");
-    
-const routes = data.routes;
-// console.log("Nombre de trajets :", routes.length);   
-const coords = routes[0].geometry.coordinates;
+const body = {
+    coordinates: [
+        [start.lng, start.lat],
+        [endLon, endLat]
+    ]
+};
+
+const response = await fetch(orsUrl, {
+    method: "POST",
+    headers: {
+        "Authorization": apiKey,
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+});
+
+alert("Réponse ORS reçue");
+
+const data = await response.json();
+
+alert("Données ORS reçues");
+
+// ⚠️ ORS format différent
+const coords = data.features[0].geometry.coordinates;
+
+// ⚠️ On recrée un "routes" compatible avec ton code
+const routes = [{
+    geometry: {
+        coordinates: coords
+    }
+}];
   const latlngs =
     coords.map(point=>[
         point[1],
