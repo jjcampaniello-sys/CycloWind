@@ -287,12 +287,12 @@ ${recommendation}
 🌱 CycloWind : ${alternativeScore.toFixed(1)}
 `;
 // 💾 Sauvegarde du trajet
-const routeData = {
-    coords: latlngs,
-    wind: normalScore,
-    altWind: alternativeScore,
-    recommendation: recommendation
-};
+//const routeData = {
+  //  coords: latlngs,
+//    wind: normalScore,
+//    altWind: alternativeScore,
+ //   recommendation: recommendation
+//};
 
 //localStorage.setItem("cyclowind_route", JSON.stringify(routeData));
     window.drawWindRoute = drawWindRoute;
