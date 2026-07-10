@@ -143,11 +143,12 @@ function drawGrayRoute(latlngs){
 //----------------------------------------------------------------------------------------------------------
 // Calcul trajet
 async function getRoute(){
-alert("Calcul trajet lancé");
+
     if(!marker){
         alert("Définissez votre position d'abord");
         return;
     }
+    alert("Calcul trajet lancé");
 //const profile = getBikeProfile();
     const start = marker.getLatLng();
 //console.log("Position départ :", start);
