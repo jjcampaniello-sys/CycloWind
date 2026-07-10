@@ -1,5 +1,5 @@
 // Direction segment route
-
+let routeLine = null;
 function getSegmentDirection(p1,p2){
 
     const dy = p2[0]-p1[0];
