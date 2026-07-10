@@ -1,52 +1,91 @@
 let destination = null;
-let timeout = null;
 
-function searchDestination(){
 
-    clearTimeout(timeout);
+async function searchDestination(){
 
-    timeout = setTimeout(async () => {
+    const query =
+    document.getElementById("destination").value;
 
-        const query =
-        document.getElementById("destination").value;
 
-        const box =
-        document.getElementById("suggestions");
+    const box =
+    document.getElementById("suggestions");
 
-        if(query.length < 3){
-            box.innerHTML = "";
-            return;
-        }
 
-       const url =
-`https://photon.komoot.io/api/?q=${query}&lat=${userLat}&lon=${userLon}&limit=5`;
-
-        const response = await fetch(url);
-        const results = await response.json();
-
+    if(query.length < 3){
         box.innerHTML = "";
+        return;
+    }
 
-        results.forEach((place)=>{
 
-            const item = document.createElement("div");
-            item.className="suggestion";
-            item.innerHTML = place.display_name;
+    const url =
+    `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=5`;
 
-            item.onclick = function(){
 
-                destination = {
-                    lat: parseFloat(place.lat),
-                    lon: parseFloat(place.lon)
-                };
+    const response =
+    await fetch(url);
 
-                document.getElementById("destination").value =
-                place.display_name;
 
-                box.innerHTML="";
+    const data =
+    await response.json();
+
+
+    box.innerHTML="";
+
+
+    data.features.forEach((place)=>{
+
+
+        const item =
+        document.createElement("div");
+
+
+        item.className="suggestion";
+
+
+        item.innerHTML =
+        place.properties.name +
+        "<br>" +
+        (place.properties.city || "") +
+        " " +
+        (place.properties.country || "");
+
+
+        item.onclick=function(){
+
+
+            destination = {
+
+                lat: place.geometry.coordinates[1],
+
+                lon: place.geometry.coordinates[0]
+
             };
 
-            box.appendChild(item);
-        });
 
-    }, 300); // ← délai 300ms
+            document.getElementById("destination").value =
+            item.innerText;
+
+
+            box.innerHTML="";
+
+
+            console.log(
+                "Destination choisie :",
+                destination
+            );
+
+        };
+
+
+        box.appendChild(item);
+
+    });
+
+}
+function clearRoute(){
+
+    localStorage.removeItem("cyclowind_route");
+
+    location.reload();
+
 }
