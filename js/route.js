@@ -172,7 +172,7 @@ console.log("Route alternative :", alternative);
     const data = await response.json();
 //alert("Données trajet reçues");
 const routes = data.routes;
- console.log("Nombre de trajets :", routes.length);   
+// console.log("Nombre de trajets :", routes.length);   
 const coords = routes[0].geometry.coordinates;
   const latlngs =
     coords.map(point=>[
@@ -187,7 +187,7 @@ const altLatlngs = altCoords.map(point => [
 ]);
    // alert("Coordonnées trajet OK : " + latlngs.length);
     drawWindRoute(latlngs);
-    alert("Dessin trajet lancé");
+    //alert("Dessin trajet lancé");
 const normalScore =
 calculateWindScore(latlngs);
 
