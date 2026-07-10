@@ -10,7 +10,15 @@ async function searchDestination(){
     const box =
     document.getElementById("suggestions");
 
+let cleanedQuery = query.trim();
 
+// Si l'utilisateur n'a pas mis de virgule, on aide Photon
+if (!cleanedQuery.includes(",")) {
+    cleanedQuery = cleanedQuery.replace(
+        /^(.+?\d+)\s+(.*)$/,
+        "$1, $2"
+    );
+}
     if(query.length < 3){
         box.innerHTML = "";
         return;
@@ -20,7 +28,7 @@ async function searchDestination(){
    const cleanedQuery = query.trim();
 
 const url =
-`https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr`;
+`https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
 
 
     const response =
