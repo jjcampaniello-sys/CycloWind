@@ -148,7 +148,6 @@ alert("Calcul trajet lancé");
         alert("Définissez votre position d'abord");
         return;
     }
-
 //const profile = getBikeProfile();
     const start = marker.getLatLng();
 //console.log("Position départ :", start);
