@@ -149,8 +149,7 @@ async function getRoute(){
         return;
     }
 
-
-const profile = getBikeProfile();
+//const profile = getBikeProfile();
     const start = marker.getLatLng();
 
  const endLat = destination.lat;
