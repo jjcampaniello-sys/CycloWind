@@ -23,18 +23,61 @@ function getSegmentDirection(p1,p2){
 }
 async function getAlternativeRoute(start, endLat, endLon) {
 
-    const midLat = (start.lat + endLat) / 2;
-    const midLon = (start.lng + endLon) / 2 + 0.01;
+
+    const apiKey = "TA_CLE_API_ICI";
+
 
     const url =
-    `https://router.project-osrm.org/route/v1/bicycle/${start.lng},${start.lat};${midLon},${midLat};${endLon},${endLat}?overview=full&geometries=geojson`;
+    "https://api.openrouteservice.org/v2/directions/cycling-regular/geojson";
 
 
-    const response = await fetch(url);
+    const body = {
+
+        coordinates: [
+
+            [start.lng, start.lat],
+
+            [endLon, endLat]
+
+        ]
+
+    };
+
+
+    const response = await fetch(
+        url,
+        {
+            method:"POST",
+
+            headers:{
+                "Authorization":apiKey,
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify(body)
+
+        }
+    );
+
 
     const data = await response.json();
 
-    return data.routes[0];
+
+    const coords =
+    data.features[0].geometry.coordinates;
+
+
+    return {
+
+        geometry:{
+            coordinates:coords
+        },
+
+        duration:
+        data.features[0].properties.summary.duration
+
+    };
+
 }
 function calculateWindScore(latlngs){
 
