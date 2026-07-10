@@ -82,10 +82,4 @@ async function searchDestination(){
     });
 
 }
-function clearRoute(){
 
-    localStorage.removeItem("cyclowind_route");
-
-    location.reload();
-
-}
