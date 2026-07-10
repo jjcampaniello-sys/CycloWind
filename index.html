@@ -24,6 +24,7 @@
     <button onclick="getRoute()">
         Calculer trajet
     </button>
+    <button onclick="clearRoute()">Supprimer trajet</button>
 
 </div>
 
@@ -39,7 +40,10 @@
     <div id="suggestions"></div>
 
 </div>
-
+function clearRoute(){
+    localStorage.removeItem("cyclowind_route");
+    alert("Trajet supprimé");
+}
 <div id="map"></div>
 <div id="windInfo"></div>
 
