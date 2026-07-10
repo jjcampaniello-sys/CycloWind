@@ -148,7 +148,9 @@ async function getRoute(){
         alert("Définissez votre position d'abord");
         return;
     }
-    //alert("Calcul trajet lancé");
+    
+    alert("Calcul trajet lancé");
+    
 //const profile = getBikeProfile();
     const start = marker.getLatLng();
 //console.log("Position départ :", start);
@@ -160,7 +162,9 @@ const alternative = await getAlternativeRoute(
     endLat,
     endLon
 );
-//alert("Route alternative récupérée");
+    
+alert("Route alternative récupérée");
+    
 console.log("Route alternative :", alternative);
 
  const url =
@@ -168,9 +172,13 @@ console.log("Route alternative :", alternative);
 
 
     const response = await fetch(url);
-//alert("Réponse serveur reçue");
+    
+alert("Réponse serveur reçue");
+    
     const data = await response.json();
-//alert("Données trajet reçues");
+    
+alert("Données trajet reçues");
+    
 const routes = data.routes;
 // console.log("Nombre de trajets :", routes.length);   
 const coords = routes[0].geometry.coordinates;
@@ -185,7 +193,9 @@ const altLatlngs = altCoords.map(point => [
     point[1],
     point[0]
 ]);
-   // alert("Coordonnées trajet OK : " + latlngs.length);
+    
+    alert("Coordonnées trajet OK : " + latlngs.length);
+    
     drawWindRoute(latlngs);
     //alert("Dessin trajet lancé");
 const normalScore =
