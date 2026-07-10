@@ -23,7 +23,6 @@ function getSegmentDirection(p1,p2){
 }
 async function getAlternativeRoute(start, endLat, endLon) {
 
-
     const apiKey = "TA_CLE_API_ICI";
 
 
