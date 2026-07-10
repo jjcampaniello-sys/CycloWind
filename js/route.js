@@ -5,10 +5,10 @@ function getSegmentDirection(p1,p2){
     const dy = p2[0]-p1[0];
     const dx = p2[1]-p1[1];
 
-console.log(
-"Profil vélo choisi :",
-profile
-);
+//console.log(
+//"Profil vélo choisi :",
+//profile
+//);
     
     let angle =
     Math.atan2(dy,dx)*(180/Math.PI);
@@ -151,8 +151,8 @@ async function getRoute(){
 
 //const profile = getBikeProfile();
     const start = marker.getLatLng();
-console.log("Position départ :", start);
-console.log("Destination :", destination);
+//console.log("Position départ :", start);
+//console.log("Destination :", destination);
  const endLat = destination.lat;
 const endLon = destination.lon;
 const alternative = await getAlternativeRoute(
@@ -160,7 +160,7 @@ const alternative = await getAlternativeRoute(
     endLat,
     endLon
 );
-
+alert("Route alternative récupérée");
 console.log("Route alternative :", alternative);
 
  const url =
