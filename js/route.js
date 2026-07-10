@@ -151,7 +151,8 @@ async function getRoute(){
 
 //const profile = getBikeProfile();
     const start = marker.getLatLng();
-
+console.log("Position départ :", start);
+console.log("Destination :", destination);
  const endLat = destination.lat;
 const endLon = destination.lon;
 const alternative = await getAlternativeRoute(
