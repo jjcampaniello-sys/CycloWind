@@ -14,6 +14,28 @@ function clearRoute(){
 
     localStorage.removeItem("cyclowind_route");
 
+
+    // Effacer le trajet affiché
+    if(window.routeLayers){
+
+        routeLayers.forEach(layer=>{
+            map.removeLayer(layer);
+        });
+
+        routeLayers = [];
+
+    }
+
+
+    // Effacer la destination sélectionnée
+    destination = null;
+
+
+    // Vider la barre de recherche
+    document.getElementById("destination").value = "";
+
+
+    // Message
     document.getElementById("windInfo").innerHTML =
     "🚴 Aucun trajet calculé";
 
