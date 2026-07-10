@@ -1,5 +1,5 @@
 // Direction segment route
-let routeLine = null;
+//let routeLine = null;
 alert("Début route.js");
 function getSegmentDirection(p1,p2){
 
