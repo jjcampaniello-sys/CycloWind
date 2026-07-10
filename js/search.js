@@ -60,12 +60,12 @@ async function searchDestination(){
                 lon: place.geometry.coordinates[0]
 
             };
-alert(
-"Destination choisie :\n" +
-destination.lat +
-"\n" +
-destination.lon
-);
+//alert(
+//"Destination choisie :\n" +
+//destination.lat +
+//"\n" +
+//destination.lon
+//);
 
             document.getElementById("destination").value =
             item.innerText;
