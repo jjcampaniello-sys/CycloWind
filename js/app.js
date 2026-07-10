@@ -9,27 +9,37 @@ L.tileLayer(
 ).addTo(map);
 function loadSavedRoute(){
 
-    const saved = localStorage.getItem("cyclowind_route");
+    const saved =
+    localStorage.getItem("cyclowind_route");
+
 
     if(!saved){
-        console.log("Aucun trajet sauvegardé");
         return;
     }
 
-    const route = JSON.parse(saved);
 
-    console.log("Trajet chargé :", route);
+    const route =
+    JSON.parse(saved);
+
+
+    if(!route.coords){
+        return;
+    }
+
 
     drawWindRoute(route.coords);
 
+
+    map.fitBounds(route.coords);
+
+
     document.getElementById("windInfo").innerHTML =
     `
-    ${route.recommendation}
-    <br><br>
-    🌬️ Trajet : ${route.wind.toFixed(1)}
+    🚴 Trajet sauvegardé
     <br>
-    🌱 Alternative : ${route.altWind.toFixed(1)}
+    🌬️ Vent : ${route.wind.toFixed(1)}
     `;
+
 }
 function clearRoute(){
     localStorage.removeItem("cyclowind_route");
