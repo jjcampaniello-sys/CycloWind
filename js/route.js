@@ -168,9 +168,9 @@ console.log("Route alternative :", alternative);
 
 
     const response = await fetch(url);
-
+alert("Réponse serveur reçue");
     const data = await response.json();
-
+alert("Données trajet reçues");
 const routes = data.routes;
  console.log("Nombre de trajets :", routes.length);   
 const coords = routes[0].geometry.coordinates;
