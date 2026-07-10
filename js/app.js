@@ -36,8 +36,22 @@ L.tileLayer(
 ).addTo(map);
 
 function clearRoute(){
+
     localStorage.removeItem("cyclowind_route");
-    location.reload();
+
+
+    if(routeLine){
+
+        map.removeLayer(routeLine);
+        routeLine = null;
+
+    }
+
+
+    document.getElementById("windInfo").innerHTML =
+    "🚴 Aucun trajet calculé";
+
+
 }
 let marker;
 let bikeArrow;
