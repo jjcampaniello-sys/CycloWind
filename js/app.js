@@ -40,16 +40,10 @@ function clearRoute(){
     localStorage.removeItem("cyclowind_route");
 
 
-    if(routeLine){
-
-        map.removeLayer(routeLine);
-        routeLine = null;
-
-    }
-
-
     document.getElementById("windInfo").innerHTML =
     "🚴 Aucun trajet calculé";
+
+}
 
 
 }
