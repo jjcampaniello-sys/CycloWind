@@ -5,7 +5,13 @@ function getSegmentDirection(p1,p2){
     const dy = p2[0]-p1[0];
     const dx = p2[1]-p1[1];
 
+const profile = getBikeProfile();
 
+console.log(
+"Profil vélo choisi :",
+profile
+);
+    
     let angle =
     Math.atan2(dy,dx)*(180/Math.PI);
 
