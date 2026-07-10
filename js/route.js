@@ -14,7 +14,6 @@ function getSegmentDirection(p1,p2){
     let angle =
     Math.atan2(dy,dx)*(180/Math.PI);
 
-
     if(angle<0){
         angle+=360;
     }
