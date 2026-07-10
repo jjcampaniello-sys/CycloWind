@@ -185,7 +185,9 @@ const altLatlngs = altCoords.map(point => [
     point[1],
     point[0]
 ]);
-    drawWindRoute(latlngs);  
+    alert("Coordonnées trajet OK : " + latlngs.length);
+    drawWindRoute(latlngs);
+    alert("Dessin trajet lancé");
 const normalScore =
 calculateWindScore(latlngs);
 
