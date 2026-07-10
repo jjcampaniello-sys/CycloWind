@@ -18,8 +18,8 @@ function searchDestination(){
             return;
         }
 
-        const url =
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&addressdetails=1&countrycodes=nl&bounded=1&viewbox=4.7,52.5,5.1,52.3`;
+       const url =
+`https://photon.komoot.io/api/?q=${query}&lat=${userLat}&lon=${userLon}&limit=5`;
 
         const response = await fetch(url);
         const results = await response.json();
