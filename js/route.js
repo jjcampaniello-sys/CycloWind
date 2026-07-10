@@ -19,7 +19,6 @@ function getSegmentDirection(p1,p2){
         angle+=360;
     }
 
-
     return angle;
 }
 async function getAlternativeRoute(start, endLat, endLon) {
