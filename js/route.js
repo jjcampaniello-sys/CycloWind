@@ -1,5 +1,6 @@
 // Direction segment route
-let routeLine = null;
+//let routeLine = null;
+let routeLayers = [];
 alert("Début route.js");
 function getSegmentDirection(p1,p2){
 
@@ -120,24 +121,30 @@ function drawWindRoute(latlngs){
             color = "green";
         }
 
-        L.polyline(
-            [latlngs[i], latlngs[i+1]],
-            {
-                color: color,
-                weight: 6
-            }
-        ).addTo(map);
+       const line = L.polyline(
+    [latlngs[i], latlngs[i+1]],
+    {
+        color: color,
+        weight: 6
+    }
+).addTo(map);
+
+
+routeLayers.push(line);
     }
 }
 function drawGrayRoute(latlngs){
 
-    L.polyline(
-        latlngs,
-        {
-            color:"gray",
-            weight:5
-        }
-    ).addTo(map);
+   const line = L.polyline(
+    latlngs,
+    {
+        color:"gray",
+        weight:5
+    }
+).addTo(map);
+
+
+routeLayers.push(line);
 
 }
 //----------------------------------------------------------------------------------------------------------
