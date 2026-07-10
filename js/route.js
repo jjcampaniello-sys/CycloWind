@@ -127,7 +127,7 @@ function drawWindRoute(latlngs){
         color: color,
         weight: 6
     }
-).addTo(routeGroup);
+).addTo(window.routeGroup);
 
 
 routeLayers.push(line);
@@ -141,7 +141,7 @@ function drawGrayRoute(latlngs){
         color:"gray",
         weight:5
     }
-).addTo(routeGroup);
+).addTo(window.routeGroup);
 
 
 routeLayers.push(line);
