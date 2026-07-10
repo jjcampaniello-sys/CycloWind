@@ -1,5 +1,5 @@
 // GPS
-console.log("gps.js chargé");
+//console.log("gps.js chargé");
 let currentHeading = 0;
 function startCompass(){
 
