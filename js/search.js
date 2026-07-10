@@ -17,8 +17,8 @@ async function searchDestination(){
     }
 
 
-    const url =
-    `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=5`;
+   const url =
+`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=5&lang=fr`;
 
 
     const response =
@@ -43,11 +43,13 @@ async function searchDestination(){
 
 
         item.innerHTML =
-        place.properties.name +
-        "<br>" +
-        (place.properties.city || "") +
-        " " +
-        (place.properties.country || "");
+(place.properties.housenumber || "") +
+" " +
+(place.properties.street || place.properties.name || "") +
+"<br>" +
+(place.properties.city || "") +
+" " +
+(place.properties.country || "");
 
 
         item.onclick=function(){
