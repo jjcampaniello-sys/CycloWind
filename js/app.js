@@ -31,7 +31,10 @@ function loadSavedRoute(){
     🌱 Alternative : ${route.altWind.toFixed(1)}
     `;
 }
-
+function clearRoute(){
+    localStorage.removeItem("cyclowind_route");
+    location.reload();
+}
 let marker;
 let bikeArrow;
 let windControl;
