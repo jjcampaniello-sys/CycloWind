@@ -14,7 +14,6 @@ function clearRoute(){
 
     localStorage.removeItem("cyclowind_route");
 
-
     document.getElementById("windInfo").innerHTML =
     "🚴 Aucun trajet calculé";
 
