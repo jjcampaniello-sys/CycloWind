@@ -7,7 +7,7 @@ let currentWindDirection = 0;
 let currentWindSpeed = 0;
 let routeLine;
 let routeLayers = [];
-let routeGroup = L.layerGroup();
+window.routeGroup = L.layerGroup();
 
 const map = L.map('map')
     .setView([52.3676,4.9041],12);
@@ -20,7 +20,7 @@ L.tileLayer(
  attribution:'OpenStreetMap'
 }
 ).addTo(map);
-routeGroup.addTo(map);
+window.routeGroup.addTo(map);
 
 function clearRoute(){
 
