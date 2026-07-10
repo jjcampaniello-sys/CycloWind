@@ -1,5 +1,5 @@
 // Direction segment route
-//let routeLine = null;
+let routeLine = null;
 alert("Début route.js");
 function getSegmentDirection(p1,p2){
 
@@ -149,7 +149,10 @@ async function getRoute(){
         alert("Définissez votre position d'abord");
         return;
     }
-    
+    if(!destination){
+    alert("Choisissez une destination dans la liste");
+    return;
+}
     alert("Calcul trajet lancé");
     
 //const profile = getBikeProfile();
@@ -285,10 +288,9 @@ const routeData = {
     recommendation: recommendation
 };
 
-localStorage.setItem("cyclowind_route", JSON.stringify(routeData));
+//localStorage.setItem("cyclowind_route", JSON.stringify(routeData));
     window.drawWindRoute = drawWindRoute;
-    
- alert("route.js chargé");   
+      
 }
 
 
