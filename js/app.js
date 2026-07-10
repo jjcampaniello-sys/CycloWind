@@ -45,8 +45,6 @@ function clearRoute(){
 
 }
 
-
-}
 let marker;
 let bikeArrow;
 let windControl;
