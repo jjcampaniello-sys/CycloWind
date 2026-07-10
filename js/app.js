@@ -28,15 +28,7 @@ function clearRoute(){
 
 
     // Effacer le trajet affiché
-    if(window.routeLayers){
-
-        routeLayers.forEach(layer=>{
-            map.removeLayer(layer);
-        });
-
-        routeLayers = [];
-
-    }
+    routeGroup.clearLayers();
 
 
     // Effacer la destination sélectionnée
