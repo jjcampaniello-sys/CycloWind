@@ -1,7 +1,6 @@
 alert("search.js chargé");
 let destination = null;
 
-
 async function searchDestination(){
 
     const query =
