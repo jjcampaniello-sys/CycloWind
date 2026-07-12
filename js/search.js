@@ -25,8 +25,6 @@ if (!cleanedQuery.includes(",")) {
     }
 
 
-   const cleanedQuery = query.trim();
-
 const url =
 `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
 
