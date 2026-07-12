@@ -1,100 +1,62 @@
 alert("search.js chargé");
+
 let destination = null;
 
-async function searchDestination(){
+async function searchDestination() {
 
-    const query =
-    document.getElementById("destination").value;
+    const query = document.getElementById("destination").value;
+    const box = document.getElementById("suggestions");
 
+    let cleanedQuery = query.trim();
 
-    const box =
-    document.getElementById("suggestions");
+    // Si l'utilisateur n'a pas mis de virgule, on aide Photon
+    if (!cleanedQuery.includes(",")) {
+        cleanedQuery = cleanedQuery.replace(
+            /^(.+?\d+)\s+(.*)$/,
+            "$1, $2"
+        );
+    }
 
-let cleanedQuery = query.trim();
-
-// Si l'utilisateur n'a pas mis de virgule, on aide Photon
-if (!cleanedQuery.includes(",")) {
-    cleanedQuery = cleanedQuery.replace(
-        /^(.+?\d+)\s+(.*)$/,
-        "$1, $2"
-    );
-}
-    if(query.length < 3){
+    if (query.length < 3) {
         box.innerHTML = "";
         return;
     }
 
+    const url =
+        `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
 
-const url =
-`https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
+    const response = await fetch(url);
+    const data = await response.json();
 
+    box.innerHTML = "";
 
-    const response =
-    await fetch(url);
+    data.features.forEach((place) => {
 
-
-    const data =
-    await response.json();
-
-
-    box.innerHTML="";
-
-
-    data.features.forEach((place)=>{
-
-
-        const item =
-        document.createElement("div");
-
-
-        item.className="suggestion";
-
+        const item = document.createElement("div");
+        item.className = "suggestion";
 
         item.innerHTML =
-(place.properties.housenumber || "") +
-" " +
-(place.properties.street || place.properties.name || "") +
-"<br>" +
-(place.properties.city || "") +
-" " +
-(place.properties.country || "");
+            (place.properties.housenumber || "") +
+            " " +
+            (place.properties.street || place.properties.name || "") +
+            "<br>" +
+            (place.properties.city || "") +
+            " " +
+            (place.properties.country || "");
 
-
-        item.onclick=function(){
-
+        item.onclick = function () {
 
             destination = {
-
                 lat: place.geometry.coordinates[1],
-
                 lon: place.geometry.coordinates[0]
-
             };
-//alert(
-//"Destination choisie :\n" +
-//destination.lat +
-//"\n" +
-//destination.lon
-//);
 
-            document.getElementById("destination").value =
-            item.innerText;
+            document.getElementById("destination").value = item.innerText;
+            box.innerHTML = "";
 
-
-            box.innerHTML="";
-
-
-            console.log(
-                "Destination choisie :",
-                destination
-            );
-
+            console.log("Destination choisie :", destination);
         };
 
-
         box.appendChild(item);
-
     });
-
 }
-
