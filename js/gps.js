@@ -62,7 +62,8 @@ navigator.geolocation.watchPosition(
 );
 //--------------------------------------   
 function onPositionUpdate(position) {
-
+document.getElementById("destination").disabled = false;
+document.getElementById("destination").placeholder = "Entrer une destination";
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
 
