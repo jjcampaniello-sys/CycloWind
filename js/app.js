@@ -8,21 +8,11 @@ let currentWindSpeed = 0;
 let routeLine = null;
 let routeLayers = [];
 //--------------
-function startGPS() {
+window.onload = function() {
 
-    if (!navigator.geolocation) {
-        alert("GPS non supporté");
-        return;
-    }
+    startGPS(); // ta fonction qui lance watchPosition
 
-    navigator.geolocation.watchPosition(
-        onPositionUpdate,
-        errorHandler,
-        {
-            enableHighAccuracy: true
-        }
-    );
-}
+};
 //---------------
 
 const map = L.map('map')
