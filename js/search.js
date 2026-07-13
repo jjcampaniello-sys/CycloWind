@@ -28,8 +28,13 @@ const url =
    //const url =
        // `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
 
-    const response = await fetch(url);
-    const data = await response.json();
+   const response = await fetch(url);
+
+alert("Réponse serveur : " + response.status);
+
+const data = await response.json();
+
+alert("Résultats reçus : " + data.features.length);
 
     box.innerHTML = "";
 
