@@ -259,6 +259,12 @@ const routes = [{
         point[1],
         point[0]
     ]);   
+    //---------------------
+window.currentRoute = latlngs.map(p => ({
+    lat: p[0],
+    lng: p[1]
+}));
+    //--------------
 const altCoords = alternative.geometry.coordinates;
 
 const altLatlngs = altCoords.map(point => [
