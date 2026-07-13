@@ -336,7 +336,7 @@ choice === "alternative"
 ?
 "🌱 CycloWind recommande l'alternative"
 :
-"🚴 CycloWind recommande le trajet actuel";
+"🚴 CycloWind recommande ce trajet";
 
 
 document.getElementById("windInfo").innerHTML =
@@ -344,7 +344,7 @@ document.getElementById("windInfo").innerHTML =
 ${recommendation}
 
 <br>
-🌬️ Actuel : ${normalScore.toFixed(1)}
+//🌬️ Actuel : ${normalScore.toFixed(1)}
 <br>
 🌱 CycloWind : ${alternativeScore.toFixed(1)}
 `;
