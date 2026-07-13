@@ -72,7 +72,7 @@ function updateBikeArrow(){
 
     bikeArrow.setIcon(icon);
 }
-function getLocation(){
+//function getLocation(){
 
    // navigator.geolocation.getCurrentPosition(
 //--------------------------------------------------------
