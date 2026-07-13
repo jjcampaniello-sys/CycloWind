@@ -3,7 +3,7 @@ let destination = null;
 //let routeLine = null;
 //let routeLayers=[];
 async function searchDestination() {
-alert ("sdestination");
+
     const query = document.getElementById("destination").value;
     const box = document.getElementById("suggestions");
 
