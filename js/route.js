@@ -291,18 +291,18 @@ calculateWindScore(altLatlngs);
     normalScore,
     alternativeScore
 );
-if(choice === "alternative"){
+//if(choice === "alternative"){
 
-    drawGrayRoute(latlngs);
-    drawWindRoute(altLatlngs);
+ //   drawGrayRoute(latlngs);
+ //   drawWindRoute(altLatlngs);
 
-}
-else{
+//}
+//else{
 
-    drawGrayRoute(altLatlngs);
-    drawWindRoute(latlngs);
+//    drawGrayRoute(altLatlngs);
+//    drawWindRoute(latlngs);
 
-}
+//}
 //console.log("Choix CycloWind :", choice);   
 document.getElementById("windInfo").innerHTML +=
 `
