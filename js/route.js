@@ -196,7 +196,7 @@ async function getRoute(){
         alert("Définissez votre position d'abord");
         return;
     }
-    if(!destination){
+    if(!window.destination){
     alert("Choisissez une destination dans la liste");
     return;
 }
