@@ -24,11 +24,12 @@ async function searchDestination() {
         return;
     }
     const url =
-`https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr:*`;
+const url =
+//`https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr`;
 //const url =
 //`https://corsproxy.io/?https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
    //const url =
-       // `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
+        `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
 
    const response = await fetch(url);
 
