@@ -5,7 +5,7 @@ let windLegend;
 
 let currentWindDirection = 0;
 let currentWindSpeed = 0;
-let routeLine;
+let routeLine = null;
 let routeLayers = [];
 
 
