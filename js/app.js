@@ -7,7 +7,23 @@ let currentWindDirection = 0;
 let currentWindSpeed = 0;
 let routeLine = null;
 let routeLayers = [];
+//--------------
+function startGPS() {
 
+    if (!navigator.geolocation) {
+        alert("GPS non supporté");
+        return;
+    }
+
+    navigator.geolocation.watchPosition(
+        onPositionUpdate,
+        errorHandler,
+        {
+            enableHighAccuracy: true
+        }
+    );
+}
+//---------------
 
 const map = L.map('map')
     .setView([52.3676,4.9041],12);
