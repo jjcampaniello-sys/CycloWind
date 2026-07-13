@@ -1,6 +1,31 @@
 // GPS
 //console.log("gps.js chargé");
 let currentHeading = 0;
+//------------------
+function startGPS() {
+
+    if (!navigator.geolocation) {
+        alert("GPS non supporté");
+        return;
+    }
+
+    navigator.geolocation.watchPosition(
+        onPositionUpdate,
+        errorHandler,
+        {
+            enableHighAccuracy: true
+        }
+    );
+}
+//--------------
+function errorHandler(error) {
+
+    alert("Impossible d'accéder à votre position");
+
+    document.getElementById("destination").placeholder =
+        "Activer la localisation pour continuer";
+}
+//-----------
 function startCompass(){
 
     window.addEventListener(
