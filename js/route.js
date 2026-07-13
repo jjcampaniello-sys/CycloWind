@@ -343,9 +343,9 @@ document.getElementById("windInfo").innerHTML =
 `
 ${recommendation}
 
-<br>
+//<br>
 //🌬️ Actuel : ${normalScore.toFixed(1)}
-<br>
+//<br>
 🌱 CycloWind : ${alternativeScore.toFixed(1)}
 `;
 // 💾 Sauvegarde du trajet
