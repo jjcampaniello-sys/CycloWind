@@ -1,4 +1,5 @@
 alert("search.js chargé");
+alert(typeof destination);
 let destination = null;
 //let routeLine = null;
 //let routeLayers=[];
