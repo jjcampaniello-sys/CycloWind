@@ -20,9 +20,10 @@ async function searchDestination() {
         box.innerHTML = "";
         return;
     }
-
-    const url =
-        `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
+const url =
+`https://corsproxy.io/?https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
+   //const url =
+       // `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
 
     const response = await fetch(url);
     const data = await response.json();
