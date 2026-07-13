@@ -10,7 +10,8 @@ let routeLayers = [];
 //--------------
 window.onload = function() {
 
-    startGPS(); // ta fonction qui lance watchPosition
+    startGPS();
+    startCompass();
 
 };
 //---------------
