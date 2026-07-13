@@ -1,8 +1,9 @@
 alert("search.js chargé");
-alert(typeof destination);
+
 let destination = null;
 //let routeLine = null;
 //let routeLayers=[];
+alert(typeof destination);
 async function searchDestination() {
 
     const query = document.getElementById("destination").value;
