@@ -13,7 +13,9 @@ function startGPS() {
         onPositionUpdate,
         errorHandler,
         {
-            enableHighAccuracy: true
+            enableHighAccuracy: true,
+            maximumAge: 1000,
+            timeout: 5000
         }
     );
 }
@@ -76,27 +78,38 @@ function updateBikeArrow(){
 
    // navigator.geolocation.getCurrentPosition(
 //--------------------------------------------------------
-navigator.geolocation.watchPosition(
-    onPositionUpdate,
-    errorHandler,
-    {
-        enableHighAccuracy: true,
-        maximumAge: 1000,
-        timeout: 5000
-    }
-);
+//navigator.geolocation.watchPosition(
+//    onPositionUpdate,
+//    errorHandler,
+//    {
+     //   enableHighAccuracy: true,
+    //    maximumAge: 1000,
+   //     timeout: 5000
+  //  }
+//);
 //--------------------------------------   
 function onPositionUpdate(position) {
-document.getElementById("destination").disabled = false;
-document.getElementById("destination").placeholder = "Entrer une destination";
+
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
 
-    console.log("Position live :", lat, lon);
+    // 🔥 stocker position
+    window.currentPosition = { lat, lon };
+
+    // ✅ activer champ destination
+    const input = document.getElementById("destination");
+    if (input) {
+        input.disabled = false;
+        input.placeholder = "Entrer une destination";
+    }
+
+    console.log("Position OK :", lat, lon);
 
     updateUserMarker(lat, lon);
 
     followRoute(lat, lon);
+
+    map.setView([lat, lon], 17);
 }
  //-----------------------  
 function followRoute(lat, lon) {
