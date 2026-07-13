@@ -49,8 +49,62 @@ function updateBikeArrow(){
 }
 function getLocation(){
 
-    navigator.geolocation.getCurrentPosition(
+   // navigator.geolocation.getCurrentPosition(
+//--------------------------------------------------------
+navigator.geolocation.watchPosition(
+    onPositionUpdate,
+    errorHandler,
+    {
+        enableHighAccuracy: true,
+        maximumAge: 1000,
+        timeout: 5000
+    }
+);
+//--------------------------------------   
+function onPositionUpdate(position) {
 
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+
+    console.log("Position live :", lat, lon);
+
+    updateUserMarker(lat, lon);
+
+    followRoute(lat, lon);
+}
+ //-----------------------  
+function followRoute(lat, lon) {
+
+    if (!window.currentRoute) return;
+
+    let closestPoint = null;
+    let minDist = Infinity;
+
+    window.currentRoute.forEach(point => {
+
+        const dx = point.lat - lat;
+        const dy = point.lng - lon;
+
+        const dist = dx*dx + dy*dy;
+
+        if (dist < minDist) {
+            minDist = dist;
+            closestPoint = point;
+        }
+    });
+
+    if (closestPoint) {
+        moveMarkerOnRoute(closestPoint);
+    }
+}
+ //------------------------   
+function moveMarkerOnRoute(point) {
+
+    if (!window.userMarker) return;
+
+    window.userMarker.setLatLng([point.lat, point.lng]);
+}
+//-----------------
         function(position){
 
             const lat = position.coords.latitude;
