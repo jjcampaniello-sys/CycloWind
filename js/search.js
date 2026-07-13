@@ -1,6 +1,6 @@
 alert("search.js chargé");
-
-let destination = null;
+window.destination = null;
+//let destination = null;
 //let routeLine = null;
 //let routeLayers=[];
 alert(typeof destination);
@@ -56,7 +56,7 @@ const data = await response.json();
 
         item.onclick = function () {
 
-            destination = {
+            window.destination = {
                 lat: place.geometry.coordinates[1],
                 lon: place.geometry.coordinates[0]
             };
