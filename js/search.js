@@ -32,11 +32,11 @@ async function searchDestination() {
 
    const response = await fetch(url);
 
-alert("Réponse serveur : " + response.status);
+//alert("Réponse serveur : " + response.status);
 
 const data = await response.json();
 
-alert("Résultats reçus : " + data.features.length);
+//alert("Résultats reçus : " + data.features.length);
 
     box.innerHTML = "";
 
