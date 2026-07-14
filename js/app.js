@@ -16,7 +16,7 @@ alert("app.js loading...");
 
 window.addEventListener("load", function(){
 
-    console.log("App démarrée");
+   // console.log("App démarrée");
 
     // 🌍 Création carte
     window.map = L.map('map').setView([52.3676, 4.9041], 12);
@@ -28,7 +28,7 @@ window.addEventListener("load", function(){
 
     window.routeGroup = L.layerGroup().addTo(window.map);
 
-    console.log("Carte prête");
+  //  console.log("Carte prête");
 
     // ✅ MAINTENANT SEULEMENT on lance GPS
     if(typeof startGPS === "function"){
