@@ -8,7 +8,7 @@ let currentWindSpeed = 0;
 let routeLine = null;
 let routeLayers = [];
 
-alert ("App.js appelé")
+alert ("App.js appelé V0")
 const map = L.map('map')
     .setView([52.3676,4.9041],12);
 
