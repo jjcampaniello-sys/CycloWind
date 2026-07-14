@@ -1,11 +1,7 @@
 // gps.js
 
-alert("gps.js chargé");
-
-
 let currentHeading = 0;
 let bikeArrow = null;
-
 
 // ----------------------------
 // Démarrage GPS automatique
@@ -13,40 +9,23 @@ let bikeArrow = null;
 
 function startGPS(){
 
-    alert("startGPS appelé");
-
-
     if(!navigator.geolocation){
-
-        alert("GPS non disponible");
+        console.error("GPS non disponible");
         return;
-
     }
 
-
     navigator.geolocation.watchPosition(
-
         onPositionUpdate,
-
         function(error){
-
-            alert(
-                "Erreur GPS : " + error.message
-            );
-
+            console.error("Erreur GPS : " + error.message);
         },
-
         {
             enableHighAccuracy:true,
             maximumAge:1000,
             timeout:10000
         }
-
     );
-
 }
-
-
 
 // ----------------------------
 // Boussole téléphone
@@ -55,32 +34,16 @@ function startGPS(){
 function startCompass(){
 
     window.addEventListener(
-
         "deviceorientation",
-
         function(event){
-
-
             if(event.alpha !== null){
-
-                currentHeading =
-                360 - event.alpha;
-
-
+                currentHeading = 360 - event.alpha;
                 updateBikeArrow();
-
             }
-
-
         },
-
         true
-
     );
-
 }
-
-
 
 // ----------------------------
 // Réception position GPS
@@ -88,146 +51,63 @@ function startCompass(){
 
 function onPositionUpdate(position){
 
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
-    //alert("Position reçue");
-
-
-    const lat =
-    position.coords.latitude;
-
-
-    const lon =
-    position.coords.longitude;
-
-
-
-    console.log(
-        "Position :",
-        lat,
-        lon
-    );
-
-
+    console.log("Position :", lat, lon);
 
     window.currentPosition = {
-
-        lat:lat,
-        lon:lon
-
+        lat: lat,
+        lon: lon
     };
 
+    updateBikeArrowPosition(lat, lon);
 
-
-    updateBikeArrowPosition(
-        lat,
-        lon
-    );
-
-
-
-    const input =
-    document.getElementById("destination");
-
+    const input = document.getElementById("destination");
 
     if(input){
-
         input.disabled = false;
-
-        input.placeholder =
-        "Entrer une destination";
-
+        input.placeholder = "Entrer une destination";
     }
-
-
 
     if(typeof updateUserMarker === "function"){
-
-        updateUserMarker(
-            lat,
-            lon
-        );
-
+        updateUserMarker(lat, lon);
     }
 
-
-
-    map.setView(
-
-        [lat,lon],
-
-        17
-
-    );
-
+    map.setView([lat, lon], 17);
 }
-
-
 
 // ----------------------------
 // Création / déplacement flèche
 // ----------------------------
 
-function updateBikeArrowPosition(lat,lon){
-
+function updateBikeArrowPosition(lat, lon){
 
     if(!bikeArrow){
-
-
-        bikeArrow =
-        L.marker(
-
-            [lat,lon],
-
+        bikeArrow = L.marker(
+            [lat, lon],
             {
-
-                icon:
-                L.divIcon({
-
-                    className:"bike-icon",
-
-                    html:
-
-                    `
-                    <div style="
-                    transform:rotate(${currentHeading}deg);
-                    font-size:32px;
-                    color:blue;">
-                    ➤
-                    </div>
+                icon: L.divIcon({
+                    className: "bike-icon",
+                    html: `
+                        <div style="
+                        transform:rotate(${currentHeading}deg);
+                        font-size:32px;
+                        color:blue;">
+                        ➤
+                        </div>
                     `,
-
-
-                    iconSize:[40,40],
-
-                    iconAnchor:[20,20]
-
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 20]
                 })
-
             }
-
-        )
-        .addTo(map);
-
-
+        ).addTo(map);
     }
     else{
-
-
-        bikeArrow.setLatLng(
-
-            [lat,lon]
-
-        );
-
-
+        bikeArrow.setLatLng([lat, lon]);
         updateBikeArrow();
-
     }
-
-
 }
-
-
 
 // ----------------------------
 // Rotation flèche
@@ -235,63 +115,32 @@ function updateBikeArrowPosition(lat,lon){
 
 function updateBikeArrow(){
 
-
     if(!bikeArrow){
-
         return;
-
     }
 
-
-
-    const icon =
-
-    L.divIcon({
-
-        className:"bike-icon",
-
-
-        html:
-
-        `
-        <div style="
-        transform:rotate(${currentHeading}deg);
-        font-size:32px;
-        color:blue;">
-        ➤
-        </div>
+    const icon = L.divIcon({
+        className: "bike-icon",
+        html: `
+            <div style="
+            transform:rotate(${currentHeading}deg);
+            font-size:32px;
+            color:blue;">
+            ➤
+            </div>
         `,
-
-
-        iconSize:[40,40],
-
-        iconAnchor:[20,20]
-
+        iconSize: [40, 40],
+        iconAnchor: [20, 20]
     });
 
-
-
     bikeArrow.setIcon(icon);
-
-
 }
-
-
 
 // ----------------------------
 // Lancement automatique
 // ----------------------------
 
 window.addEventListener("load", function(){
-
-
-   alert("Lancement automatique GPS");
-
-
     startGPS();
-
-
     startCompass();
-
-
 });

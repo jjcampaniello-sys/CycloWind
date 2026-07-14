@@ -31,13 +31,10 @@ function initializeMap() {
 }
 
 function clearRoute(){
-
     localStorage.removeItem("cyclowind_route");
 
     if(window.routeGroup){
-
         window.routeGroup.clearLayers();
-
     }
 
     window.destination = null;
@@ -46,7 +43,6 @@ function clearRoute(){
 
     document.getElementById("windInfo").innerHTML =
     "🚴 Aucun trajet calculé";
-
 }
 
 // Initialize when DOM is ready

@@ -1,9 +1,8 @@
-alert("search.js chargé");
 window.destination = null;
 
 async function searchDestination() {
     if (!window.currentPosition) {
-        alert("Position GPS en cours de récupération...");
+        console.log("Position GPS en cours de récupération...");
         return;
     }
 
@@ -24,17 +23,15 @@ async function searchDestination() {
         box.innerHTML = "";
         return;
     }
-    const url =
-`https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr`;
 
-   const response = await fetch(url);
+    const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr`;
 
-const data = await response.json();
+    const response = await fetch(url);
+    const data = await response.json();
 
     box.innerHTML = "";
 
     data.features.forEach((place) => {
-
         const item = document.createElement("div");
         item.className = "suggestion";
 
@@ -48,7 +45,6 @@ const data = await response.json();
             (place.properties.country || "");
 
         item.onclick = function () {
-
             window.destination = {
                 lat: place.geometry.coordinates[1],
                 lon: place.geometry.coordinates[0]
