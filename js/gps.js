@@ -3,7 +3,7 @@
 alert("gps.js chargé");
 
 let currentHeading = 0;
-
+let bikeArrow = null;
 
 function startGPS(){
 
@@ -15,7 +15,25 @@ function startGPS(){
         return;
     }
 
+function startCompass(){
 
+    window.addEventListener(
+        "deviceorientation",
+        function(event){
+
+            if(event.alpha !== null){
+
+                currentHeading = 360 - event.alpha;
+
+                updateBikeArrow();
+
+            }
+
+        },
+        true
+    );
+
+}
     navigator.geolocation.watchPosition(
 
         onPositionUpdate,
@@ -59,7 +77,40 @@ function onPositionUpdate(position){
         lat:lat,
         lon:lon
     };
+if(!bikeArrow){
 
+    bikeArrow = L.marker(
+        [lat,lon],
+        {
+            icon:L.divIcon({
+
+                className:"bike-icon",
+
+                html:
+                `
+                <div style="
+                font-size:32px;
+                color:blue;">
+                ➤
+                </div>
+                `,
+
+                iconSize:[40,40],
+                iconAnchor:[20,20]
+
+            })
+        }
+    )
+    .addTo(map);
+
+}
+else{
+
+    bikeArrow.setLatLng(
+        [lat,lon]
+    );
+
+}
 
     const input =
     document.getElementById("destination");
@@ -73,7 +124,36 @@ function onPositionUpdate(position){
         "Entrer une destination";
 
     }
+function updateBikeArrow(){
 
+    if(!bikeArrow){
+        return;
+    }
+
+
+    const icon = L.divIcon({
+
+        className:"bike-icon",
+
+        html:
+        `
+        <div style="
+        transform:rotate(${currentHeading}deg);
+        font-size:32px;
+        color:blue;">
+        ➤
+        </div>
+        `,
+
+        iconSize:[40,40],
+        iconAnchor:[20,20]
+
+    });
+
+
+    bikeArrow.setIcon(icon);
+
+}
 
     if(typeof updateUserMarker === "function"){
 
@@ -101,5 +181,7 @@ function(){
     alert("Lancement automatique GPS");
 
     startGPS();
+
+    startCompass();
 
 });
