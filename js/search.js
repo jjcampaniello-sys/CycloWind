@@ -1,29 +1,21 @@
 alert("search.js chargé");
 window.destination = null;
 
-async function searchDestination() {
-    if (!window.currentPosition) {
-        console.log("Position GPS en cours de récupération...");
-        return;
-    }
+function searchDestination(){
 
     const query = document.getElementById("destination").value;
-    const box = document.getElementById("suggestions");
 
-    let cleanedQuery = query.trim();
+    if(query.length < 3) return;
 
-    // Si l'utilisateur n'a pas mis de virgule, on aide Photon
-    if (!cleanedQuery.includes(",")) {
-        cleanedQuery = cleanedQuery.replace(
-            /^(.+?\d+)\s+(.*)$/,
-            "$1, $2"
-        );
-    }
+    console.log("Recherche lancée");
 
-    if (query.length < 3) {
-        box.innerHTML = "";
-        return;
-    }
+    fetch(`https://photon.komoot.io/api/?q=${query}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            alert("Résultats reçus !");
+        });
+}
 //const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImU5N2JkNDJjYTM5MzRjYTFhODQ1MTE2YjViNmQ2ZGJjIiwiaCI6Im11cm11cjY0In0=";
     const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr`;
 
