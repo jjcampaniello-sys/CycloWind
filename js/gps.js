@@ -52,7 +52,7 @@ const lon = position.coords.longitude;
 
 // 🔥 STOCKAGE GLOBAL
 window.userPosition = [lat, lon];
-
+console.log("Position stockée :", window.userPosition);
     console.log("Position :", lat, lon);
 
     if(!window.map){
