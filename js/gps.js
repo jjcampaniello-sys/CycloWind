@@ -2,29 +2,52 @@
 
 let currentHeading = 0;
 let bikeArrow = null;
+let gpsWatchId = null;
 
 // ----------------------------
 // Démarrage GPS automatique
 // ----------------------------
 
 function startGPS(){
+    alert("startGPS called");
 
     if(!navigator.geolocation){
-        console.error("GPS non disponible");
+        alert("GPS non disponible");
         return;
     }
 
-    navigator.geolocation.watchPosition(
+    // Stop previous watch if exists
+    if(gpsWatchId){
+        navigator.geolocation.clearWatch(gpsWatchId);
+    }
+
+    gpsWatchId = navigator.geolocation.watchPosition(
         onPositionUpdate,
         function(error){
-            console.error("Erreur GPS : " + error.message);
+            let msg = "Erreur GPS : ";
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    msg += "Permission refusée";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    msg += "Position indisponible";
+                    break;
+                case error.TIMEOUT:
+                    msg += "Timeout";
+                    break;
+                default:
+                    msg += error.message;
+            }
+            alert(msg);
         },
         {
-            enableHighAccuracy:true,
-            maximumAge:1000,
-            timeout:10000
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 15000
         }
     );
+    
+    alert("GPS watchPosition started");
 }
 
 // ----------------------------
@@ -32,7 +55,8 @@ function startGPS(){
 // ----------------------------
 
 function startCompass(){
-
+    alert("startCompass called");
+    
     window.addEventListener(
         "deviceorientation",
         function(event){
@@ -50,11 +74,11 @@ function startCompass(){
 // ----------------------------
 
 function onPositionUpdate(position){
-
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
+    const accuracy = position.coords.accuracy;
 
-    console.log("Position GPS reçue :", lat, lon);
+    alert("Position GPS reçue:\nLat: " + lat.toFixed(4) + "\nLon: " + lon.toFixed(4) + "\nAccuracy: " + accuracy.toFixed(0) + "m");
 
     window.currentPosition = {
         lat: lat,
@@ -76,10 +100,14 @@ function onPositionUpdate(position){
 
     // Center map on user position
     if(typeof map !== 'undefined' && map){
-        map.setView([lat, lon], 17);
-        console.log("Map centered on user position");
+        try {
+            map.setView([lat, lon], 17);
+            alert("Map centered on GPS position");
+        } catch(e) {
+            alert("Error centering map: " + e.message);
+        }
     } else {
-        console.warn("Map not available yet");
+        alert("Map not available");
     }
 }
 
@@ -88,37 +116,42 @@ function onPositionUpdate(position){
 // ----------------------------
 
 function updateBikeArrowPosition(lat, lon){
+    alert("Creating marker at: " + lat.toFixed(4) + ", " + lon.toFixed(4));
 
     if(!bikeArrow){
         if(typeof map === 'undefined' || !map){
-            console.warn("Map not available, cannot add marker");
+            alert("Map not available, cannot add marker");
             return;
         }
         
-        bikeArrow = L.marker(
-            [lat, lon],
-            {
-                icon: L.divIcon({
-                    className: "bike-icon",
-                    html: `
-                        <div style="
-                        transform:rotate(${currentHeading}deg);
-                        font-size:32px;
-                        color:blue;">
-                        ➤
-                        </div>
-                    `,
-                    iconSize: [40, 40],
-                    iconAnchor: [20, 20]
-                })
-            }
-        ).addTo(map);
-        console.log("Bike arrow marker created at", lat, lon);
+        try {
+            bikeArrow = L.marker(
+                [lat, lon],
+                {
+                    icon: L.divIcon({
+                        className: "bike-icon",
+                        html: `
+                            <div style="
+                            transform:rotate(${currentHeading}deg);
+                            font-size:32px;
+                            color:blue;">
+                            ➤
+                            </div>
+                        `,
+                        iconSize: [40, 40],
+                        iconAnchor: [20, 20]
+                    })
+                }
+            ).addTo(map);
+            alert("Bike arrow marker created successfully");
+        } catch(e) {
+            alert("Error creating marker: " + e.message);
+        }
     }
     else{
         bikeArrow.setLatLng([lat, lon]);
         updateBikeArrow();
-        console.log("Bike arrow position updated to", lat, lon);
+        alert("Bike arrow position updated");
     }
 }
 
@@ -148,3 +181,21 @@ function updateBikeArrow(){
 
     bikeArrow.setIcon(icon);
 }
+
+// ----------------------------
+// Wait for page load to start GPS
+// ----------------------------
+
+window.addEventListener("load", function(){
+    alert("Page load event fired - checking map...");
+    // Small delay to ensure map is ready
+    setTimeout(function(){
+        if(typeof map !== 'undefined' && map){
+            alert("Map is ready, starting GPS");
+            startGPS();
+            startCompass();
+        } else {
+            alert("Map still not ready");
+        }
+    }, 500);
+});
