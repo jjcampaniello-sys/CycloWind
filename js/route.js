@@ -147,7 +147,10 @@ async function getRoute(){
         return;
     }
     
-    const start = marker.getLatLng();
+    const start = {
+    lat: window.currentPosition.lat,
+    lng: window.currentPosition.lon
+};
     const endLat = window.destination.lat;
     const endLon = window.destination.lon;
     
