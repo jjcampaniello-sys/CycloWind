@@ -1,3 +1,4 @@
+window.userPosition = null;
 let marker;
 let bikeArrow = null;
 let windControl;
