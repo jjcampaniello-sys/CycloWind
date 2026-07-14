@@ -47,11 +47,11 @@ function clearRoute(){
 }
 
 //-------------------------------------
-window.addEventListener("load", function(){
+''window.addEventListener("load", function(){
 
-    startGPS();
+  ''  startGPS();
 
-});
+''});
 //----------------------------------------
 
 // Démarrage
