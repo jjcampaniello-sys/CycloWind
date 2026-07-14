@@ -24,7 +24,20 @@ function(){
     startGPS();
 
 });
+navigator.geolocation.watchPosition(
+    function(position){
 
+        alert("Position reçue");
+
+        console.log(position);
+
+    },
+    function(error){
+
+        alert(error.message);
+
+    }
+);
 
 // ----------------------------
 // Boussole téléphone
