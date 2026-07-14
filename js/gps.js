@@ -48,7 +48,10 @@ function startCompass(){
 function onPositionUpdate(position){
 
     const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+const lon = position.coords.longitude;
+
+// 🔥 STOCKAGE GLOBAL
+window.userPosition = [lat, lon];
 
     console.log("Position :", lat, lon);
 
