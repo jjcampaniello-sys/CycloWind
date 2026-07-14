@@ -48,7 +48,7 @@ function clearRoute(){
 
 //-------------------------------------
 //window.addEventListener("load", function(){
-  //startGPS();
+  startGPS();
 //alert("Lancement GPS");
      // startCompass();
 //});
