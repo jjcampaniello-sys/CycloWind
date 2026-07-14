@@ -4,6 +4,8 @@ let currentHeading = 0;
 //------------------
 function startGPS() {
 
+      alert("Démarrage GPS");
+    
     if (!navigator.geolocation) {
         alert("GPS non supporté");
         return;
