@@ -1,17 +1,11 @@
 alert("search.js chargé");
 window.destination = null;
-//let destination = null;
-//let routeLine = null;
-//let routeLayers=[];
-alert(typeof destination);
-//------------------------
-async function searchDestination()
-if (!window.currentPosition) {
-    alert("Position GPS en cours de récupération...");
-    return;
-}
-//--------------
+
 async function searchDestination() {
+    if (!window.currentPosition) {
+        alert("Position GPS en cours de récupération...");
+        return;
+    }
 
     const query = document.getElementById("destination").value;
     const box = document.getElementById("suggestions");
@@ -32,18 +26,10 @@ async function searchDestination() {
     }
     const url =
 `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr`;
-//const url =
-//`https://corsproxy.io/?https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
-   //const url =
-       // `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanedQuery)}&limit=5&lang=fr&osm_tag=addr:*`;
 
    const response = await fetch(url);
 
-//alert("Réponse serveur : " + response.status);
-
 const data = await response.json();
-
-//alert("Résultats reçus : " + data.features.length);
 
     box.innerHTML = "";
 
@@ -71,7 +57,7 @@ const data = await response.json();
             document.getElementById("destination").value = item.innerText;
             box.innerHTML = "";
 
-            console.log("Destination choisie :", destination);
+            console.log("Destination choisie :", window.destination);
         };
 
         box.appendChild(item);
