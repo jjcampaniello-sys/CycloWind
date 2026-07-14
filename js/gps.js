@@ -3,7 +3,7 @@
 let currentHeading = 0;
 let bikeArrow = null;
 let gpsWatchId = null;
-
+    alert("GPS loading");
 // ----------------------------
 // Démarrage GPS automatique
 // ----------------------------
