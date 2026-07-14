@@ -159,6 +159,14 @@ function moveMarkerOnRoute(point) {
     }
 
 }   
+//--------------
+window.onload = function() {
+
+    startGPS();
+    startCompass();
+
+};
+//---------------
 //-------------------
 // function(position){
 
