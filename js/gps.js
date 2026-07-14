@@ -160,12 +160,14 @@ function moveMarkerOnRoute(point) {
 
 }   
 //--------------
-window.onload = function() {
+window.addEventListener("load", function(){
+
+    alert("Lancement GPS automatique");
 
     startGPS();
     startCompass();
 
-};
+});
 //---------------
 //-------------------
 // function(position){
@@ -204,7 +206,7 @@ window.onload = function() {
 //    color:blue;">
  //   ➤
  //   </div>
-    `,
+  //  `,
 
    // iconSize:[35,35],
    // iconAnchor:[17,17]
