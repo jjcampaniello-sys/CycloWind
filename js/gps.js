@@ -57,20 +57,3 @@ function(){
 // Lancement automatique
 // ----------------------------
 
-window.addEventListener(
-
-"load",
-
-function(){
-
-
-    alert("Lancement automatique GPS");
-
-
-    startGPS();
-
-
-    startCompass();
-
-
-});
