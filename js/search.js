@@ -1,3 +1,4 @@
+alert("search.js chargé");
 window.destination = null;
 
 async function searchDestination() {
