@@ -12,18 +12,32 @@ let routeLayers = [];
 alert("app.js loading...");
 
 // Initialize map immediately when script loads
+// app.js
+
 window.addEventListener("load", function(){
 
-    alert("app.js loaded");
+    console.log("App démarrée");
 
-   window.map = L.map('map').setView([52.3676, 4.9041], 12);
+    // 🌍 Création carte
+    window.map = L.map('map').setView([52.3676, 4.9041], 12);
 
     L.tileLayer(
         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
         { attribution: 'OpenStreetMap' }
-    ).addTo(map);
+    ).addTo(window.map);
 
-    window.routeGroup = L.layerGroup().addTo(map);
+    window.routeGroup = L.layerGroup().addTo(window.map);
+
+    console.log("Carte prête");
+
+    // ✅ MAINTENANT SEULEMENT on lance GPS
+    if(typeof startGPS === "function"){
+        startGPS();
+    }
+
+    if(typeof startCompass === "function"){
+        startCompass();
+    }
 
 });
 
