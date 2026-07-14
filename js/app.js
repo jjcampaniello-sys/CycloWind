@@ -2,31 +2,37 @@ let marker;
 let bikeArrow;
 let windControl;
 let windLegend;
+let map;
 
 let currentWindDirection = 0;
 let currentWindSpeed = 0;
 let routeLine = null;
 let routeLayers = [];
 
-alert ("App.js appelé V1")
-const map = L.map('map')
-    .setView([52.3676,4.9041],12);
+function initializeMap() {
+    const mapElement = document.getElementById('map');
+    if (!mapElement) {
+        console.error("Map element not found");
+        return;
+    }
 
+    map = L.map('map')
+        .setView([52.3676, 4.9041], 12);
 
-L.tileLayer(
-'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-{
- attribution:'OpenStreetMap'
+    L.tileLayer(
+        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+            attribution: 'OpenStreetMap'
+        }
+    ).addTo(map);
+
+    window.routeGroup = L.layerGroup();
+    window.routeGroup.addTo(map);
 }
-).addTo(map);
-
-window.routeGroup = L.layerGroup();
-window.routeGroup.addTo(map);
 
 function clearRoute(){
 
     localStorage.removeItem("cyclowind_route");
-
 
     if(window.routeGroup){
 
@@ -34,22 +40,16 @@ function clearRoute(){
 
     }
 
-
-    destination = null;
-
+    window.destination = null;
 
     document.getElementById("destination").value = "";
-
 
     document.getElementById("windInfo").innerHTML =
     "🚴 Aucun trajet calculé";
 
 }
 
-//-------------------------------------
-
-//----------------------------------------
-
-// Démarrage
-
-
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    initializeMap();
+});
