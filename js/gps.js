@@ -160,7 +160,7 @@ function moveMarkerOnRoute(point) {
 
 }   
 //--------------
-window.addEventListener("load", function(){
+//window.addEventListener("load", function(){
 
     alert("Lancement GPS automatique");
 
