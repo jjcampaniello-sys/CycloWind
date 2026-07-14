@@ -53,7 +53,13 @@ function clearRoute(){
 
 }
 
+//-------------------------------------
+window.addEventListener("load", function(){
 
+    startGPS();
+
+});
+//----------------------------------------
 
 // Démarrage
 
