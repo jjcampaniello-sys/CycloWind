@@ -15,7 +15,6 @@ function startGPS(){
 
 }
 
-
 window.addEventListener(
 "load",
 function(){
