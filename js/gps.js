@@ -185,20 +185,3 @@ function updateBikeArrow(){
     bikeArrow.setIcon(icon);
 }
 
-// ----------------------------
-// Wait for page load to start GPS
-// ----------------------------
-
-window.addEventListener("load", function(){
-    alert("Page load event fired - checking map...");
-    // Small delay to ensure map is ready
-    setTimeout(function(){
-        if(typeof map !== 'undefined' && map){
-            alert("Map is ready, starting GPS");
-            startGPS();
-            startCompass();
-        } else {
-            alert("Map still not ready");
-        }
-    }, 500);
-});
