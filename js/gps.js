@@ -233,48 +233,7 @@ function updateBikeArrowPosition(lat,lon){
 // Rotation flèche
 // ----------------------------
 
-function updateBikeArrow(){
 
-
-    if(!bikeArrow){
-
-        return;
-
-    }
-
-
-
-    const icon =
-
-    L.divIcon({
-
-        className:"bike-icon",
-
-
-        html:
-
-        `
-        <div style="
-        transform:rotate(${currentHeading}deg);
-        font-size:32px;
-        color:blue;">
-        ➤
-        </div>
-        `,
-
-
-        iconSize:[40,40],
-
-        iconAnchor:[20,20]
-
-    });
-
-
-
-    bikeArrow.setIcon(icon);
-
-
-}
 
 
 
