@@ -1,7 +1,7 @@
 // gps.js
 
 let currentHeading = 0;
-let bikeArrow = null;
+// utilise la variable créée dans app.js//let bikeArrow = null;
 let gpsWatchId = null;
 alert ("GPS démarre");
 function startGPS(){
