@@ -49,7 +49,7 @@ function clearRoute(){
 //-------------------------------------
 //window.addEventListener("load", function(){
   startGPS();
-//alert("Lancement GPS");
+alert("Lancement GPS");
      // startCompass();
 //});
 //----------------------------------------
