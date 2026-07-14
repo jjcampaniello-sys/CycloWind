@@ -282,16 +282,16 @@ function updateBikeArrow(){
 // Lancement automatique
 // ----------------------------
 
-''window.addEventListener("load", function(){
+window.addEventListener("load", function(){
 
 
-''   alert("Lancement automatique GPS");
+   alert("Lancement automatique GPS");
 
 
-  ''  startGPS();
+    startGPS();
 
 
-  ''  startCompass();
+    startCompass();
 
 
-''});
+});
