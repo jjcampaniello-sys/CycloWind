@@ -9,28 +9,33 @@ let currentWindSpeed = 0;
 let routeLine = null;
 let routeLayers = [];
 
-function initializeMap() {
-    const mapElement = document.getElementById('map');
-    if (!mapElement) {
-        console.error("Map element not found");
-        return false;
-    }
+alert("app.js loading...");
 
-    map = L.map('map')
-        .setView([52.3676, 4.9041], 12);
-
-    L.tileLayer(
-        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        {
-            attribution: 'OpenStreetMap'
-        }
-    ).addTo(map);
-
-    window.routeGroup = L.layerGroup();
-    window.routeGroup.addTo(map);
+// Initialize map immediately when script loads
+const mapElement = document.getElementById('map');
+if (!mapElement) {
+    alert("ERROR: Map element not found!");
+} else {
+    alert("Map element found, initializing...");
     
-    console.log("Map initialized successfully");
-    return true;
+    try {
+        map = L.map('map')
+            .setView([52.3676, 4.9041], 12);
+
+        L.tileLayer(
+            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                attribution: 'OpenStreetMap'
+            }
+        ).addTo(map);
+
+        window.routeGroup = L.layerGroup();
+        window.routeGroup.addTo(map);
+        
+        alert("Map initialized successfully!");
+    } catch(e) {
+        alert("Error initializing map: " + e.message);
+    }
 }
 
 function clearRoute(){
@@ -47,12 +52,3 @@ function clearRoute(){
     document.getElementById("windInfo").innerHTML =
     "🚴 Aucun trajet calculé";
 }
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM Content Loaded - Initializing map");
-    if(initializeMap()){
-        // GPS will start automatically when map is ready
-        console.log("Map ready, GPS will start via gps.js load event");
-    }
-});
