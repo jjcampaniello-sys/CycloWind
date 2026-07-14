@@ -168,6 +168,7 @@ window.addEventListener("load", function(){
     startCompass();
 
 });
+alert("Appel direct startGPS");
 //---------------
 //-------------------
 // function(position){
