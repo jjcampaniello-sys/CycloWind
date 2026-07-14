@@ -1,3 +1,4 @@
+alert(typeof searchDestination);
 alert("search.js chargé");
 window.destination = null;
 
