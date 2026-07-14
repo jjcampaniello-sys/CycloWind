@@ -1,5 +1,5 @@
 let marker;
-let bikeArrow;
+let bikeArrow = null;
 let windControl;
 let windLegend;
 window.map = null;
