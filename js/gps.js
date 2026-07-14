@@ -5,47 +5,26 @@ alert("gps.js chargé");
 
 let currentHeading = 0;
 let bikeArrow = null;
-
-
-// ----------------------------
-// Démarrage GPS automatique
-// ----------------------------
+//--------------------
+// Démrage Automatique GPS
+//----------------
 
 function startGPS(){
 
     alert("startGPS appelé");
 
-
-    if(!navigator.geolocation){
-
-        alert("GPS non disponible");
-        return;
-
-    }
-
-
-    navigator.geolocation.watchPosition(
-
-        onPositionUpdate,
-
-        function(error){
-
-            alert(
-                "Erreur GPS : " + error.message
-            );
-
-        },
-
-        {
-            enableHighAccuracy:true,
-            maximumAge:1000,
-            timeout:10000
-        }
-
-    );
-
 }
 
+
+window.addEventListener(
+"load",
+function(){
+
+    alert("Lancement automatique GPS");
+
+    startGPS();
+
+});
 
 
 // ----------------------------
