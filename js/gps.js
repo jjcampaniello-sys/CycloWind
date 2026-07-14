@@ -52,33 +52,6 @@ function startGPS(){
 // Boussole téléphone
 // ----------------------------
 
-function startCompass(){
-
-    window.addEventListener(
-
-        "deviceorientation",
-
-        function(event){
-
-
-            if(event.alpha !== null){
-
-                currentHeading =
-                360 - event.alpha;
-
-
-                updateBikeArrow();
-
-            }
-
-
-        },
-
-        true
-
-    );
-
-}
 
 
 
