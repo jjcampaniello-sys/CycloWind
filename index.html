@@ -46,12 +46,17 @@
 
 <div class="search-box">
      
-    <input 
-id="destination"
-disabled
-placeholder="Chargement position..."
-oninput="searchDestination()"
->
+    <input id="destination" oninput="searchDestination()" placeholder="Entrer une destination">
+
+<div id="suggestions" style="
+background:white;
+position:absolute;
+z-index:1000;
+width:90%;
+max-height:200px;
+overflow:auto;
+border:1px solid #ccc;">
+</div>
     <div id="suggestions"></div>
 
 </div>
