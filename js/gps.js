@@ -5,6 +5,7 @@ alert("gps.js chargé");
 let currentHeading = 0;
 let bikeArrow = null;
 
+
 function startGPS(){
 
     alert("startGPS appelé");
@@ -15,25 +16,7 @@ function startGPS(){
         return;
     }
 
-function startCompass(){
 
-    window.addEventListener(
-        "deviceorientation",
-        function(event){
-
-            if(event.alpha !== null){
-
-                currentHeading = 360 - event.alpha;
-
-                updateBikeArrow();
-
-            }
-
-        },
-        true
-    );
-
-}
     navigator.geolocation.watchPosition(
 
         onPositionUpdate,
@@ -54,8 +37,28 @@ function startCompass(){
 
     );
 
-}
+}   // <-- fermeture correcte de startGPS
 
+
+function startCompass(){
+
+    window.addEventListener(
+        "deviceorientation",
+        function(event){
+
+            if(event.alpha !== null){
+
+                currentHeading = 360 - event.alpha;
+
+                updateBikeArrow();
+
+            }
+
+        },
+        true
+    );
+
+}
 
 
 function onPositionUpdate(position){
@@ -124,6 +127,23 @@ else{
         "Entrer une destination";
 
     }
+
+    if(typeof updateUserMarker === "function"){
+
+        updateUserMarker(
+            lat,
+            lon
+        );
+
+    }
+
+
+    map.setView(
+        [lat,lon],
+        17
+    );
+
+}
 function updateBikeArrow(){
 
     if(!bikeArrow){
@@ -154,25 +174,6 @@ function updateBikeArrow(){
     bikeArrow.setIcon(icon);
 
 }
-
-    if(typeof updateUserMarker === "function"){
-
-        updateUserMarker(
-            lat,
-            lon
-        );
-
-    }
-
-
-    map.setView(
-        [lat,lon],
-        17
-    );
-
-}
-
-
 
 window.addEventListener(
 "load",
