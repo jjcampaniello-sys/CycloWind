@@ -10,7 +10,10 @@ let gpsWatchId = null;
 
 function startGPS(){
     alert("startGPS called");
-
+navigator.geolocation.getCurrentPosition(
+    (pos)=>alert("GPS OK"),
+    (err)=>alert("GPS ERROR: " + err.message)
+);
     if(!navigator.geolocation){
         alert("GPS non disponible");
         return;
