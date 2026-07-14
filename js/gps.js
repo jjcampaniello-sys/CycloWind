@@ -91,10 +91,10 @@ function onPositionUpdate(position){
 
 
 
-    updateBikeArrowPosition(
-        lat,
-        lon
-    );
+  //  updateBikeArrowPosition(
+  //      lat,
+  //      lon
+ //   );
 
 
 
