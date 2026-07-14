@@ -168,7 +168,7 @@ function moveMarkerOnRoute(point) {
     startCompass();
 
 });
-alert("Appel direct startGPS");
+//alert("Appel direct startGPS");
 //---------------
 //-------------------
 // function(position){
