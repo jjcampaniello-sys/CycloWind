@@ -54,7 +54,7 @@ function onPositionUpdate(position){
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
 
-    console.log("Position :", lat, lon);
+    console.log("Position GPS reçue :", lat, lon);
 
     window.currentPosition = {
         lat: lat,
@@ -74,7 +74,13 @@ function onPositionUpdate(position){
         updateUserMarker(lat, lon);
     }
 
-    map.setView([lat, lon], 17);
+    // Center map on user position
+    if(typeof map !== 'undefined' && map){
+        map.setView([lat, lon], 17);
+        console.log("Map centered on user position");
+    } else {
+        console.warn("Map not available yet");
+    }
 }
 
 // ----------------------------
@@ -84,6 +90,11 @@ function onPositionUpdate(position){
 function updateBikeArrowPosition(lat, lon){
 
     if(!bikeArrow){
+        if(typeof map === 'undefined' || !map){
+            console.warn("Map not available, cannot add marker");
+            return;
+        }
+        
         bikeArrow = L.marker(
             [lat, lon],
             {
@@ -102,10 +113,12 @@ function updateBikeArrowPosition(lat, lon){
                 })
             }
         ).addTo(map);
+        console.log("Bike arrow marker created at", lat, lon);
     }
     else{
         bikeArrow.setLatLng([lat, lon]);
         updateBikeArrow();
+        console.log("Bike arrow position updated to", lat, lon);
     }
 }
 
@@ -135,12 +148,3 @@ function updateBikeArrow(){
 
     bikeArrow.setIcon(icon);
 }
-
-// ----------------------------
-// Lancement automatique
-// ----------------------------
-
-window.addEventListener("load", function(){
-    startGPS();
-    startCompass();
-});
