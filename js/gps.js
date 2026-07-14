@@ -113,14 +113,14 @@ function onPositionUpdate(position){
 
 
 
-    if(typeof updateUserMarker === "function"){
+  //  if(typeof updateUserMarker === "function"){
 
-        updateUserMarker(
-            lat,
-            lon
-        );
+     //   updateUserMarker(
+    //        lat,
+    //        lon
+    //    );
 
-    }
+ //   }
 
 
 
