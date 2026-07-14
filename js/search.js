@@ -14,7 +14,7 @@ function searchDestination(){
         .then(res => res.json())
         .then(data => {
             console.log("Résultats :", data);
-            alert("Résultats reçus !");
+           // alert("Résultats reçus !");
         })
         .catch(err => {
             console.error("Erreur fetch :", err);
