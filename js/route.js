@@ -147,8 +147,7 @@ async function getRoute(){
         return;
     }
     
-   const start = {
-    lat: window.currentPosition[0],   
+   const start = {   
     lat: window.userPosition[0],
     lng: window.userPosition[1]
 };
