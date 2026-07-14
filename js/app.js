@@ -13,7 +13,7 @@ function initializeMap() {
     const mapElement = document.getElementById('map');
     if (!mapElement) {
         console.error("Map element not found");
-        return;
+        return false;
     }
 
     map = L.map('map')
@@ -28,6 +28,9 @@ function initializeMap() {
 
     window.routeGroup = L.layerGroup();
     window.routeGroup.addTo(map);
+    
+    console.log("Map initialized successfully");
+    return true;
 }
 
 function clearRoute(){
@@ -47,5 +50,9 @@ function clearRoute(){
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-    initializeMap();
+    console.log("DOM Content Loaded - Initializing map");
+    if(initializeMap()){
+        // GPS will start automatically when map is ready
+        console.log("Map ready, GPS will start via gps.js load event");
+    }
 });
