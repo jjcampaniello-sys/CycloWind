@@ -137,10 +137,10 @@ function drawGrayRoute(latlngs){
 
 // Calcul trajet
 async function getRoute(){
-    if(!marker){
-        alert("Définissez votre position d'abord");
-        return;
-    }
+   if(!window.currentPosition){
+    alert("Définissez votre position d'abord");
+    return;
+}
     
     if(!window.destination){
         alert("Choisissez une destination dans la liste");
