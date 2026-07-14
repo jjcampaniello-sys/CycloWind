@@ -89,7 +89,7 @@ function startCompass(){
 function onPositionUpdate(position){
 
 
-    alert("Position reçue");
+    //alert("Position reçue");
 
 
     const lat =
