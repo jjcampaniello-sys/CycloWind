@@ -282,11 +282,7 @@ function updateBikeArrow(){
 // Lancement automatique
 // ----------------------------
 
-window.addEventListener(
-
-"load",
-
-function(){
+window.addEventListener("load", function(){
 
 
    alert("Lancement automatique GPS");
