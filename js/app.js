@@ -7,14 +7,7 @@ let currentWindDirection = 0;
 let currentWindSpeed = 0;
 let routeLine = null;
 let routeLayers = [];
-//--------------
-window.onload = function() {
 
-    startGPS();
-    startCompass();
-
-};
-//---------------
 
 const map = L.map('map')
     .setView([52.3676,4.9041],12);
