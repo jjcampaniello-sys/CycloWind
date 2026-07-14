@@ -1,5 +1,6 @@
 // GPS
 //console.log("gps.js chargé");
+alert("Démarrage GPS");
 let currentHeading = 0;
 //------------------
 function startGPS() {
