@@ -86,7 +86,18 @@ function chooseBestRoute(normalRoute, alternativeRoute, normalScore, alternative
 
     return "normal";
 }
+function calculateWindGain(scoreNormal, scoreAlternative){
 
+    if(scoreNormal <= 0){
+        return 0;
+    }
+
+    const gain =
+    ((scoreNormal - scoreAlternative) / scoreNormal) * 100;
+
+    return Math.max(0, gain);
+
+}
 function drawWindRoute(latlngs){
     for(let i = 0; i < latlngs.length - 1; i++){
         const direction = getSegmentDirection(
