@@ -257,10 +257,10 @@ await getWind(start.lat, start.lng, firstDir);
         alternativeScore
     );
 
-    document.getElementById("windInfo").innerHTML += `
-        <br>Route test : ${normalScore.toFixed(1)}
-        <br>Alternative : ${alternativeScore.toFixed(1)}
-    `;    
+  //  document.getElementById("windInfo").innerHTML += `
+   //     <br>Route test : ${normalScore.toFixed(1)}
+   //     <br>Alternative : ${alternativeScore.toFixed(1)}
+   // `;    
     
     map.fitBounds(latlngs);
     addWindLegend();
@@ -277,13 +277,13 @@ await getWind(start.lat, start.lng, firstDir);
 
     let recommendation =
         choice === "alternative"
-        ? "🌱 CycloWind recommande l'alternative"
+     //   ? "🌱 CycloWind recommande l'alternative"
         : "🚴 CycloWind recommande ce trajet";
 
     document.getElementById("windInfo").innerHTML = `
         ${recommendation}
-        <br>
-        🌬️ Actuel : ${normalScore.toFixed(1)}
+      //  <br>
+     //   🌬️ Actuel : ${normalScore.toFixed(1)}
         <br>
         🌱 CycloWind : ${alternativeScore.toFixed(1)}
     `;
