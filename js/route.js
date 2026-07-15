@@ -255,13 +255,11 @@ let recommendation =
 // ✅ AFFICHAGE PROPRE (UN SEUL BLOC)
 document.getElementById("windInfo").innerHTML = `
     ${recommendation}
-  🌬️ Normal : ${normalScore.toFixed(1)}
+  <br>
+    🌬️ Impact vent : ${alternativeScore.toFixed(1)}
     <br>
-    🌱 Alternative : ${alternativeScore.toFixed(1)}
-    <br>
-    📉 Gain : ${windGain.toFixed(0)} %
-    <br>
-    🧠 Choix : ${choice}
+    📉 Gain estimé : ${windGain.toFixed(0)} %
+`;
 `;
 
     const routeData = {
