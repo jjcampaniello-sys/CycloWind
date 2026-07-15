@@ -1,4 +1,26 @@
 // Analyse du vent
+function windDirectionText(deg){
+
+    const directions = [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SO",
+        "O",
+        "NO"
+    ];
+
+
+    const index =
+    Math.round(deg / 45) % 8;
+
+
+    return directions[index];
+
+}
+
 function windEffect(rideDirection, windDirection) {
 
     let angle = Math.abs(rideDirection - windDirection);
@@ -80,11 +102,19 @@ async function getWind(lat, lon, rideDirection) {
             </div>
 
             <div>
-            ${currentWindSpeed} km/h<br>
-            ${windEffect(
-                rideDirection,
-                currentWindDirection
-            )}
+           // ${currentWindSpeed} km/h<br>
+        //    ${windEffect(
+            //    rideDirection,
+            //    currentWindDirection
+           // )}
+
+            ${Math.round(currentWindSpeed)} km/h<br>
+Vent ${windDirectionText(currentWindDirection)}
+<br>
+${windEffect(
+    rideDirection,
+    currentWindDirection
+)}
             </div>
             `;
 
