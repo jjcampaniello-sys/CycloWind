@@ -137,7 +137,8 @@ function drawGrayRoute(latlngs){
 
 // Calcul trajet
 async function getRoute(){
-   if(!window.userPosition){
+   alert("getRoute démarré");
+    if(!window.userPosition){
     alert("Définissez votre position d'abord");
     return;
 }
@@ -151,6 +152,9 @@ async function getRoute(){
     lat: window.userPosition[0],
     lng: window.userPosition[1]
 };
+    alert(
+"Départ : " + start.lat + " / " + start.lng
+);
     const endLat = window.destination.lat;
     const endLon = window.destination.lon;
     
