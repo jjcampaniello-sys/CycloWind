@@ -242,7 +242,10 @@ await getWind(start.lat, start.lng, firstDir);
         normalScore,
         alternativeScore
     );
-
+const windGain = calculateWindGain(
+    normalScore,
+    alternativeScore
+);
     document.getElementById("windInfo").innerHTML += `
         <br>Route test : ${normalScore.toFixed(1)}
         <br>Alternative : ${alternativeScore.toFixed(1)}
