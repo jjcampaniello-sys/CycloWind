@@ -152,12 +152,12 @@ async function getRoute(){
     lat: window.userPosition[0],
     lng: window.userPosition[1]
 };
-
+const latlngs = coords.map(point => [point[1], point[0]]);
 // 🔥 AJOUT ICI
-//const firstDir = getSegmentDirection(latlngs[0], latlngs[1]);
-//await getWind(start.lat, start.lng, firstDir);
+const firstDir = getSegmentDirection(latlngs[0], latlngs[1]);
+await getWind(start.lat, start.lng, firstDir);
     
-    await getWind(start.lat, start.lng, 0);
+   // await getWind(start.lat, start.lng, 0);
     
     alert(
 "Départ : " + start.lat + " / " + start.lng
