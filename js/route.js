@@ -275,7 +275,8 @@ await getWind(start.lat, start.lng, firstDir);
     alternativeScore
 );
     //--------------------------------------------
-    
+   document.getElementById("windInfo").innerHTML = `
+ <br> 🌬️ Actuel : ${normalScore.toFixed(1)} 
 
     //--------------------------------
     map.fitBounds(latlngs);
