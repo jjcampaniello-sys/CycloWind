@@ -97,7 +97,7 @@ function calculateWindScore(latlngs){
 function chooseBestRoute(normalRoute, alternativeRoute, normalScore, alternativeScore){
     const normalTime = normalRoute.duration;
     const alternativeTime = alternativeRoute.duration;
-
+ 
     // avantage vent
     const windGain = normalScore - alternativeScore;
 
@@ -111,7 +111,20 @@ function chooseBestRoute(normalRoute, alternativeRoute, normalScore, alternative
 
     return "normal";
 }
+//----------------------------------------
+function calculateWindGain(scoreNormal, scoreAlternative){
 
+    if(scoreNormal <= 0){
+        return 0;
+    }
+
+    const gain =
+    ((scoreNormal - scoreAlternative) / scoreNormal) * 100;
+
+    return Math.max(0, gain);
+
+}
+//---------------------------------------
 function drawWindRoute(latlngs){
     for(let i = 0; i < latlngs.length - 1; i++){
         const direction = getSegmentDirection(
@@ -256,10 +269,21 @@ await getWind(start.lat, start.lng, firstDir);
         normalScore,
         alternativeScore
     );
-
-    document.getElementById("windInfo").innerHTML += `
-        <br>🚴CycloWind recommande ce trajet: ${alternativeScore.toFixed(1)}
-    `;    
+//-----------------------------------
+    const windGain = calculateWindGain(
+    normalScore,
+    alternativeScore
+);
+    //--------------------------------------------
+    document.getElementById("windInfo").innerHTML = `
+    ${recommendation}
+    <br>
+    🌬️ Effort vent trajet choisi :
+    ${alternativeScore.toFixed(1)}
+    <br>
+    📉 Gain estimé :
+    ${windGain.toFixed(0)} %
+`;  
     
     map.fitBounds(latlngs);
     addWindLegend();
