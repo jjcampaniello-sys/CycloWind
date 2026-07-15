@@ -254,7 +254,6 @@ let recommendation =
 
 // ✅ AFFICHAGE PROPRE (UN SEUL BLOC)
 document.getElementById("windInfo").innerHTML = `
-document.getElementById("windInfo").innerHTML = `
     ${recommendation}
     <br>
     🌬️ Impact vent : ${alternativeScore.toFixed(1)}
