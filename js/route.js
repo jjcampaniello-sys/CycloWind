@@ -275,15 +275,7 @@ await getWind(start.lat, start.lng, firstDir);
     alternativeScore
 );
     //--------------------------------------------
-    document.getElementById("windInfo").innerHTML = `
-    ${recommendation}
-    <br>
-    🌬️ Effort vent trajet choisi :
-    ${alternativeScore.toFixed(1)}
-    <br>
-    📉 Gain estimé :
-    ${windGain.toFixed(0)} %
-`;  
+    
     
     map.fitBounds(latlngs);
     addWindLegend();
@@ -303,6 +295,15 @@ await getWind(start.lat, start.lng, firstDir);
         ? "🌱 CycloWind recommande l'alternative"
         : "🚴 CycloWind recommande ce trajet";
 
+    document.getElementById("windInfo").innerHTML = `
+    ${recommendation}
+    <br>
+    🌬️ Effort vent trajet choisi :
+    ${alternativeScore.toFixed(1)}
+    <br>
+    📉 Gain estimé :
+    ${windGain.toFixed(0)} %
+`;  
    // document.getElementById("windInfo").innerHTML = `
     //    ${recommendation}
    //     <br>
