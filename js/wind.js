@@ -1,25 +1,25 @@
 // Analyse du vent
-function windDirectionText(deg){
+//function windDirectionText(deg){
 
-    const directions = [
-        "N",
-        "NE",
-        "E",
-        "SE",
-        "S",
-        "SO",
-        "O",
-        "NO"
-    ];
-
-
-    const index =
-    Math.round(deg / 45) % 8;
+ //   const directions = [
+ //       "N",
+  //      "NE",
+  //      "E",
+   //     "SE",
+   //    "S",
+    //    "SO",
+    //    "O",
+    //    "NO"
+   // ];
 
 
-    return directions[index];
+  //  const index =
+  //  Math.round(deg / 45) % 8;
 
-}
+
+  //  return directions[index];
+
+//}
 
 function windEffect(rideDirection, windDirection) {
 
