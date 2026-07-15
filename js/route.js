@@ -258,8 +258,7 @@ await getWind(start.lat, start.lng, firstDir);
     );
 
     document.getElementById("windInfo").innerHTML += `
-       <br>Route test : ${normalScore.toFixed(1)}
-        <br>🚴 CycloWind recommande ce trajet : ${alternativeScore.toFixed(1)}
+        <br>🚴CycloWind recommande ce trajet: ${alternativeScore.toFixed(1)}
     `;    
     
     map.fitBounds(latlngs);
