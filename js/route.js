@@ -242,10 +242,10 @@ await getWind(start.lat, start.lng, firstDir);
         normalScore,
         alternativeScore
     );
-const windGain = calculateWindGain(
-    normalScore,
-    alternativeScore
-);
+//const windGain = calculateWindGain(
+   // normalScore,
+   // alternativeScore
+//);
 
 // Choix texte
 let recommendation =
