@@ -300,10 +300,10 @@ await getWind(start.lat, start.lng, firstDir);
         alternativeScore < 15 ? "Moyen" :
         "Difficile";
 /---------------------------
-    let recommendation =
-        choice === "alternative"
-        ? "🌱 CycloWind recommande l'alternative"
-        : "🚴 CycloWind recommande ce trajet";
+    //let recommendation =
+    //    choice === "alternative"
+    //    ? "🌱 CycloWind recommande l'alternative"
+   //     : "🚴 CycloWind recommande ce trajet";
    // document.getElementById("windInfo").innerHTML = `
     //    ${recommendation}
    //     <br>
