@@ -247,31 +247,25 @@ const windGain = calculateWindGain(
     alternativeScore
 );
 
-// Choix texte
 let recommendation =
-    choice === "alternative"
-    ? "🌱 CycloWind recommande l'alternative"
-    : "🚴 CycloWind recommande ce trajet";
+        choice === "alternative"
+        ? "🌱 CycloWind recommande l'alternative"
+        : "🚴 CycloWind recommande ce trajet";
 
-// ✅ AFFICHAGE PROPRE (UN SEUL BLOC)
-document.getElementById("windInfo").innerHTML = `
-    ${recommendation}
-    <br>
-    🌬️ Impact vent : ${alternativeScore.toFixed(1)}
-    <br>
-    📉 Gain estimé : ${windGain.toFixed(0)} %
-`;
+    document.getElementById("windInfo").innerHTML = `
+        ${recommendation}
+        <br>
+        🌬️ Actuel : ${normalScore.toFixed(1)}
+        <br>
+        🌱 CycloWind : ${alternativeScore.toFixed(1)}
+    `;
 
-// Carte
-//map.fitBounds(latlngs);
-//addWindLegend();
+    const routeData = {
+        coords: latlngs,
+        wind: normalScore,
+        altWind: alternativeScore,
+        recommendation: recommendation
+    };
 
-// Données internes
-const routeData = {
-    coords: latlngs,
-    wind: normalScore,
-    altWind: alternativeScore,
-    recommendation: recommendation
+    window.drawWindRoute = drawWindRoute;
 };
-
-window.drawWindRoute = drawWindRoute;
