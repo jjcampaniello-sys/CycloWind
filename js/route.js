@@ -91,8 +91,8 @@ function calculateWindScore(latlngs){
     return totalCost / totalDistance;
 
 }
-    return totalCost / count;
-}
+//    return totalCost / count;
+//}
 
 function chooseBestRoute(normalRoute, alternativeRoute, normalScore, alternativeScore){
     const normalTime = normalRoute.duration;
