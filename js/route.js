@@ -19,11 +19,15 @@ async function getAlternativeRoute(start, endLat, endLon) {
     const url = "https://api.openrouteservice.org/v2/directions/cycling-regular/geojson";
 
     const body = {
-        coordinates: [
-            [start.lng, start.lat],
-            [endLon, endLat]
-        ]
-    };
+    coordinates: [
+        [start.lng, start.lat],
+        [endLon, endLat]
+    ],
+
+    alternative_routes: {
+        target_count: 3
+    }
+};
 
     const response = await fetch(url, {
         method: "POST",
@@ -35,6 +39,7 @@ async function getAlternativeRoute(start, endLat, endLon) {
     });
 
     const data = await response.json();
+    console.log("Routes ORS reçues :", data);
     const coords = data.features[0].geometry.coordinates;
 
     return {
@@ -172,11 +177,15 @@ async function getRoute(){
     const orsUrl = "https://api.openrouteservice.org/v2/directions/cycling-regular/geojson";
 
     const body = {
-        coordinates: [
-            [start.lng, start.lat],
-            [endLon, endLat]
-        ]
-    };
+    coordinates: [
+        [start.lng, start.lat],
+        [endLon, endLat]
+    ],
+
+    alternative_routes: {
+        target_count: 3
+    }
+};
 
     const response = await fetch(orsUrl, {
         method: "POST",
@@ -188,6 +197,7 @@ async function getRoute(){
     });
 
     const data = await response.json();
+    console.log("Routes ORS reçues :", data);
     const coords = data.features[0].geometry.coordinates;
 
     const routes = [{
