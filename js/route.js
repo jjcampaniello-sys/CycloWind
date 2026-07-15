@@ -254,12 +254,12 @@ let recommendation =
 
 // ✅ AFFICHAGE PROPRE (UN SEUL BLOC)
 document.getElementById("windInfo").innerHTML = `
+document.getElementById("windInfo").innerHTML = `
     ${recommendation}
-  <br>
+    <br>
     🌬️ Impact vent : ${alternativeScore.toFixed(1)}
     <br>
     📉 Gain estimé : ${windGain.toFixed(0)} %
-`;
 `;
 
     const routeData = {
