@@ -291,17 +291,17 @@ await getWind(start.lat, start.lng, firstDir);
         alternativeScore < 15 ? "Moyen" :
         "Difficile";
 /---------------------------
-    //let recommendation =
-    //    choice === "alternative"
-    //    ? "🌱 CycloWind recommande l'alternative"
-   //     : "🚴 CycloWind recommande ce trajet";
-   // document.getElementById("windInfo").innerHTML = `
-    //    ${recommendation}
-   //     <br>
-   //    🌬️ Actuel : ${normalScore.toFixed(1)}
- //       <br>
-  //      🌱 CycloWind : ${alternativeScore.toFixed(1)}
- //   `;
+    let recommendation =
+        choice === "alternative"
+        ? "🌱 CycloWind recommande l'alternative"
+        : "🚴 CycloWind recommande ce trajet";
+    document.getElementById("windInfo").innerHTML = `
+        ${recommendation}
+        <br>
+       🌬️ Actuel : ${normalScore.toFixed(1)}
+       <br>
+        🌱 CycloWind : ${alternativeScore.toFixed(1)}
+    `;
 
     const routeData = {
         coords: latlngs,
