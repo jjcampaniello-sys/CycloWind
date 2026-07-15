@@ -18,7 +18,6 @@ function windEffect(rideDirection, windDirection) {
     return "↔️ Vent latéral";
 }
 
-
 // Coût du vent
 function windCost(roadDirection, windDirection, windSpeed) {
 
