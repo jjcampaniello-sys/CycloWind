@@ -277,7 +277,7 @@ await getWind(start.lat, start.lng, firstDir);
 
     let recommendation =
         choice === "alternative"
-     //   ? "🌱 CycloWind recommande l'alternative"
+        ? "🌱 CycloWind recommande l'alternative"
         : "🚴 CycloWind recommande ce trajet";
 
     document.getElementById("windInfo").innerHTML = `
