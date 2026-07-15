@@ -154,7 +154,10 @@ async function getRoute(){
 };
 
 // 🔥 AJOUT ICI
-await getWind(start.lat, start.lng, 0);
+const firstDir = getSegmentDirection(latlngs[0], latlngs[1]);
+await getWind(start.lat, start.lng, firstDir);
+    
+   // await getWind(start.lat, start.lng, 0);
     
     alert(
 "Départ : " + start.lat + " / " + start.lng
