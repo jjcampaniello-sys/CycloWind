@@ -131,40 +131,40 @@ Vent ${windDirectionText(currentWindDirection)}<br>
 
 
 // Légende
-function addWindLegend() {
+//function addWindLegend() {
 
-    if (windLegend) {
-        map.removeControl(windLegend);
-    }
-
-
-    windLegend = L.control({
-        position:"bottomleft"
-    });
+ //   if (windLegend) {
+ //       map.removeControl(windLegend);
+ //   }
 
 
-    windLegend.onAdd = function() {
-
-        const div = L.DomUtil.create("div");
-
-
-        div.style.background="white";
-        div.style.padding="10px";
-        div.style.borderRadius="10px";
-        div.style.fontSize="16px";
+//    windLegend = L.control({
+ //       position:"bottomleft"
+//    });
 
 
-        div.innerHTML =
+  //  windLegend.onAdd = function() {
+
+     //   const div = L.DomUtil.create("div");
+
+
+     //   div.style.background="white";
+      //  div.style.padding="10px";
+     //   div.style.borderRadius="10px";
+    //    div.style.fontSize="16px";
+
+
+     //   div.innerHTML =
         `
-        🟢 Vent favorable<br>
-        🟠 Vent latéral<br>
-        🔴 Vent de face
-        `;
+    //    🟢 Vent favorable<br>
+    //    🟠 Vent latéral<br>
+    //    🔴 Vent de face
+   //     `;
 
 
-        return div;
-    };
+    //    return div;
+   // };
 
 
-    windLegend.addTo(map);
-}
+   // windLegend.addTo(map);
+//}
