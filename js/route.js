@@ -263,8 +263,8 @@ document.getElementById("windInfo").innerHTML = `
 `;
 
 // Carte
-map.fitBounds(latlngs);
-addWindLegend();
+//map.fitBounds(latlngs);
+//addWindLegend();
 
 // Données internes
 const routeData = {
