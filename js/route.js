@@ -147,6 +147,11 @@ async function getRoute(){
         alert("Choisissez une destination dans la liste");
         return;
     }
+
+const firstSegmentDirection = getSegmentDirection(
+    latlngs[0],
+    latlngs[1]
+);
     
    const start = {   
     lat: window.userPosition[0],
