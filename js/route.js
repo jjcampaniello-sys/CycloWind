@@ -47,14 +47,18 @@ async function getAlternativeRoute(start, endLat, endLon) {
 }
 
 function calculateWindScore(latlngs){
+
     let totalCost = 0;
-    let count = 0;
+    let totalDistance = 0;
+
 
     for(let i = 0; i < latlngs.length - 1; i++){
+
         const direction = getSegmentDirection(
             latlngs[i],
             latlngs[i+1]
         );
+
 
         const cost = windCost(
             direction,
@@ -62,10 +66,31 @@ function calculateWindScore(latlngs){
             currentWindSpeed
         );
 
-        totalCost += cost;
-        count++;
+
+        // distance du segment en mètres
+        const distance =
+        map.distance(
+            latlngs[i],
+            latlngs[i+1]
+        );
+
+
+        // pondération par distance
+        totalCost += cost * distance;
+
+        totalDistance += distance;
+
     }
 
+
+    if(totalDistance === 0){
+        return 0;
+    }
+
+
+    return totalCost / totalDistance;
+
+}
     return totalCost / count;
 }
 
