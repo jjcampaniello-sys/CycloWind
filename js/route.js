@@ -246,43 +246,32 @@ const windGain = calculateWindGain(
     normalScore,
     alternativeScore
 );
-   // document.getElementById("windInfo").innerHTML += `
-   //     <br>Route test : ${normalScore.toFixed(1)}
-   //     <br>Alternative : ${alternativeScore.toFixed(1)}
-  //  `;    
-    
-    map.fitBounds(latlngs);
-    addWindLegend();
 
-    const normalEffort =
-        normalScore < 8 ? "Facile" :
-        normalScore < 15 ? "Moyen" :
-        "Difficile";
+// Choix texte
+let recommendation =
+    choice === "alternative"
+    ? "🌱 CycloWind recommande l'alternative"
+    : "🚴 CycloWind recommande ce trajet";
 
-    const alternativeEffort =
-        alternativeScore < 8 ? "Facile" :
-        alternativeScore < 15 ? "Moyen" :
-        "Difficile";
+// ✅ AFFICHAGE PROPRE (UN SEUL BLOC)
+document.getElementById("windInfo").innerHTML = `
+    ${recommendation}
+    <br>
+    🌬️ Impact vent : ${alternativeScore.toFixed(1)}
+    <br>
+    📉 Gain estimé : ${windGain.toFixed(0)} %
+`;
 
-    let recommendation =
-        choice === "alternative"
-        ? "🌱 CycloWind recommande l'alternative"
-        : "🚴 CycloWind recommande ce trajet";
+// Carte
+map.fitBounds(latlngs);
+addWindLegend();
 
-    document.getElementById("windInfo").innerHTML = `
-        ${recommendation}
-        <br>
-        🌬️ Actuel : ${normalScore.toFixed(1)}
-        <br>
-        🌱 CycloWind : ${alternativeScore.toFixed(1)}
-    `;
+// Données internes
+const routeData = {
+    coords: latlngs,
+    wind: normalScore,
+    altWind: alternativeScore,
+    recommendation: recommendation
+};
 
-    const routeData = {
-        coords: latlngs,
-        wind: normalScore,
-        altWind: alternativeScore,
-        recommendation: recommendation
-    };
-
-    window.drawWindRoute = drawWindRoute;
-}
+window.drawWindRoute = drawWindRoute;
