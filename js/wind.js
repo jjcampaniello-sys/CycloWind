@@ -107,14 +107,6 @@ async function getWind(lat, lon, rideDirection) {
                 rideDirection,
                 currentWindDirection
             )}
-
-           // ${Math.round(currentWindSpeed)} km/h<br>
-//Vent ${windDirectionText(currentWindDirection)}
-//<br>
-/${windEffect(
-/ /   rideDirection,
-   / currentWindDirection
-//)}
             </div>
             `;
 
