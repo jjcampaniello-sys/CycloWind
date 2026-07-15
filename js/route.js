@@ -277,15 +277,6 @@ await getWind(start.lat, start.lng, firstDir);
     //--------------------------------------------
     
 
-    document.getElementById("windInfo").innerHTML = `
-    //${recommendation}
-    <br>
-    🌬️ Effort vent trajet choisi :
-    ${alternativeScore.toFixed(1)}
-    <br>
-    📉 Gain estimé :
-    ${windGain.toFixed(0)} %
-`;  
     //--------------------------------
     map.fitBounds(latlngs);
     addWindLegend();
