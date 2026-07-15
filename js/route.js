@@ -47,18 +47,14 @@ async function getAlternativeRoute(start, endLat, endLon) {
 }
 
 function calculateWindScore(latlngs){
-
     let totalCost = 0;
-    let totalDistance = 0;
-
+    let count = 0;
 
     for(let i = 0; i < latlngs.length - 1; i++){
-
         const direction = getSegmentDirection(
             latlngs[i],
             latlngs[i+1]
         );
-
 
         const cost = windCost(
             direction,
@@ -66,38 +62,17 @@ function calculateWindScore(latlngs){
             currentWindSpeed
         );
 
-
-        // distance du segment en mètres
-        const distance =
-        map.distance(
-            latlngs[i],
-            latlngs[i+1]
-        );
-
-
-        // pondération par distance
-        totalCost += cost * distance;
-
-        totalDistance += distance;
-
+        totalCost += cost;
+        count++;
     }
 
-
-    if(totalDistance === 0){
-        return 0;
-    }
-
-
-    return totalCost / totalDistance;
-
+    return totalCost / count;
 }
-//    return totalCost / count;
-//}
 
 function chooseBestRoute(normalRoute, alternativeRoute, normalScore, alternativeScore){
     const normalTime = normalRoute.duration;
     const alternativeTime = alternativeRoute.duration;
- 
+
     // avantage vent
     const windGain = normalScore - alternativeScore;
 
@@ -110,32 +85,6 @@ function chooseBestRoute(normalRoute, alternativeRoute, normalScore, alternative
     }
 
     return "normal";
-}
-
-function calculateWindGain(scoreNormal, scoreAlternative){
-
-    if(scoreNormal <= 0){
-        return 0;
-    }
-
-    const gain =
-    ((scoreNormal - scoreAlternative) / scoreNormal) * 100;
-
-    return Math.max(0, gain);
-
-}}
-
-function calculateWindGain(scoreNormal, scoreAlternative){
-
-    if(scoreNormal <= 0){
-        return 0;
-    }
-
-    const gain =
-    ((scoreNormal - scoreAlternative) / scoreNormal) * 100;
-
-    return Math.max(0, gain);
-
 }
 
 function drawWindRoute(latlngs){
@@ -270,11 +219,10 @@ await getWind(start.lat, start.lng, firstDir);
 
 // puis
 //drawWindRoute(latlngs);
- alert("1 avant draw");   
+    
     drawWindRoute(latlngs);
-alert("2 après draw");
+
     const normalScore = calculateWindScore(latlngs);
-alert("3 après score");    
     const alternativeScore = calculateWindScore(altLatlngs);
 
     const choice = chooseBestRoute(
@@ -284,36 +232,43 @@ alert("3 après score");
         alternativeScore
     );
 
-    const windGain = calculateWindGain(
-    normalScore,
-    alternativeScore
-);
+    document.getElementById("windInfo").innerHTML += `
+        <br>Route test : ${normalScore.toFixed(1)}
+        <br>Alternative : ${alternativeScore.toFixed(1)}
+    `;    
+    
+    map.fitBounds(latlngs);
+    addWindLegend();
 
-// Choix texte
-let recommendation =
-    choice === "alternative"
-    ? "🌱 CycloWind recommande l'alternative"
-    : "🚴 CycloWind recommande ce trajet";
+    const normalEffort =
+        normalScore < 8 ? "Facile" :
+        normalScore < 15 ? "Moyen" :
+        "Difficile";
 
-// ✅ AFFICHAGE PROPRE (UN SEUL BLOC)
-document.getElementById("windInfo").innerHTML = `
-    ${recommendation}
-    <br>
-    🌬️ Impact vent : ${alternativeScore.toFixed(1)}
-    <br>
-    📉 Gain estimé : ${windGain.toFixed(0)} %
-`;
+    const alternativeEffort =
+        alternativeScore < 8 ? "Facile" :
+        alternativeScore < 15 ? "Moyen" :
+        "Difficile";
 
-// Carte
-map.fitBounds(latlngs);
-addWindLegend();
+    let recommendation =
+        choice === "alternative"
+        ? "🌱 CycloWind recommande l'alternative"
+        : "🚴 CycloWind recommande ce trajet";
 
-// Données internes
-const routeData = {
-    coords: latlngs,
-    wind: normalScore,
-    altWind: alternativeScore,
-    recommendation: recommendation
-};
+    document.getElementById("windInfo").innerHTML = `
+        ${recommendation}
+        <br>
+        🌬️ Actuel : ${normalScore.toFixed(1)}
+        <br>
+        🌱 CycloWind : ${alternativeScore.toFixed(1)}
+    `;
 
-window.drawWindRoute = drawWindRoute;
+    const routeData = {
+        coords: latlngs,
+        wind: normalScore,
+        altWind: alternativeScore,
+        recommendation: recommendation
+    };
+
+    window.drawWindRoute = drawWindRoute;
+}
