@@ -1,4 +1,8 @@
 // Analyse du vent
+let currentWindSpeed = 0;
+let currentWindDirection = 0;
+let windControl = null;
+let windLegend = null;
 function windEffect(rideDirection, windDirection) {
 
     let angle = Math.abs(rideDirection - windDirection);
