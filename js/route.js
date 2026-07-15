@@ -275,21 +275,6 @@ await getWind(start.lat, start.lng, firstDir);
     alternativeScore
 );
     //--------------------------------------------
-    
-    
-    map.fitBounds(latlngs);
-    addWindLegend();
-
-    const normalEffort =
-        normalScore < 8 ? "Facile" :
-        normalScore < 15 ? "Moyen" :
-        "Difficile";
-
-    const alternativeEffort =
-        alternativeScore < 8 ? "Facile" :
-        alternativeScore < 15 ? "Moyen" :
-        "Difficile";
-
     let recommendation =
         choice === "alternative"
         ? "🌱 CycloWind recommande l'alternative"
@@ -304,6 +289,21 @@ await getWind(start.lat, start.lng, firstDir);
     📉 Gain estimé :
     ${windGain.toFixed(0)} %
 `;  
+    //--------------------------------
+    map.fitBounds(latlngs);
+    addWindLegend();
+
+    const normalEffort =
+        normalScore < 8 ? "Facile" :
+        normalScore < 15 ? "Moyen" :
+        "Difficile";
+
+    const alternativeEffort =
+        alternativeScore < 8 ? "Facile" :
+        alternativeScore < 15 ? "Moyen" :
+        "Difficile";
+/---------------------------
+    
    // document.getElementById("windInfo").innerHTML = `
     //    ${recommendation}
    //     <br>
