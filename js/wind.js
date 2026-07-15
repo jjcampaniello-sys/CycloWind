@@ -1,8 +1,4 @@
 // Analyse du vent
-let currentWindSpeed = 0;
-let currentWindDirection = 0;
-let windControl = null;
-let windLegend = null;
 function windEffect(rideDirection, windDirection) {
 
     let angle = Math.abs(rideDirection - windDirection);
@@ -21,6 +17,7 @@ function windEffect(rideDirection, windDirection) {
 
     return "↔️ Vent latéral";
 }
+
 
 // Coût du vent
 function windCost(roadDirection, windDirection, windSpeed) {
@@ -147,4 +144,3 @@ function addWindLegend() {
 
     windLegend.addTo(map);
 }
-
