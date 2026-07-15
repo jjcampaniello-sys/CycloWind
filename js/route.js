@@ -208,7 +208,7 @@ async function getRoute(){
 
 const latlngs = coords.map(point => [point[1], point[0]]);
 
-    const latlngs = coords.map(point => [point[1], point[0]]);
+   // const latlngs = coords.map(point => [point[1], point[0]]);
 
 // ✅ ICI c’est bon
 const firstDir = getSegmentDirection(latlngs[0], latlngs[1]);
