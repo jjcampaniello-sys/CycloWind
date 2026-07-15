@@ -111,7 +111,7 @@ function chooseBestRoute(normalRoute, alternativeRoute, normalScore, alternative
 
     return "normal";
 }
-//----------------------------------------
+
 function calculateWindGain(scoreNormal, scoreAlternative){
 
     if(scoreNormal <= 0){
@@ -124,7 +124,7 @@ function calculateWindGain(scoreNormal, scoreAlternative){
     return Math.max(0, gain);
 
 }
-//---------------------------------------
+
 function drawWindRoute(latlngs){
     for(let i = 0; i < latlngs.length - 1; i++){
         const direction = getSegmentDirection(
@@ -269,47 +269,37 @@ await getWind(start.lat, start.lng, firstDir);
         normalScore,
         alternativeScore
     );
-//-----------------------------------
+
     const windGain = calculateWindGain(
     normalScore,
     alternativeScore
 );
-    //--------------------------------------------
-   document.getElementById("windInfo").innerHTML = `
- <br> 🌬️ Actuel : ${normalScore.toFixed(1)} 
 
-    //--------------------------------
-    map.fitBounds(latlngs);
-    addWindLegend();
+// Choix texte
+let recommendation =
+    choice === "alternative"
+    ? "🌱 CycloWind recommande l'alternative"
+    : "🚴 CycloWind recommande ce trajet";
 
-    const normalEffort =
-        normalScore < 8 ? "Facile" :
-        normalScore < 15 ? "Moyen" :
-        "Difficile";
+// ✅ AFFICHAGE PROPRE (UN SEUL BLOC)
+document.getElementById("windInfo").innerHTML = `
+    ${recommendation}
+    <br>
+    🌬️ Impact vent : ${alternativeScore.toFixed(1)}
+    <br>
+    📉 Gain estimé : ${windGain.toFixed(0)} %
+`;
 
-    const alternativeEffort =
-        alternativeScore < 8 ? "Facile" :
-        alternativeScore < 15 ? "Moyen" :
-        "Difficile";
-/---------------------------
-    let recommendation =
-        choice === "alternative"
-        ? "🌱 CycloWind recommande l'alternative"
-        : "🚴 CycloWind recommande ce trajet";
-    document.getElementById("windInfo").innerHTML = `
-      //  ${recommendation}
-        <br>
-       🌬️ Actuel : ${normalScore.toFixed(1)}
-       <br>
-        🌱 CycloWind : ${alternativeScore.toFixed(1)}
-    `;
+// Carte
+map.fitBounds(latlngs);
+addWindLegend();
 
-    const routeData = {
-        coords: latlngs,
-        wind: normalScore,
-        altWind: alternativeScore,
-        recommendation: recommendation
-    };
+// Données internes
+const routeData = {
+    coords: latlngs,
+    wind: normalScore,
+    altWind: alternativeScore,
+    recommendation: recommendation
+};
 
-    window.drawWindRoute = drawWindRoute;
-}
+window.drawWindRoute = drawWindRoute;
