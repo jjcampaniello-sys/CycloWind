@@ -152,6 +152,10 @@ async function getRoute(){
     lat: window.userPosition[0],
     lng: window.userPosition[1]
 };
+
+// 🔥 AJOUT ICI
+await getWind(start.lat, start.lng, 0);
+    
     alert(
 "Départ : " + start.lat + " / " + start.lng
 );
