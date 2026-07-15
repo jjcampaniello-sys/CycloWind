@@ -31,7 +31,10 @@ function searchDestination(){
                 div.onclick = function(){
 
                     // 🔥 STOCKER DESTINATION
-                    window.destination = place.geometry.coordinates;
+                   window.destination = {
+    lat: place.geometry.coordinates[1],
+    lon: place.geometry.coordinates[0]
+};
 
                     document.getElementById("destination").value = full;
 
