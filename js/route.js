@@ -246,10 +246,10 @@ const windGain = calculateWindGain(
     normalScore,
     alternativeScore
 );
-    document.getElementById("windInfo").innerHTML += `
-        <br>Route test : ${normalScore.toFixed(1)}
-        <br>Alternative : ${alternativeScore.toFixed(1)}
-    `;    
+   // document.getElementById("windInfo").innerHTML += `
+   //     <br>Route test : ${normalScore.toFixed(1)}
+   //     <br>Alternative : ${alternativeScore.toFixed(1)}
+  //  `;    
     
     map.fitBounds(latlngs);
     addWindLegend();
