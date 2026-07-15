@@ -22,11 +22,7 @@ async function getAlternativeRoute(start, endLat, endLon) {
     coordinates: [
         [start.lng, start.lat],
         [endLon, endLat]
-    ],
-
-    alternative_routes: {
-        target_count: 2
-    }
+    ],    
 };
 
     const response = await fetch(url, {
@@ -181,10 +177,6 @@ async function getRoute(){
         [start.lng, start.lat],
         [endLon, endLat]
     ],
-
-    alternative_routes: {
-        target_count: 2
-    }
 };
 
     const response = await fetch(orsUrl, {
