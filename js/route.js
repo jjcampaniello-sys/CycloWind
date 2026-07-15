@@ -123,6 +123,19 @@ function calculateWindGain(scoreNormal, scoreAlternative){
 
     return Math.max(0, gain);
 
+}}
+
+function calculateWindGain(scoreNormal, scoreAlternative){
+
+    if(scoreNormal <= 0){
+        return 0;
+    }
+
+    const gain =
+    ((scoreNormal - scoreAlternative) / scoreNormal) * 100;
+
+    return Math.max(0, gain);
+
 }
 
 function drawWindRoute(latlngs){
@@ -257,10 +270,11 @@ await getWind(start.lat, start.lng, firstDir);
 
 // puis
 //drawWindRoute(latlngs);
-    
+ alert("1 avant draw");   
     drawWindRoute(latlngs);
-
+alert("2 après draw");
     const normalScore = calculateWindScore(latlngs);
+alert("3 après score");    
     const alternativeScore = calculateWindScore(altLatlngs);
 
     const choice = chooseBestRoute(
