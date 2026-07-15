@@ -148,17 +148,17 @@ async function getRoute(){
         return;
     }
 
-const firstSegmentDirection = getSegmentDirection(
-    latlngs[0],
-    latlngs[1]
-);
+//const firstSegmentDirection = getSegmentDirection(
+   // latlngs[0],
+  //  latlngs[1]
+//);
     
    const start = {   
     lat: window.userPosition[0],
     lng: window.userPosition[1]
 };
     // 🔥 AJOUT ICI
-//await getWind(start.lat, start.lng, 0);
+await getWind(start.lat, start.lng, 0);
     alert(
 "Départ : " + start.lat + " / " + start.lng
 );
