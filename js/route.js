@@ -303,13 +303,13 @@ await getWind(start.lat, start.lng, firstDir);
         ? "🌱 CycloWind recommande l'alternative"
         : "🚴 CycloWind recommande ce trajet";
 
-    document.getElementById("windInfo").innerHTML = `
-        ${recommendation}
-        <br>
-       🌬️ Actuel : ${normalScore.toFixed(1)}
-        <br>
-        🌱 CycloWind : ${alternativeScore.toFixed(1)}
-    `;
+   // document.getElementById("windInfo").innerHTML = `
+    //    ${recommendation}
+   //     <br>
+   //    🌬️ Actuel : ${normalScore.toFixed(1)}
+ //       <br>
+  //      🌱 CycloWind : ${alternativeScore.toFixed(1)}
+ //   `;
 
     const routeData = {
         coords: latlngs,
