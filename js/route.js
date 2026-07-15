@@ -282,8 +282,8 @@ await getWind(start.lat, start.lng, firstDir);
 
     document.getElementById("windInfo").innerHTML = `
         ${recommendation}
-      //  <br>
-     //   🌬️ Actuel : ${normalScore.toFixed(1)}
+        <br>
+        🌬️ Actuel : ${normalScore.toFixed(1)}
         <br>
         🌱 CycloWind : ${alternativeScore.toFixed(1)}
     `;
