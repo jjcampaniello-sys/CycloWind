@@ -155,8 +155,8 @@ async function getRoute(){
 // 🔥 AJOUT ICI
 //const firstDir = getSegmentDirection(latlngs[0], latlngs[1]);
 //await getWind(start.lat, start.lng, firstDir);
-    
-// await getWind(start.lat, start.lng, 0);
+
+    //await getWind(start.lat, start.lng, 0);
     
     alert(
 "Départ : " + start.lat + " / " + start.lng
@@ -206,7 +206,7 @@ async function getRoute(){
     const altCoords = alternative.geometry.coordinates;
     const altLatlngs = altCoords.map(point => [point[1], point[0]]);
 
-const latlngs = coords.map(point => [point[1], point[0]]);
+//const latlngs = coords.map(point => [point[1], point[0]]);
 
    // const latlngs = coords.map(point => [point[1], point[0]]);
 
@@ -216,7 +216,7 @@ const firstDir = getSegmentDirection(latlngs[0], latlngs[1]);
 await getWind(start.lat, start.lng, firstDir);
 
 // puis
-drawWindRoute(latlngs);
+//drawWindRoute(latlngs);
     
     drawWindRoute(latlngs);
 
