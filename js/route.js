@@ -209,21 +209,35 @@ async function getRoute(){
         ? "🌱 CycloWind recommande l'alternative"
         : "🚴 CycloWind recommande ce trajet";
 
+       // --- CONFIGURATION DE L'AFFICHAGE DYNAMIQUE ---
     function updateWindText(currentView, activeScore) {
+        const featureActive = currentView === "normale" ? normalFeature : alternativeFeature;
+        const distanceKm = (featureActive.properties.summary.distance / 1000).toFixed(1);
+        const durationMin = Math.round(featureActive.properties.summary.duration / 60);
+
         document.getElementById("windInfo").innerHTML = `
             ${recommendation}
             <br>
             📍 Vue : Route ${currentView}
             <br>
-            🌬️ Impact vent : ${activeScore.toFixed(1)}
+            📏 Distance : ${distanceKm} km
             <br>
-            📉 Économie max : ${windGain.toFixed(0)} %
+            ⏱️ Durée : ${durationMin} min
+            <br>
+            📊 Impact vent : ${activeScore.toFixed(1)}
         `;
     }
 
+    // Affichage initial à droite
     updateWindText("normale", normalScore);
 
-    // --- LOGIQUE DU BOUTON TOGGLE CORRIGÉE ET ENTIÈREMENT REFERMÉE ---
+    // 🔥 AUTOMATISATION DE LA VUE GLOBALE AU CHARGEMENT (Étape Planification)
+    if (latlngsNormal && latlngsNormal.length > 0) {
+        const bounds = L.latLngBounds(latlngsNormal);
+        window.map.fitBounds(bounds, { padding: [50, 50] }); // Ajuste l'écran pour tout voir d'un coup
+    }
+
+    // --- LOGIQUE DU BOUTON TOGGLE ROUTE A GAUCHE ---
     const toggleBtn = document.getElementById("toggleRouteBtn");
     
     if (allRoutesData.features.length > 1) {
@@ -236,7 +250,6 @@ async function getRoute(){
             if (typeof routeLayers !== 'undefined') { routeLayers = []; }
 
             if (!showingAlternative) {
-                // Utilisation des variables globales rattachées à window
                 drawWindRoute(window.latlngsAlternativePersist);
                 toggleBtn.innerText = "Voir la route normale";
                 updateWindText("alternative", alternativeScore);
@@ -253,4 +266,35 @@ async function getRoute(){
     }
 
     window.drawWindRoute = drawWindRoute;
+}
+
+// 🔥 NOUVELLE FONCTION COMMANDEE PAR LE BOUTON DEMARRER
+function startNavigation() {
+    const btn = document.getElementById("startNavBtn");
+    if (!btn) return;
+
+    if (!window.userPosition) {
+        alert("Position GPS non détectée. Impossible de démarrer.");
+        return;
+    }
+
+    if (!window.isNavigating) {
+        // Déclenchement du suivi de mouvement serré
+        window.isNavigating = true;
+        btn.innerText = "Arrêter";
+        btn.style.backgroundColor = "#e74c3c"; // Passe au Rouge
+
+        // Zoom direct instantané sur l'utilisateur pour lancer la route
+        window.map.setView(window.userPosition, 17);
+    } else {
+        // Arrêt de la navigation, retour au mode planification
+        window.isNavigating = false;
+        btn.innerText = "Démarrer";
+        btn.style.backgroundColor = "#2ecc71"; // Repasse au Vert
+
+        // Repositionne en grand si un itinéraire existe
+        if (window.latlngsNormalPersist) {
+            window.map.fitBounds(L.latLngBounds(window.latlngsNormalPersist), { padding: [50, 50] });
+        }
+    }
 }
