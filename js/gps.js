@@ -8,7 +8,6 @@ let gpsWatchId = null;
 window.isNavigating = false;
 let isFirstLoad = true;
 
-alert("GPS démarre");
 
 function startGPS(){
     if(!navigator.geolocation){
