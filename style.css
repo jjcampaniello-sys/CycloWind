@@ -121,7 +121,7 @@ button {
 .wind-container-right {
     position: absolute !important;
     bottom: 20px !important;
-    right: 20px !important; /* Calé à droite */
+    right: 10px !important; /* Calé à droite */
     background: white !important;
     padding: 12px !important;
     border-radius: 8px !important;
