@@ -111,41 +111,44 @@ button {
 }
 /* 1. On crée un conteneur pour tout le bloc d'info en bas à droite */
 .wind-container {
-   /* Conteneur flottant positionné en bas à gauche de l'écran */
+ /* Le conteneur flotte à gauche, mais remonte pour laisser la place aux zooms Leaflet */
 .wind-container {
     position: absolute;
-    bottom: 15px;
-    left: 15px; /* Déplacement à gauche (remplace right: 15px) */
+    bottom: 80px; /* Remonté de 15px à 80px pour esquiver les boutons de zoom */
+    left: 20px;
     background: white;
-    padding: 10px;
+    padding: 12px;
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-    z-index: 1000; /* Reste par-dessus la carte Leaflet */
-    max-width: 200px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Ombre plus visible */
+    z-index: 2000; /* Priorité maximale absolue face aux couches Leaflet */
+    width: 220px; /* Légèrement élargi pour éviter les retours à la ligne brusques */
 }
 
-/* Le texte météo s'adapte à l'intérieur */
+/* Style interne du texte */
 #windInfo {
     font-size: 13px;
     line-height: 1.4;
     font-weight: bold;
-    margin-bottom: 8px; 
+    color: #2c3e50;
+    margin-bottom: 10px;
 }
 
-/* Style du bouton Toggle */
+/* Style moderne pour votre bouton Toggle */
 #toggleRouteBtn {
     width: 100%;
-    padding: 8px 10px;
+    padding: 10px;
     background-color: #3498db;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 12px;
+    border-radius: 6px;
+    font-size: 13px;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
 }
 
 #toggleRouteBtn:hover {
     background-color: #2980b9;
+    transform: translateY(-1px); /* Effet de soulèvement au survol */
 }
