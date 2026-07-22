@@ -23,8 +23,8 @@ async function getAlternativeRoute(start, endLat, endLon) {
         ],
         alternative_routes: {
             target_count: 3,    
-            share_factor: 0.6,  
-            weight_factor: 1.4  
+            share_factor: 0.4,  
+            weight_factor: 1.8  
         }
     };
 
