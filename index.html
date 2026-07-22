@@ -63,16 +63,16 @@ border:1px solid #ccc;">
 
 <div id="map"></div>
 <!-- Bloc d'analyse du vent en bas à droite de la carte -->
-<div class="wind-container">
-    <!-- Le JavaScript écrira les scores ici -->
+<!-- 1. BLOC DE GAUCHE : Contient UNIQUEMENT le bouton Toggle -->
+<div class="wind-container-left">
+    <button id="toggleRouteBtn">Voir la route alternative</button>
+</div>
+
+<!-- 2. BLOC DE DROITE : Contient le texte des scores et de la recommandation -->
+<div class="wind-container-right">
     <div id="windInfo">
         En attente du trajet...
     </div>
-    
-    <!-- Le bouton est maintenant protégé à l'intérieur du bloc blanc -->
-    <button id="toggleRouteBtn" style="display: none;">
-        Voir la route alternative
-    </button>
 </div>
 
 
