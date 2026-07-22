@@ -212,6 +212,8 @@ async function getRoute(){
     const routesArrayMock = [{ duration: normalFeature.properties.summary.duration }];
     const alternativeMock = { duration: alternativeFeature.properties.summary.duration };
 
+       // ... (votre code existant au-dessus reste identique)
+
     const choice = chooseBestRoute(
         routesArrayMock[0],
         alternativeMock,
@@ -225,7 +227,7 @@ async function getRoute(){
         ? "🌱 CycloWind recommande l'alternative"
         : "🚴 CycloWind recommande ce trajet";
 
-    // 6. Affichage des statistiques dans le HTML
+    // Affichage des statistiques dans le HTML
     document.getElementById("windInfo").innerHTML = `
         ${recommendation}
         <br>
@@ -234,6 +236,36 @@ async function getRoute(){
         📉 Gain estimé : ${windGain.toFixed(0)} %
     `;
 
-    // Facultatif : si l'alternative est sélectionnée, vous pourriez vouloir effacer la carte 
-    // et dessiner drawWindRoute(latlngsAlternative) à la place.
+    // --- LOGIQUE DU BOUTON TOGGLE ET DE LA COLORATION DYNAMIQUE ---
+    const toggleBtn = document.getElementById("toggleRouteBtn");
+    
+    // Si l'API a bien renvoyé deux routes, on affiche le bouton
+    if (allRoutesData.features.length > 1) {
+        toggleBtn.style.display = "block";
+        let showingAlternative = false;
+
+        // On écoute le clic sur le bouton
+        toggleBtn.onclick = function() {
+            // 1. On nettoie les tracés précédents sur la carte
+            window.routeGroup.clearLayers();
+            routeLayers = []; // On vide le tableau de suivi des calques
+
+            if (!showingAlternative) {
+                // L'utilisateur veut voir l'alternative -> On la trace AVEC les couleurs du vent !
+                drawWindRoute(latlngsAlternative);
+                toggleBtn.innerText = "Voir la route normale";
+                showingAlternative = true;
+            } else {
+                // L'utilisateur revient à la route normale -> On la retrace en couleur
+                drawWindRoute(latlngsNormal);
+                toggleBtn.innerText = "Voir la route alternative";
+                showingAlternative = false;
+            }
+        };
+    } else {
+        // Pas d'alternative trouvée par l'API, on cache le bouton
+        toggleBtn.style.display = "none";
+    }
+
+    window.drawWindRoute = drawWindRoute;
 };
