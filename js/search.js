@@ -15,11 +15,22 @@ function searchDestination(){
             const container = document.getElementById("suggestions");
             container.innerHTML = "";
 
+            // 🔥 CORRECTIF : Création d'un Set pour mémoriser les adresses textuelles uniques
+            const uniqueAddresses = new Set();
+
             data.features.forEach(place => {
 
                 const name = place.properties.name || "Lieu";
                 const city = place.properties.city || "";
                 const full = name + " " + city;
+
+                // 🔥 CORRECTIF : Si la combinaison "Nom Ville" a déjà été ajoutée, on l'ignore
+                if (uniqueAddresses.has(full)) {
+                    return; // Passe au lieu suivant sans l'ajouter à l'écran
+                }
+
+                // Sinon, on l'enregistre dans notre mémoire "Set" et on continue
+                uniqueAddresses.add(full);
 
                 const div = document.createElement("div");
 
@@ -30,11 +41,11 @@ function searchDestination(){
 
                 div.onclick = function(){
 
-                    // 🔥 STOCKER DESTINATION
-                   window.destination = {
-    lat: place.geometry.coordinates[1],
-    lon: place.geometry.coordinates[0]
-};
+                    // STOCKER DESTINATION (Reste inchangé et 100% fonctionnel)
+                    window.destination = {
+                        lat: place.geometry.coordinates[1],
+                        lon: place.geometry.coordinates[0]
+                    };
 
                     document.getElementById("destination").value = full;
 
