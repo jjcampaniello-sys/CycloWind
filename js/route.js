@@ -15,15 +15,20 @@ function getSegmentDirection(p1, p2){
 
 async function getAlternativeRoute(start, endLat, endLon) {
     const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImU5N2JkNDJjYTM5MzRjYTFhODQ1MTE2YjViNmQ2ZGJjIiwiaCI6Im11cm11cjY0In0=";
+    const url = "https://openrouteservice.org";
 
-    const url = "https://api.openrouteservice.org/v2/directions/cycling-regular/geojson";
-
+    // Configuration pour demander des routes alternatives à l'API
     const body = {
-    coordinates: [
-        [start.lng, start.lat],
-        [endLon, endLat]
-    ],    
-};
+        coordinates: [
+            [start.lng, start.lat],
+            [endLon, endLat]
+        ],
+        alternative_routes: {
+            target_count: 2,    // Demande jusqu'à 2 routes alternatives max
+            share_factor: 0.6,  // Niveau de ressemblance max autorisé entre les routes (0.6 = 60%)
+            weight_factor: 1.4  // L'alternative peut être au maximum 1.4 fois plus longue
+        }
+    };
 
     const response = await fetch(url, {
         method: "POST",
@@ -35,15 +40,7 @@ async function getAlternativeRoute(start, endLat, endLon) {
     });
 
     const data = await response.json();
- //  console.log("Routes ORS reçues :", data);
-    const coords = data.features[0].geometry.coordinates;
-
-    return {
-        geometry: {
-            coordinates: coords
-        },
-        duration: data.features[0].properties.summary.duration
-    };
+    return data; // On retourne tout l'objet de données qui contient désormais TOUTES les routes
 }
 
 function calculateWindScore(latlngs){
@@ -149,124 +146,91 @@ function drawGrayRoute(latlngs){
 
 // Calcul trajet
 async function getRoute(){
-   alert("getRoute démarré");
+    alert("getRoute démarré");
     if(!window.userPosition){
-    alert("Définissez votre position d'abord");
-    return;
-}
+        alert("Définissez votre position d'abord");
+        return;
+    }
     
     if(!window.destination){
         alert("Choisissez une destination dans la liste");
         return;
     }
     
-   const start = {   
-    lat: window.userPosition[0],
-    lng: window.userPosition[1]
-};
-// 🔥 AJOUT ICI
-//const firstDir = getSegmentDirection(latlngs[0], latlngs[1]);
-//await getWind(start.lat, start.lng, firstDir);
-
-    //await getWind(start.lat, start.lng, 0);
+    const start = {   
+        lat: window.userPosition[0],
+        lng: window.userPosition[1]
+    };
     
-    alert(
-"Départ : " + start.lat + " / " + start.lng
-);
+    alert("Départ : " + start.lat + " / " + start.lng);
     const endLat = window.destination.lat;
     const endLon = window.destination.lon;
     
-    const alternative = await getAlternativeRoute(start, endLat, endLon);
+    // 1. On récupère TOUTES les routes calculées (la principale + les alternatives)
+    const allRoutesData = await getAlternativeRoute(start, endLat, endLon);
     
-   // console.log("Route alternative :", alternative);
+    if (!allRoutesData.features || allRoutesData.features.length === 0) {
+        alert("Aucun itinéraire trouvé");
+        return;
+    }
 
-    const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImU5N2JkNDJjYTM5MzRjYTFhODQ1MTE2YjViNmQ2ZGJjIiwiaCI6Im11cm11cjY0In0=";
-    const orsUrl = "https://api.openrouteservice.org/v2/directions/cycling-regular/geojson";
+    // 2. Extraction de la route normale (la première de la liste d'ORS)
+    const normalFeature = allRoutesData.features[0];
+    const coordsNormal = normalFeature.geometry.coordinates;
+    const latlngsNormal = coordsNormal.map(point => [point[1], point[0]]);
 
-    const body = {
-    coordinates: [
-        [start.lng, start.lat],
-        [endLon, endLat]
-    ],
-};
+    // 3. Extraction de la route alternative (la deuxième, s'il y en a une)
+    let latlngsAlternative = latlngsNormal; // Par défaut s'il n'y a pas d'alternative
+    let alternativeFeature = normalFeature;
 
-    const response = await fetch(orsUrl, {
-        method: "POST",
-        headers: {
-            "Authorization": apiKey,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    });
+    if (allRoutesData.features.length > 1) {
+        alternativeFeature = allRoutesData.features[1];
+        const coordsAlt = alternativeFeature.geometry.coordinates;
+        latlngsAlternative = coordsAlt.map(point => [point[1], point[0]]);
+    } else {
+        console.log("L'API n'a pas pu générer de route alternative viable pour ce trajet.");
+    }
 
-    const data = await response.json();
-    //console.log("Routes ORS reçues :", data);
-    const coords = data.features[0].geometry.coordinates;
+    // Sauvegarde de la route actuelle globale (format objets)
+    window.currentRoute = latlngsNormal.map(p => ({ lat: p[0], lng: p[1] }));
 
-    const routes = [{
-        geometry: {
-            coordinates: coords
-        }
-    }];
+    // Récupération de la météo du vent
+    const firstDir = getSegmentDirection(latlngsNormal[0], latlngsNormal[1]);
+    await getWind(start.lat, start.lng, firstDir);
     
-    const latlngs = coords.map(point => [point[1], point[0]]);   
+    // 4. On dessine la route normale en couleur selon le vent
+    drawWindRoute(latlngsNormal);
 
-    window.currentRoute = latlngs.map(p => ({
-        lat: p[0],
-        lng: p[1]
-    }));
+    // 5. Calcul et comparaison des scores face au vent
+    const normalScore = calculateWindScore(latlngsNormal);
+    const alternativeScore = calculateWindScore(latlngsAlternative);
 
-    const altCoords = alternative.geometry.coordinates;
-    const altLatlngs = altCoords.map(point => [point[1], point[0]]);
-
-//const latlngs = coords.map(point => [point[1], point[0]]);
-
-   // const latlngs = coords.map(point => [point[1], point[0]]);
-
-// ✅ ICI c’est bon
-const firstDir = getSegmentDirection(latlngs[0], latlngs[1]);
-
-await getWind(start.lat, start.lng, firstDir);
-
-// puis
-//drawWindRoute(latlngs);
-    
-    drawWindRoute(latlngs);
-
-    const normalScore = calculateWindScore(latlngs);
-    const alternativeScore = calculateWindScore(altLatlngs);
+    // Formatage des objets pour correspondre à votre fonction chooseBestRoute
+    const routesArrayMock = [{ duration: normalFeature.properties.summary.duration }];
+    const alternativeMock = { duration: alternativeFeature.properties.summary.duration };
 
     const choice = chooseBestRoute(
-        routes[0],
-        alternative,
+        routesArrayMock[0],
+        alternativeMock,
         normalScore,
         alternativeScore
     );
-const windGain = calculateWindGain(
-    normalScore,
-    alternativeScore
-);
 
-let recommendation =
-    choice === "alternative"
-    ? "🌱 CycloWind recommande l'alternative"
-    : "🚴 CycloWind recommande ce trajet";
+    const windGain = calculateWindGain(normalScore, alternativeScore);
 
-// ✅ AFFICHAGE PROPRE (UN SEUL BLOC)
-document.getElementById("windInfo").innerHTML = `
-    ${recommendation}
-    <br>
-    🌬️ Impact vent : ${alternativeScore.toFixed(1)}
-    <br>
-    📉 Gain estimé : ${windGain.toFixed(0)} %
-`;
+    let recommendation = choice === "alternative" && allRoutesData.features.length > 1
+        ? "🌱 CycloWind recommande l'alternative"
+        : "🚴 CycloWind recommande ce trajet";
 
-    const routeData = {
-        coords: latlngs,
-        wind: normalScore,
-        altWind: alternativeScore,
-        recommendation: recommendation
-    };
+    // 6. Affichage des statistiques dans le HTML
+    document.getElementById("windInfo").innerHTML = `
+        ${recommendation}
+        <br>
+        🌬️ Impact vent : ${alternativeScore.toFixed(1)}
+        <br>
+        📉 Gain estimé : ${windGain.toFixed(0)} %
+    `;
 
-    window.drawWindRoute = drawWindRoute;
+    // Facultatif : si l'alternative est sélectionnée, vous pourriez vouloir effacer la carte 
+    // et dessiner drawWindRoute(latlngsAlternative) à la place.
 };
