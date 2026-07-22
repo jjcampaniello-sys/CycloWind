@@ -8,7 +8,7 @@ function searchDestination(){
 
     if(query.length < 3) return;
 
-    fetch(`https://komoot.io{encodeURIComponent(query)}&limit=5&lang=fr`)
+    fetch(`https://photon.komoot.io{encodeURIComponent(query)}&limit=5&lang=fr`)
         .then(res => res.json())
         .then(data => {
 
