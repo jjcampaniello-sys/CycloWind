@@ -120,8 +120,8 @@ button {
 /* Positionnement précis des scores et recommandations à DROITE */
 .wind-container-right {
     position: absolute !important;
-    bottom: 10px !important;
-    right: 10px !important; /* Calé à droite */
+    bottom: 15px !important;
+    right: 15px !important; /* Calé à droite */
     background: white !important;
     padding: 12px !important;
     border-radius: 8px !important;
