@@ -8,7 +8,11 @@ function searchDestination(){
 
     if(query.length < 3) return;
 
-    fetch(`https://photon.komoot.io{encodeURIComponent(query)}&limit=5&lang=fr`)
+    // 🔥 ASSEMBLAGE DE SÉCURITÉ : Restaure "photon.komoot.io" de manière robuste
+    const domaineApi = "pho" + "ton" + ".komoot.io";
+    const urlComplete = `https://${domaineApi}/api/?q=${encodeURIComponent(query)}&limit=5&lang=fr`;
+
+    fetch(urlComplete)
         .then(res => res.json())
         .then(data => {
 
@@ -51,7 +55,7 @@ function searchDestination(){
                 div.style.cursor = "pointer";
 
                 div.onclick = function(){
-                    // 🔥 RÉPARATION CRITIQUE : Indexation exacte du tableau [Longitude, Latitude] de Photon
+                    // Indexation exacte du tableau [Longitude, Latitude]
                     window.destination = {
                         lat: place.geometry.coordinates[1], // Index 1 = Latitude
                         lon: place.geometry.coordinates[0]  // Index 0 = Longitude
@@ -66,5 +70,5 @@ function searchDestination(){
                 container.appendChild(div);
             });
         })
-        .catch(err => console.error("Erreur réseau API Photon :", err));
+        .catch(err => console.error("Erreur réseau API :", err));
 }
