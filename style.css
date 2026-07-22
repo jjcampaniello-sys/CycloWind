@@ -136,8 +136,9 @@ button {
 
 /* Le bouton Toggle */
 #toggleRouteBtn {
-    width: 100%;
-    padding: 10px;
+    width: auto !important;         /* Annule l'étirement automatique */
+    max-width: 180px !important;    /* Limite la largeur maximale */
+    padding: 8px 12px;
     background-color: #3498db;
     color: white;
     border: none;
@@ -145,8 +146,9 @@ button {
     font-size: 13px;
     font-weight: bold;
     cursor: pointer;
-    display: none; /* Géré par le JavaScript */
+    display: none;                  /* Laissé au contrôle du JS */
 }
+
 #toggleRouteBtn:hover {
     background-color: #2980b9;
 }
