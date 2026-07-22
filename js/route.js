@@ -208,10 +208,20 @@ async function getRoute(){
         : "🚴 CycloWind recommande ce trajet";
 
     // --- CONFIGURATION DE L'AFFICHAGE DYNAMIQUE ---
-    function updateWindText(currentView, activeScore) {
+        function updateWindText(currentView, activeScore) {
         const featureActive = currentView === "normale" ? normalFeature : alternativeFeature;
+        
+        // 1. Calcul de la distance en km
         const distanceKm = (featureActive.properties.summary.distance / 1000).toFixed(1);
-        const durationMin = Math.round(featureActive.properties.summary.duration / 60);
+
+        // 2. Gestion explicite du gain en pourcentage
+        let gainText = "";
+        if (windGain > 0 && allRoutesData.features.length > 1) {
+            gainText = `📉 Gain d'effort : -${windGain.toFixed(0)}% de vent`;
+        } else {
+            // Message explicite si les deux routes subissent le même vent ou s'il n'y a pas d'alternative
+            gainText = "🌬️ Protection identique sur les deux routes";
+        }
 
         document.getElementById("windInfo").innerHTML = `
             ${recommendation}
@@ -220,11 +230,12 @@ async function getRoute(){
             <br>
             📏 Distance : ${distanceKm} km
             <br>
-            ⏱️ Durée : ${durationMin} min
+            ${gainText}
             <br>
-            📊 Impact vent : ${activeScore.toFixed(1)}
+            📊 Indice effort vent : ${activeScore.toFixed(1)}
         `;
     }
+
 
     updateWindText("normale", normalScore);
 
