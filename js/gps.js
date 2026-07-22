@@ -52,7 +52,14 @@ function onPositionUpdate(position){
 
     updateBikeArrowPosition(lat, lon);
 
-    // 🔥 CORRECTIF CRITIQUE : On ne recentre et zoom à 17 QUE si la navigation est active !
+    // 🔥 MODIFICATION ICI :
+    // 1. Si c'est le premier chargement, on cadre DIRECTEMENT sur l'utilisateur
+    if (isFirstLoad) {
+        window.map.setView([lat, lon], 15); // Zoom de départ confortable de 15
+        isFirstLoad = false; // On désactive pour que ça ne se reproduise plus tout seul
+    }
+
+    // 2. Si l'utilisateur clique sur "Démarrer", on le suit avec un zoom serré de 17
     if (window.isNavigating) {
         window.map.setView([lat, lon], 17);
     }
