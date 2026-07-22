@@ -25,7 +25,7 @@ async function getAlternativeRoute(start, endLat, endLon) {
             [endLon, endLat]
         ],
         alternative_routes: {
-            target_count: 2,    // Demande jusqu'à 2 routes alternatives max
+            target_count: 3,    // Demande jusqu'à 2 routes alternatives max
             share_factor: 0.6,  // Niveau de ressemblance max autorisé entre les routes (0.6 = 60%)
             weight_factor: 1.4  // L'alternative peut être au maximum 1.4 fois plus longue
         }
