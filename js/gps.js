@@ -1,14 +1,12 @@
 // gps.js
 
 let currentHeading = 0;
-let bikeArrow = null; 
+// utilise la variable créée dans app.js//let bikeArrow = null;
 let gpsWatchId = null;
 
-// 🔥 RÉPARÉ : Déclaration obligatoire de la variable pour éviter le crash au démarrage
+// 🔥 NOUVEL ÉTAT POUR LE BOUTON DÉMARRER
+window.isNavigating = false;
 let isFirstLoad = true;
-
-// ÉTAT GLOBAL : Faux par défaut, passe à vrai au clic sur Démarrer
-window.isNavigating = false; 
 
 alert("GPS démarre");
 
@@ -24,13 +22,14 @@ function startGPS(){
             alert("Erreur GPS : " + error.message);
         },
         {
-            enableHighAccuracy: true,
-            maximumAge: 1000,
-            timeout: 10000
+            enableHighAccuracy:true,
+            maximumAge:1000,
+            timeout:10000
         }
     );
 }
 
+// ----------------------------
 function startCompass(){
     window.addEventListener("deviceorientation", function(event){
         if(event.alpha !== null){
@@ -40,13 +39,15 @@ function startCompass(){
     }, true);
 }
 
+// ----------------------------
 function onPositionUpdate(position){
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
 
-    // STOCKAGE GLOBAL
+    // 🔥 STOCKAGE GLOBAL
     window.userPosition = [lat, lon];
     console.log("Position stockée :", window.userPosition);
+    console.log("Position :", lat, lon);
 
     if(!window.map){
         console.error("map NON prête");
@@ -55,48 +56,58 @@ function onPositionUpdate(position){
 
     updateBikeArrowPosition(lat, lon);
 
-    // 1. Si c'est le premier chargement, on cadre DIRECTEMENT sur l'utilisateur
+    // 🔥 AMÉLIORATION SÉCURISÉE :
+    // 1. Cadre sur vous au tout premier démarrage de l'application
     if (isFirstLoad) {
-        window.map.setView([lat, lon], 15); // Zoom de départ confortable de 15
-        isFirstLoad = false; // On désactive pour que ça ne se reproduise plus tout seul
+        window.map.setView([lat, lon], 17);
+        isFirstLoad = false;
     }
 
-    // 2. Si l'utilisateur clique sur "Démarrer", on le suit avec un zoom serré de 17
+    // 2. Suit vos mouvements uniquement si vous avez cliqué sur "Démarrer"
     if (window.isNavigating) {
         window.map.setView([lat, lon], 17);
     }
 }
 
+// ----------------------------
 function updateBikeArrowPosition(lat, lon){
     if(!bikeArrow){
-        bikeArrow = L.marker([lat, lon], {
+        bikeArrow = L.marker([lat,lon], {
             icon: L.divIcon({
-                className: "bike-icon",
-                html: `
-                <div style="transform:rotate(${currentHeading}deg); font-size:32px; color:blue;">
+                className:"bike-icon",
+                html:`
+                <div style="
+                transform:rotate(${currentHeading}deg);
+                font-size:32px;
+                color:blue;">
                 ➤
                 </div>`,
-                iconSize: [40, 40],   // 🔥 Vérifiez que [40, 40] est bien écrit ici
-                iconAnchor: [20, 20]  // 🔥 Vérifiez que [20, 20] est bien écrit ici
+                iconSize:[40,40],
+                iconAnchor:[20,20]
             })
         }).addTo(window.map);
-    } else {
-        bikeArrow.setLatLng([lat, lon]);
+    }
+    else{
+        bikeArrow.setLatLng([lat,lon]);
         updateBikeArrow();
     }
 }
 
+// ----------------------------
 function updateBikeArrow(){
     if(!bikeArrow) return;
 
     const icon = L.divIcon({
-        className: "bike-icon",
-        html: `
-        <div style="transform:rotate(${currentHeading}deg); font-size:32px; color:blue;">
+        className:"bike-icon",
+        html:`
+        <div style="
+        transform:rotate(${currentHeading}deg);
+        font-size:32px;
+        color:blue;">
         ➤
         </div>`,
-        iconSize: [40, 40],   // 🔥 Vérifiez que [40, 40] est bien écrit ici
-        iconAnchor: [20, 20]  // 🔥 Vérifiez que [20, 20] est bien écrit ici
+        iconSize:[40,40],
+        iconAnchor:[20,20]
     });
 
     bikeArrow.setIcon(icon);
