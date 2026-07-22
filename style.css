@@ -111,8 +111,7 @@ button {
 }
 /* 1. On crée un conteneur pour tout le bloc d'info en bas à droite */
 .wind-container {
-/* Le conteneur maître qui reste soudé en bas à gauche */
-.wind-container {
+
     position: absolute !important;
     bottom: 85px !important; /* Calé au-dessus des zooms Leaflet */
     left: 20px !important;   /* Forcé à gauche */
