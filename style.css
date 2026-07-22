@@ -111,30 +111,32 @@ button {
 }
 /* 1. On crée un conteneur pour tout le bloc d'info en bas à droite */
 .wind-container {
+   /* Conteneur flottant positionné en bas à gauche de l'écran */
+.wind-container {
     position: absolute;
     bottom: 15px;
-    right: 15px;
+    left: 15px; /* Déplacement à gauche (remplace right: 15px) */
     background: white;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-    z-index: 1000; /* Force l'affichage par-dessus la carte Leaflet */
+    z-index: 1000; /* Reste par-dessus la carte Leaflet */
     max-width: 200px;
 }
 
-/* 2. Le texte à l'intérieur s'adapte simplement */
+/* Le texte météo s'adapte à l'intérieur */
 #windInfo {
     font-size: 13px;
     line-height: 1.4;
     font-weight: bold;
-    margin-bottom: 8px; /* Laisse un espace avant le bouton */
+    margin-bottom: 8px; 
 }
 
-/* 3. Style pour que votre bouton Toggle soit beau et visible */
+/* Style du bouton Toggle */
 #toggleRouteBtn {
     width: 100%;
     padding: 8px 10px;
-    background-color: #3498db; /* Bleu */
+    background-color: #3498db;
     color: white;
     border: none;
     border-radius: 5px;
@@ -145,5 +147,5 @@ button {
 }
 
 #toggleRouteBtn:hover {
-    background-color: #2980b9; /* Bleu foncé au survol */
+    background-color: #2980b9;
 }
