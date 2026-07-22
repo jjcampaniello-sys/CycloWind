@@ -117,18 +117,23 @@ button {
     z-index: 2000 !important;
 }
 
-/* Positionnement précis des scores et recommandations à DROITE */
-.wind-container-right {
-    position: absolute !important;
-    bottom: 20px !important;
-    right: 10px !important; /* Calé à droite */
+#windInfo {
+    /* Le design blanc s'applique directement ici */
     background: white !important;
     padding: 12px !important;
     border-radius: 8px !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: bold;
+    color: #2c3e50;
+
+    /* Positionnement propre à DROITE */
+    position: absolute !important;
+    bottom: 20px !important;
+    right: 20px !important;
     z-index: 2000 !important;
     width: 200px !important;
-      '' display: none;
 }
 
 /* Le texte à l'intérieur du bloc de droite */
