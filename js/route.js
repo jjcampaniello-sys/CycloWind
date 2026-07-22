@@ -208,19 +208,32 @@ async function getRoute(){
         : "🚴 CycloWind recommande ce trajet";
 
     // --- CONFIGURATION DE L'AFFICHAGE DYNAMIQUE ---
-        function updateWindText(currentView, activeScore) {
+           function updateWindText(currentView, activeScore) {
         const featureActive = currentView === "normale" ? normalFeature : alternativeFeature;
-        
-        // 1. Calcul de la distance en km
         const distanceKm = (featureActive.properties.summary.distance / 1000).toFixed(1);
 
-        // 2. Gestion explicite du gain en pourcentage
+        // --- CALCUL DE LA DIFFÉRENCE RÉELLE ---
+        // (Score Normal - Score Alternatif) / Score Normal * 100
+        const rawGain = ((normalScore - alternativeScore) / normalScore) * 100;
+
         let gainText = "";
-        if (windGain > 0 && allRoutesData.features.length > 1) {
-            gainText = `📉 Gain d'effort : -${windGain.toFixed(0)}% de vent`;
-        } else {
-            // Message explicite si les deux routes subissent le même vent ou s'il n'y a pas d'alternative
-            gainText = "🌬️ Protection identique sur les deux routes";
+
+        if (allRoutesData.features.length <= 1) {
+            // Cas 1 : L'API n'a pas trouvé d'autre rue physique
+            gainText = "🌬️ Aucune route alternative disponible";
+        } 
+        else if (Math.abs(rawGain) < 2) {
+            // Cas 2 : L'écart est minuscule (moins de 2% de différence)
+            gainText = "🌬️ Exposition au vent identique sur les deux trajets";
+        } 
+        else if (rawGain > 0) {
+            // Cas 3 : L'alternative est MEILLEURE (Gain positif)
+            gainText = `🌱 Économie de vent : -${rawGain.toFixed(0)}% d'effort sur l'alternative`;
+        } 
+        else {
+            // Cas 4 : L'alternative est MOINS BONNE (Gain négatif)
+            // On utilise Math.abs() pour transformer le chiffre négatif (ex: -15) en positif (ex: 15)
+            gainText = `⚠️ Attention : +${Math.abs(rawGain).toFixed(0)}% d'effort vent sur l'alternative`;
         }
 
         document.getElementById("windInfo").innerHTML = `
@@ -235,6 +248,7 @@ async function getRoute(){
             📊 Indice effort vent : ${activeScore.toFixed(1)}
         `;
     }
+
 
 
     updateWindText("normale", normalScore);
