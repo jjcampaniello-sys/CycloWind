@@ -111,29 +111,31 @@ button {
 }
 /* 1. On crée un conteneur pour tout le bloc d'info en bas à droite */
 .wind-container {
-/* Suppression complète de l'ancien #windInfo et remplacement par ce conteneur */
+/* Le conteneur maître qui reste soudé en bas à gauche */
 .wind-container {
     position: absolute !important;
-    bottom: 85px !important; /* Remonté pour ne pas toucher les boutons de zoom */
-    left: 20px !important;   /* Forcé à GAUCHE */
-    right: auto !important;  /* Annule explicitement le positionnement à droite */
-    
+    bottom: 85px !important; /* Calé au-dessus des zooms Leaflet */
+    left: 20px !important;   /* Forcé à gauche */
+    right: auto !important;  /* Bloque tout déplacement à droite */
     background: white !important;
     padding: 12px !important;
     border-radius: 8px !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
-    z-index: 2000 !important; /* Passe devant absolument tout */
+    z-index: 2000 !important; /* Passe devant la carte */
     width: 220px !important;
 }
 
+/* Le texte à l'intérieur : PLUS de position absolute, PLUS de right/left ici ! */
 #windInfo {
     font-size: 13px;
     line-height: 1.4;
     font-weight: bold;
     color: #2c3e50;
     margin-bottom: 10px;
+    position: relative !important; /* Reste sagement dans le conteneur */
 }
 
+/* Le bouton Toggle */
 #toggleRouteBtn {
     width: 100%;
     padding: 10px;
@@ -144,4 +146,8 @@ button {
     font-size: 13px;
     font-weight: bold;
     cursor: pointer;
+    display: none; /* Géré par le JavaScript */
+}
+#toggleRouteBtn:hover {
+    background-color: #2980b9;
 }
