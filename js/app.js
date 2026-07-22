@@ -10,7 +10,6 @@ let currentWindSpeed = 0;
 let routeLine = null;
 let routeLayers = [];
 
-alert("app.js loading...");
 
 // Initialize map immediately when script loads
 // app.js
