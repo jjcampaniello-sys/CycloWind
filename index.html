@@ -62,10 +62,19 @@ border:1px solid #ccc;">
 </div>
 
 <div id="map"></div>
-<div id="windInfo"></div>
-<button id="toggleRouteBtn" style="display:none; margin: 10px 0; padding: 8px 12px; cursor: pointer;">
-    Voir la route alternative
-</button>
+<!-- Bloc d'analyse du vent en bas à droite de la carte -->
+<div class="wind-container">
+    <!-- Le JavaScript écrira les scores ici -->
+    <div id="windInfo">
+        En attente du trajet...
+    </div>
+    
+    <!-- Le bouton est maintenant protégé à l'intérieur du bloc blanc -->
+    <button id="toggleRouteBtn" style="display: none;">
+        Voir la route alternative
+    </button>
+</div>
+
 
 <!-- Leaflet library first -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
