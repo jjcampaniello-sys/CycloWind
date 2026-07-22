@@ -68,13 +68,13 @@ async function getWind(lat, lon, rideDirection) {
     try {
 
         const url =
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_2m%2Cwind_direction_2m`;
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m%2Cwind_direction_10m`;
 
         const response = await fetch(url);
         const data = await response.json();
 
-        currentWindSpeed = data.current.wind_speed_2m;
-        currentWindDirection = data.current.wind_direction_2m;
+        currentWindSpeed = data.current.wind_speed_10m;
+        currentWindDirection = data.current.wind_direction_10m;
 
 
         if (windControl) {
