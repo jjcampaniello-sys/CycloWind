@@ -228,7 +228,7 @@ async function getRoute(){
         } 
         else if (rawGain > 0) {
             // Cas 3 : L'alternative est MEILLEURE (Gain positif)
-            gainText = `🌱 Économie de vent : -${rawGain.toFixed(0)}% d'effort sur l'alternative`;
+             gainText = `🌱 Économie de vent : -${Math.abs(rawGain).toFixed(0)}% d'effort sur l'alternative`;
         } 
         else {
             // Cas 4 : L'alternative est MOINS BONNE (Gain négatif)
