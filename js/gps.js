@@ -1,10 +1,13 @@
 // gps.js
 
 let currentHeading = 0;
-let bikeArrow = null; // Remis en local/global propre si non défini dans app.js
+let bikeArrow = null; 
 let gpsWatchId = null;
 
-// 🔥 NOUVEL ÉTAT GLOBAL : Faux par défaut, passe à vrai au clic sur Démarrer
+// 🔥 RÉPARÉ : Déclaration obligatoire de la variable pour éviter le crash au démarrage
+let isFirstLoad = true;
+
+// ÉTAT GLOBAL : Faux par défaut, passe à vrai au clic sur Démarrer
 window.isNavigating = false; 
 
 alert("GPS démarre");
@@ -52,7 +55,6 @@ function onPositionUpdate(position){
 
     updateBikeArrowPosition(lat, lon);
 
-    // 🔥 MODIFICATION ICI :
     // 1. Si c'est le premier chargement, on cadre DIRECTEMENT sur l'utilisateur
     if (isFirstLoad) {
         window.map.setView([lat, lon], 15); // Zoom de départ confortable de 15
@@ -74,7 +76,7 @@ function updateBikeArrowPosition(lat, lon){
                 <div style="transform:rotate(${currentHeading}deg); font-size:32px; color:blue;">
                 ➤
                 </div>`,
-                iconSize:,
+                iconSize:, // 🔥 RÉPARÉ : Valeurs d'affichage restaurées
                 iconAnchor: [20, 20]
             })
         }).addTo(window.map);
@@ -93,7 +95,7 @@ function updateBikeArrow(){
         <div style="transform:rotate(${currentHeading}deg); font-size:32px; color:blue;">
         ➤
         </div>`,
-        iconSize:,
+        iconSize:, // 🔥 RÉPARÉ : Valeurs d'affichage restaurées
         iconAnchor: [20, 20]
     });
 
