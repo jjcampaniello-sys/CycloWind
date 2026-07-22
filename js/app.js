@@ -20,7 +20,10 @@ window.addEventListener("load", function(){
    // console.log("App démarrée");
 
     // 🌍 Création carte
-    window.map = L.map('map').setView([52.3676, 4.9041], 12);
+   // Centre la carte sur l'Europe (coordonnées centrales approximatives) avec un zoom large de 4
+window.map = L.map('map').setView([54.5260, 15.2551], 4);
+
+   // window.map = L.map('map').setView([52.3676, 4.9041], 12);
 
     L.tileLayer(
         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
