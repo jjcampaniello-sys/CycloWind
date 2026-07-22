@@ -188,6 +188,8 @@ async function getRoute(){
         alternativeFeature = allRoutesData.features[1];
         const coordsAlt = alternativeFeature.geometry.coordinates;
         latlngsAlternative = coordsAlt.map(point => [point[1], point[0]]);
+        // OPTIONNEL : On dessine aussi la route alternative en Gris pour qu'elle apparaisse !
+        drawGrayRoute(latlngsAlternative);
     } else {
         console.log("L'API n'a pas pu générer de route alternative viable pour ce trajet.");
     }
