@@ -252,31 +252,37 @@ async function getRoute(){
         let showingAlternative = false;
         toggleBtn.innerText = "Voir la route alternative";
 
-        toggleBtn.onclick = function() {
+                toggleBtn.onclick = function() {
+            // 1. On nettoie proprement la carte
             window.routeGroup.clearLayers();
-            
-            if (typeof routeLayers !== 'undefined') {
-                routeLayers = []; 
-            }
+            if (typeof routeLayers !== 'undefined') { routeLayers = []; }
 
             if (!showingAlternative) {
-                // 1. On dessine l'alternative
-                drawWindRoute(window.latlngsAlternativePersist);
-                // 2. On met à jour le bouton
+                // SÉCURITÉ : Si la route alternative persistante n'existe pas, on reprend la normale
+                const pathToDraw = window.latlngsAlternativePersist && window.latlngsAlternativePersist.length > 0 
+                    ? window.latlngsAlternativePersist 
+                    : window.latlngsNormalPersist;
+
+                // 2. On dessine le tracé coloré alternatif
+                drawWindRoute(pathToDraw);
+                
+                // Si l'API n'avait pas d'alternative, on dessine la route normale en gris en arrière-plan pour meubler
+                if (window.latlngsAlternativePersist === window.latlngsNormalPersist && typeof drawGrayRoute === 'function') {
+                    drawGrayRoute(window.latlngsNormalPersist);
+                }
+
                 toggleBtn.innerText = "Voir la route normale";
-                // 3. 🔥 CORRECTIF : On affiche le score de l'alternative !
                 updateWindText("alternative", alternativeScore);
                 showingAlternative = true;
             } else {
-                // 1. On redessine la normale
+                // 3. L'utilisateur revient à la route normale
                 drawWindRoute(window.latlngsNormalPersist);
-                // 2. On met à jour le bouton
                 toggleBtn.innerText = "Voir la route alternative";
-                // 3. 🔥 CORRECTIF : On réaffiche le score de la route normale !
                 updateWindText("normale", normalScore);
                 showingAlternative = false;
             }
         };
+
     } else {
         toggleBtn.style.display = "none";
     }
