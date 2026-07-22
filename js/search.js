@@ -15,17 +15,17 @@ function searchDestination(){
             const container = document.getElementById("suggestions");
             container.innerHTML = "";
 
-            // Filtre invisible pour mémoriser les adresses uniques textuelles
+            // Filtre mémoire pour éviter d'afficher les adresses identiques
             const uniqueAddresses = new Set();
 
             data.features.forEach(place => {
 
-                // 1. Récupération des composants de l'adresse
+                // 1. Récupération des données textuelles de l'adresse
                 const name = place.properties.name || "";
                 const housenumber = place.properties.housenumber || ""; 
                 const city = place.properties.city || "";
 
-                // 2. Construction de l'adresse (s'adapte si le numéro est absent !)
+                // 2. Reconstruction de l'adresse (gère de manière transparente l'absence ou présence de numéro)
                 let full = "";
                 if (housenumber && !name.includes(housenumber)) {
                     full = housenumber + " " + name + " " + city;
@@ -33,37 +33,38 @@ function searchDestination(){
                     full = name + " " + city;
                 }
 
-                // Nettoyage des espaces multiples
+                // Nettoyage des espaces multiples superflus
                 full = full.replace(/\s+/g, ' ').trim();
 
                 if (!full) full = "Lieu inconnu";
 
-                // 3. Sécurité anti-doublon textuel
+                // 3. Application du filtre anti-doublon
                 if (uniqueAddresses.has(full)) {
-                    return; // Ignore les répétitions confuses (ex: doublons de quartiers)
+                    return; // Ignore et passe au point suivant si l'intitulé est identique
                 }
                 uniqueAddresses.add(full);
 
-                // 4. Création de l'élément HTML cliquable
+                // 4. Création et insertion de l'élément HTML cliquable
                 const div = document.createElement("div");
                 div.innerHTML = full;
                 div.style.padding = "10px";
                 div.style.cursor = "pointer";
 
                 div.onclick = function(){
-                    // 🔥 RÉPARÉ ICI : Indexation correcte du tableau Photon [Longitude (0), Latitude (1)]
+                    // 🔥 RÉPARATION CRITIQUE : Indexation exacte du tableau [Longitude, Latitude] de Photon
                     window.destination = {
-                        lat: place.geometry.coordinates[1],
-                        lon: place.geometry.coordinates[0]
+                        lat: place.geometry.coordinates[1], // Index 1 = Latitude
+                        lon: place.geometry.coordinates[0]  // Index 0 = Longitude
                     };
 
                     document.getElementById("destination").value = full;
                     container.innerHTML = "";
-                    console.log("Destination choisie :", window.destination);
+                    
+                    console.log("Destination enregistrée avec succès :", window.destination);
                 };
 
                 container.appendChild(div);
             });
         })
-        .catch(err => console.error("Erreur de recherche d'adresse :", err));
+        .catch(err => console.error("Erreur réseau API Photon :", err));
 }
