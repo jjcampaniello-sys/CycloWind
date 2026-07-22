@@ -109,29 +109,33 @@ button {
 .suggestion:hover{
     background:#eee;
 }
-/* 1. On crée un conteneur pour tout le bloc d'info en bas à droite */
-.wind-container {
-
+/* Positionnement précis du bouton à GAUCHE (au-dessus du zoom) */
+.wind-container-left {
     position: absolute !important;
-    bottom: 85px !important; /* Calé au-dessus des zooms Leaflet */
-    left: 20px !important;   /* Forcé à gauche */
-    right: auto !important;  /* Bloque tout déplacement à droite */
+    bottom: 85px !important;
+    left: 20px !important;
+    z-index: 2000 !important;
+}
+
+/* Positionnement précis des scores et recommandations à DROITE */
+.wind-container-right {
+    position: absolute !important;
+    bottom: 20px !important;
+    right: 20px !important; /* Calé à droite */
     background: white !important;
     padding: 12px !important;
     border-radius: 8px !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
-    z-index: 2000 !important; /* Passe devant la carte */
-    width: 220px !important;
+    z-index: 2000 !important;
+    width: 200px !important;
 }
 
-/* Le texte à l'intérieur : PLUS de position absolute, PLUS de right/left ici ! */
+/* Le texte à l'intérieur du bloc de droite */
 #windInfo {
     font-size: 13px;
     line-height: 1.4;
     font-weight: bold;
     color: #2c3e50;
-    margin-bottom: 10px;
-    position: relative !important; /* Reste sagement dans le conteneur */
 }
 
 /* Le bouton Toggle */
