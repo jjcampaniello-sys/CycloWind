@@ -214,8 +214,9 @@ async function getRoute(){
 
        // ... (votre code existant au-dessus reste identique)
 
+        // --- ANALYSE DES CHOIX ET RECOMMANDATION ---
     const choice = chooseBestRoute(
-        routesArrayMock[0],
+        routesArrayMock,
         alternativeMock,
         normalScore,
         alternativeScore
@@ -227,43 +228,56 @@ async function getRoute(){
         ? "🌱 CycloWind recommande l'alternative"
         : "🚴 CycloWind recommande ce trajet";
 
-    // Affichage des statistiques dans le HTML
-    document.getElementById("windInfo").innerHTML = `
-        ${recommendation}
-        <br>
-        🌬️ Impact vent : ${alternativeScore.toFixed(1)}
-        <br>
-        📉 Gain estimé : ${windGain.toFixed(0)} %
-    `;
+    // Fonction interne pour générer proprement le texte du bloc blanc
+    function updateWindText(currentView, activeScore) {
+        document.getElementById("windInfo").innerHTML = `
+            ${recommendation}
+            <br>
+            📍 Vue : Route ${currentView}
+            <br>
+            🌬️ Impact vent : ${activeScore.toFixed(1)}
+            <br>
+            📉 Économie max : ${windGain.toFixed(0)} %
+        `;
+    }
 
-    // --- LOGIQUE DU BOUTON TOGGLE ET DE LA COLORATION DYNAMIQUE ---
+    // Affichage initial (par défaut sur la route normale)
+    updateWindText("normale", normalScore);
+
+    // --- LOGIQUE DU BOUTON TOGGLE CORRIGÉE ---
     const toggleBtn = document.getElementById("toggleRouteBtn");
     
-    // Si l'API a bien renvoyé deux routes, on affiche le bouton
     if (allRoutesData.features.length > 1) {
         toggleBtn.style.display = "block";
         let showingAlternative = false;
+        toggleBtn.innerText = "Voir la route alternative";
 
-        // On écoute le clic sur le bouton
         toggleBtn.onclick = function() {
-            // 1. On nettoie les tracés précédents sur la carte
             window.routeGroup.clearLayers();
-            routeLayers = []; // On vide le tableau de suivi des calques
+            
+            if (typeof routeLayers !== 'undefined') {
+                routeLayers = []; 
+            }
 
             if (!showingAlternative) {
-                // L'utilisateur veut voir l'alternative -> On la trace AVEC les couleurs du vent !
-                drawWindRoute(latlngsAlternative);
+                // 1. On dessine l'alternative
+                drawWindRoute(window.latlngsAlternativePersist);
+                // 2. On met à jour le bouton
                 toggleBtn.innerText = "Voir la route normale";
+                // 3. 🔥 CORRECTIF : On affiche le score de l'alternative !
+                updateWindText("alternative", alternativeScore);
                 showingAlternative = true;
             } else {
-                // L'utilisateur revient à la route normale -> On la retrace en couleur
-                drawWindRoute(latlngsNormal);
+                // 1. On redessine la normale
+                drawWindRoute(window.latlngsNormalPersist);
+                // 2. On met à jour le bouton
                 toggleBtn.innerText = "Voir la route alternative";
+                // 3. 🔥 CORRECTIF : On réaffiche le score de la route normale !
+                updateWindText("normale", normalScore);
                 showingAlternative = false;
             }
         };
     } else {
-        // Pas d'alternative trouvée par l'API, on cache le bouton
         toggleBtn.style.display = "none";
     }
 
