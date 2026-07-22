@@ -146,6 +146,7 @@ async function getRoute(){
         return;
     }
     
+    // 🔥 Sécurisation des index : Index 0 = Latitude, Index 1 = Longitude selon votre gps.js
     const start = {   
         lat: window.userPosition[0],
         lng: window.userPosition[1]
@@ -162,12 +163,10 @@ async function getRoute(){
         return;
     }
 
-    // 2. Extraction route normale
     const normalFeature = allRoutesData.features[0];
     const coordsNormal = normalFeature.geometry.coordinates;
     const latlngsNormal = coordsNormal.map(point => [point[1], point[0]]);
 
-    // 3. Extraction route alternative
     let latlngsAlternative = latlngsNormal; 
     let alternativeFeature = normalFeature;
 
@@ -180,7 +179,6 @@ async function getRoute(){
         console.log("L'API n'a pas pu générer de route alternative viable pour ce trajet.");
     }
 
-    // 🔥 SAUVEGARDE GLOBALE INDISPENSABLE POUR LE TOGGLE (RÉPARÉ ICI)
     window.latlngsNormalPersist = latlngsNormal;
     window.latlngsAlternativePersist = latlngsAlternative;
     window.currentRoute = latlngsNormal.map(p => ({ lat: p[0], lng: p[1] }));
@@ -209,7 +207,7 @@ async function getRoute(){
         ? "🌱 CycloWind recommande l'alternative"
         : "🚴 CycloWind recommande ce trajet";
 
-       // --- CONFIGURATION DE L'AFFICHAGE DYNAMIQUE ---
+    // --- CONFIGURATION DE L'AFFICHAGE DYNAMIQUE ---
     function updateWindText(currentView, activeScore) {
         const featureActive = currentView === "normale" ? normalFeature : alternativeFeature;
         const distanceKm = (featureActive.properties.summary.distance / 1000).toFixed(1);
@@ -228,16 +226,13 @@ async function getRoute(){
         `;
     }
 
-    // Affichage initial à droite
     updateWindText("normale", normalScore);
 
-    // 🔥 AUTOMATISATION DE LA VUE GLOBALE AU CHARGEMENT (Étape Planification)
     if (latlngsNormal && latlngsNormal.length > 0) {
         const bounds = L.latLngBounds(latlngsNormal);
-        window.map.fitBounds(bounds, { padding: [50, 50] }); // Ajuste l'écran pour tout voir d'un coup
+        window.map.fitBounds(bounds, { padding: [50, 50] }); 
     }
 
-    // --- LOGIQUE DU BOUTON TOGGLE ROUTE A GAUCHE ---
     const toggleBtn = document.getElementById("toggleRouteBtn");
     
     if (allRoutesData.features.length > 1) {
@@ -268,7 +263,7 @@ async function getRoute(){
     window.drawWindRoute = drawWindRoute;
 }
 
-// 🔥 NOUVELLE FONCTION COMMANDEE PAR LE BOUTON DEMARRER
+// 🔥 REPARÉ ET REFERMÉ : Fonction commandée par le bouton Démarrer
 function startNavigation() {
     const btn = document.getElementById("startNavBtn");
     if (!btn) return;
@@ -279,20 +274,15 @@ function startNavigation() {
     }
 
     if (!window.isNavigating) {
-        // Déclenchement du suivi de mouvement serré
         window.isNavigating = true;
         btn.innerText = "Arrêter";
-        btn.style.backgroundColor = "#e74c3c"; // Passe au Rouge
-
-        // Zoom direct instantané sur l'utilisateur pour lancer la route
+        btn.style.backgroundColor = "#e74c3c"; 
         window.map.setView(window.userPosition, 17);
     } else {
-        // Arrêt de la navigation, retour au mode planification
         window.isNavigating = false;
         btn.innerText = "Démarrer";
-        btn.style.backgroundColor = "#2ecc71"; // Repasse au Vert
+        btn.style.backgroundColor = "#2ecc71"; 
 
-        // Repositionne en grand si un itinéraire existe
         if (window.latlngsNormalPersist) {
             window.map.fitBounds(L.latLngBounds(window.latlngsNormalPersist), { padding: [50, 50] });
         }
