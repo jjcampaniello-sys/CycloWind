@@ -109,3 +109,41 @@ button {
 .suggestion:hover{
     background:#eee;
 }
+/* 1. On crée un conteneur pour tout le bloc d'info en bas à droite */
+.wind-container {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    z-index: 1000; /* Force l'affichage par-dessus la carte Leaflet */
+    max-width: 200px;
+}
+
+/* 2. Le texte à l'intérieur s'adapte simplement */
+#windInfo {
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: bold;
+    margin-bottom: 8px; /* Laisse un espace avant le bouton */
+}
+
+/* 3. Style pour que votre bouton Toggle soit beau et visible */
+#toggleRouteBtn {
+    width: 100%;
+    padding: 8px 10px;
+    background-color: #3498db; /* Bleu */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#toggleRouteBtn:hover {
+    background-color: #2980b9; /* Bleu foncé au survol */
+}
