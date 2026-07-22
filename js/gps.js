@@ -76,8 +76,8 @@ function updateBikeArrowPosition(lat, lon){
                 <div style="transform:rotate(${currentHeading}deg); font-size:32px; color:blue;">
                 ➤
                 </div>`,
-                iconSize:, // 🔥 RÉPARÉ : Valeurs d'affichage restaurées
-                iconAnchor: [20, 20]
+                iconSize: [40, 40],   // 🔥 Vérifiez que [40, 40] est bien écrit ici
+                iconAnchor: [20, 20]  // 🔥 Vérifiez que [20, 20] est bien écrit ici
             })
         }).addTo(window.map);
     } else {
@@ -95,8 +95,8 @@ function updateBikeArrow(){
         <div style="transform:rotate(${currentHeading}deg); font-size:32px; color:blue;">
         ➤
         </div>`,
-        iconSize:, // 🔥 RÉPARÉ : Valeurs d'affichage restaurées
-        iconAnchor: [20, 20]
+        iconSize: [40, 40],   // 🔥 Vérifiez que [40, 40] est bien écrit ici
+        iconAnchor: [20, 20]  // 🔥 Vérifiez que [20, 20] est bien écrit ici
     });
 
     bikeArrow.setIcon(icon);
