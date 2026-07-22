@@ -6,7 +6,7 @@ let gpsWatchId = null;
 alert ("GPS démarre");
 function startGPS(){
 
-    console.log("GPS démarré");
+   // console.log("GPS démarré");
 
     if(!navigator.geolocation){
         alert("GPS non disponible");
