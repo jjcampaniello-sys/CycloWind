@@ -222,11 +222,11 @@ async function getRoute(){
             // Cas 1 : L'API n'a pas trouvé d'autre rue physique
             gainText = "🌬️ Aucune route alternative disponible";
         } 
-        else if (Math.abs(rawGain) < 2) {
-            // Cas 2 : L'écart est minuscule (moins de 2% de différence)
-            gainText = "🌬️ Exposition au vent identique sur les deux trajets";
+        // 🔥 AJUSTEMENT ICI : Si l'écart est inférieur à 5% (en plus ou en moins), les routes sont jugées ÉGALES
+        else if (Math.abs(rawGain) < 5) { 
+            gainText = "🌬️ Exposition au vent équivalente sur les deux trajets";
         } 
-        else if (rawGain > 0) {
+        else if (rawGain >= 5) { 
             // Cas 3 : L'alternative est MEILLEURE (Gain positif)
              gainText = `🌱 Économie de vent : -${Math.abs(rawGain).toFixed(0)}% d'effort sur l'alternative`;
         } 
