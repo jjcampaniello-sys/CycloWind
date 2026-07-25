@@ -13,15 +13,12 @@ function getSegmentDirection(p1, p2){
 }
 
 async function getAlternativeRoute(start, endLat, endLon) {
-    // 💡 Mets ici ta clé générée sur https://openrouteservice.org/
-    const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjliNTU2YzljMDI0YTA1MTlkMjU5YzdkZDM3MzY0YzQzNGIyN2VjYzZhZWQ3YzVkMzk5NmNjNTM4IiwiaCI6Im11cm11cjY0In0=";
-    
-    
-    const url = "https://api.openrouteservice.org/v2/directions/cycling-regular/geojson";
+    // 📍 On appelle maintenant le fichier serveur qu'on vient de créer sur Vercel !
+    const url = "/api/route";
 
     const body = {
         coordinates: [
-            [parseFloat(start.lng), parseFloat(start.lat)], // Longitude, Latitude
+            [parseFloat(start.lng), parseFloat(start.lat)],
             [parseFloat(endLon), parseFloat(endLat)]
         ],
         alternative_routes: {
@@ -35,16 +32,14 @@ async function getAlternativeRoute(start, endLat, endLon) {
         const response = await fetch(url, {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${apiKey}`,
-                "Content-Type": "application/json; charset=utf-8",
-                "Accept": "application/json, application/geo+json; charset=utf-8"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(body)
         });
 
         if (!response.ok) {
             const errDetails = await response.text();
-            alert(`❌ Erreur ORS (${response.status}) :\n${errDetails}`);
+            alert(`❌ Erreur API (${response.status}) :\n${errDetails}`);
             return { features: [] };
         }
 
