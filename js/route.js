@@ -13,13 +13,14 @@ function getSegmentDirection(p1, p2){
 }
 
 async function getAlternativeRoute(start, endLat, endLon) {
-    const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjliNTU2YzljMDI0YTA1MTlkMjU5YzdkZDM3MzY0YzQzNGIyN2VjYzZhZWQ3YzVkMzk5NmNjNTM4IiwiaCI6Im11cm11cjY0In0=";
+    // ⚠️ Assurez-vous d'avoir recréé une clé sur openrouteservice.org
+    const apiKey = const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjliNTU2YzljMDI0YTA1MTlkMjU5YzdkZDM3MzY0YzQzNGIyN2VjYzZhZWQ3YzVkMzk5NmNjNTM4IiwiaCI6Im11cm11cjY0In0=";
     const url = "https://api.openrouteservice.org/v2/directions/cycling-regular/geojson";
-  
+
     const body = {
         coordinates: [
-            [start.lng, start.lat],
-            [endLon, endLat]
+            [parseFloat(start.lng), parseFloat(start.lat)], 
+            [parseFloat(endLon), parseFloat(endLat)]
         ],
         alternative_routes: {
             target_count: 3,    
@@ -28,18 +29,33 @@ async function getAlternativeRoute(start, endLat, endLon) {
         }
     };
 
-    const response = await fetch(url, {
-        method: "POST",
-        headers: {
-            "Authorization": apiKey,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    });
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Authorization": apiKey,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        });
 
-    const data = await response.json();
-    return data; 
+        // 🚨 SI L'API RENVOIE UNE ERREUR (Clé, Quota, etc.)
+        if (!response.ok) {
+            const errText = await response.text();
+            alert(`❌ Erreur API ORS (${response.status}) :\n${errText}`);
+            return { features: [] };
+        }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        // 🚨 SI LE TÉLÉPHONE BLOQUE LA REQUÊTE RÉSEAU
+        alert("❌ Erreur réseau / Blocage mobile :\n" + error.message);
+        return { features: [] };
+    }
 }
+
 
 function calculateWindScore(latlngs){
     let totalCost = 0;
