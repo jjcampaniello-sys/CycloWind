@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     const url = "https://api.heigit.org/v2/directions/cycling-regular/geojson";
 
     try {
-        const response = await fetch(url, {
+        const response = await fetch(const url, {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${apiKey}`,
