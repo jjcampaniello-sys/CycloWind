@@ -13,13 +13,15 @@ function getSegmentDirection(p1, p2){
 }
 
 async function getAlternativeRoute(start, endLat, endLon) {
-    // ⚠️ Assurez-vous d'avoir recréé une clé sur openrouteservice.org
+    // ⚠️ Insère bien ta clé générée sur https://openrouteservice.org/dev/#/signup
     const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjliNTU2YzljMDI0YTA1MTlkMjU5YzdkZDM3MzY0YzQzNGIyN2VjYzZhZWQ3YzVkMzk5NmNjNTM4IiwiaCI6Im11cm11cjY0In0=";
-    const url = "https://api.openrouteservice.org/v2/directions/cycling-regular/geojson";
+    
+    // 💡 Astuce Mobile/Chrome : On injecte l'api_key directement dans l'URL
+    const url = `https://api.openrouteservice.org/v2/directions/cycling-regular/geojson?api_key=${apiKey}`;
 
     const body = {
         coordinates: [
-            [parseFloat(start.lng), parseFloat(start.lat)], 
+            [parseFloat(start.lng), parseFloat(start.lat)], // Longitude, Latitude
             [parseFloat(endLon), parseFloat(endLat)]
         ],
         alternative_routes: {
@@ -33,16 +35,14 @@ async function getAlternativeRoute(start, endLat, endLon) {
         const response = await fetch(url, {
             method: "POST",
             headers: {
-                "Authorization": apiKey,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(body)
         });
 
-        // 🚨 SI L'API RENVOIE UNE ERREUR (Clé, Quota, etc.)
         if (!response.ok) {
             const errText = await response.text();
-            alert(`❌ Erreur API ORS (${response.status}) :\n${errText}`);
+            alert(`❌ Erreur ORS (${response.status}) :\n${errText}`);
             return { features: [] };
         }
 
@@ -50,12 +50,10 @@ async function getAlternativeRoute(start, endLat, endLon) {
         return data;
 
     } catch (error) {
-        // 🚨 SI LE TÉLÉPHONE BLOQUE LA REQUÊTE RÉSEAU
-        alert("❌ Erreur réseau / Blocage mobile :\n" + error.message);
+        alert("❌ Blocage réseau / Chrome Mobile :\n" + error.message);
         return { features: [] };
     }
 }
-
 
 function calculateWindScore(latlngs){
     let totalCost = 0;
