@@ -3,8 +3,8 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Méthode non autorisée' });
     }
 
-    // 🔑 Ta clé OpenRouteService (qui commence par ey...)
-    const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjliNTU2YzljMDI0YTA1MTlkMjU5YzdkZDM3MzY0YzQzNGIyN2VjYzZhZWQ3YzVkMzk5NmNjNTM4IiwiaCI6Im11cm11cjY0In0=";
+    // 🔑 Colle bien ta VRAIE clé OpenRouteService ici !
+    const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjliNTU2YzljMDI0YTA1MTlkMjU5YzdkZDM3MzY0YzQzNGIyN2VjYzZhZWQ3YzVkMzk5NmNjNTM4IiwiaCI6Im11cm11cjY0In0"; 
     const url = "https://api.openrouteservice.org/v2/directions/cycling-regular/geojson";
 
     try {
@@ -19,9 +19,18 @@ export default async function handler(req, res) {
         });
 
         const data = await response.json();
-        return res.status(response.status).json(data);
+
+        // Si ORS renvoie un code d'erreur (ex: 401, 400, 429), on transmet les détails
+        if (!response.ok) {
+            return res.status(response.status).json({
+                error: "Erreur reçue d'OpenRouteService",
+                details: data
+            });
+        }
+
+        return res.status(200).json(data);
+
     } catch (error) {
-        return res.status(500).json({ error: "Erreur serveur : " + error.message });
+        return res.status(500).json({ error: "Erreur interne Vercel : " + error.message });
     }
 }
-
